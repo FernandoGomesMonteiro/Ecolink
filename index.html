@@ -21,6 +21,12 @@
                 <li><a href="#recursos">Recursos</a></li>
                 <li><a href="#contato">Contato</a></li>
                 <li><a href="app-preview.html" class="nav-cta">Ver App</a></li>
+                <!-- Botão para alternar o tema -->
+                <li>
+                    <button id="theme-toggle" aria-label="Alternar tema">
+                        <i id="theme-icon" class="fas fa-moon"></i>
+                    </button>
+                </li>
             </ul>
             <div class="mobile-menu-btn">
                 <i class="fas fa-bars"></i>
@@ -62,9 +68,9 @@
                     <div class="feature-item">
                         <div class="feature-icon">
                             <i class="fas fa-robot"></i>
-                    </div>
-                    <h3>IA Tréxinho</h3>
-                    <p>A inteligência artificial reconhece o material e propõe o que melhor pode ser feito</p>
+                        </div>
+                        <h3>IA Tréxinho</h3>
+                        <p>A inteligência artificial reconhece o material e propõe o que melhor pode ser feito</p>
                     </div>
                     
                     <div class="feature-item">
@@ -76,7 +82,6 @@
                     </div>
                 </div>
                 
-
                 <div class="feature-highlight">
                     <div class="feature-icon">
                         <i class="fas fa-crown"></i>
@@ -154,7 +159,7 @@
             <div class="cta-image">
                 <div class="phone-mockup">
                     <div class="phone-screen">
-                        <img src="Captura de tela 2025-05-28 150850.png" alt="EcoLink App Preview">
+                        <img src="https://placehold.co/300x600/2E8B57/FFFFFF?text=EcoLink+App" alt="EcoLink App Preview" onerror="this.onerror=null;this.src='https://placehold.co/300x600/2E8B57/FFFFFF?text=EcoLink+App';">
                     </div>
                 </div>
             </div>
@@ -179,5 +184,39 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // --- LÓGICA DO TEMA ESCURO ---
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const body = document.body;
+
+        // Função para definir o tema (claro ou escuro)
+        const setTheme = (theme) => {
+            if (theme === 'dark') {
+                body.classList.add('dark-theme');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                body.classList.remove('dark-theme');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+            // Salva a preferência do tema no localStorage
+            localStorage.setItem('theme', theme);
+        };
+
+        // Event listener para o clique no botão de alternar tema
+        themeToggle.addEventListener('click', () => {
+            const isDarkMode = body.classList.contains('dark-theme');
+            setTheme(isDarkMode ? 'light' : 'dark');
+        });
+
+        // Verifica o tema salvo no localStorage quando a página carrega
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light'; // Padrão para 'light' se nada for salvo
+            setTheme(savedTheme);
+        });
+    </script>
 </body>
 </html>
