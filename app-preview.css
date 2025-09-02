@@ -1,16 +1,16 @@
 :root {
-    --primary-color: #0cce6b;     /* Verde vibrante - sustentabilidade e tecnologia */
-    --secondary-color: #2e3192;   /* Azul profundo - confiança e tecnologia */
-    --accent-color: #00b8d4;      /* Azul ciano - inovação e frescor */
-    --highlight-color: #7b1fa2;   /* Roxo - criatividade e inovação */
+    --primary-color: #90BE6D;     /* Verde médio */
+    --secondary-color: #37371F;   /* Verde escuro */
+    --accent-color: #EA9010;      /* Laranja */
+    --highlight-color: #C9E3AC;   /* Verde médio-claro */
     --text-light: #ffffff;
-    --text-dark: #212121;
-    --background-light: #f0f2f5;   /* Alterado: tom mais azulado para fundo */
-    --background-dark: #1a1a2e;
-    --success-color: #43a047;      /* Verde - sucesso */
-    --warning-color: #ff9800;      /* Laranja - alerta */
-    --card-bg: rgba(237, 242, 247, 0.85);  /* Alterado: tom azulado claro com transparência */
-    --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    --text-dark: #37371F;
+    --background-light: #EAEFBD;   /* Verde claro */
+    --background-dark: #37371F;
+    --success-color: #90BE6D;
+    --warning-color: #EA9010;
+    --card-bg: rgba(201, 227, 172, 0.85);
+    --card-shadow: 0 8px 32px rgba(55, 55, 31, 0.1);
     --glass-effect: rgba(255, 255, 255, 0.15);
     --gradient-primary: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
     --gradient-accent: linear-gradient(135deg, var(--accent-color), var(--primary-color));
