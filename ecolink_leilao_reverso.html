@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecolink - Leilão Reverso</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+        
+        :root {
+            --bg-primary: #121212;
+            --bg-secondary: #1A1A1A;
+            --bg-card: #242424;
+            --green-primary: #00A86B;
+            --green-secondary: #008255;
+            --gold: #FFD700;
+            --text-primary: #FFFFFF;
+            --text-secondary: #B3B3B3;
+            --text-tertiary: #808080;
+            --border-color: #333333;
+            --success: #4CAF50;
+            --warning: #FFC107;
+            --error: #F44336;
+            --info: #2196F3;
+            --purple: #9C27B0;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+        }
+        
+        .sidebar {
+            background-color: #0F0F0F;
+            height: 100vh;
+            width: 200px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-y: auto;
+        }
+        
+        .sidebar-logo {
+            padding: 20px;
+            border-bottom: 1px solid #1A1A1A;
+        }
+        
+        .sidebar-menu {
+            padding: 10px 0;
+        }
+        
+        .menu-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .menu-item:hover, .menu-item.active {
+            background-color: #1A1A1A;
+            color: var(--text-primary);
+            border-left: 3px solid var(--green-primary);
+        }
+        
+        .menu-item i {
+            margin-right: 12px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .main-content {
+            margin-left: 200px;
+            padding: 20px;
+            min-height: 100vh;
+            background-color: #121212;
+        }
+        
+        .header {
+            background-color: #1A1A1A;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .search-bar {
+            background-color: #242424;
+            border: 1px solid #00A86B;
+            border-radius: 4px;
+            padding: 8px 15px;
+            width: 300px;
+            color: var(--text-primary);
+        }
+        
+        .card {
+            background-color: #242424;
+            border-radius: 4px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background-color: var(--green-primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--green-secondary);
+        }
+        
+        .btn-secondary {
+            background-color: #333333;
+            color: var(--text-primary);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #444444;
+        }
+        
+        .btn-warning {
+            background-color: #5D4E00;
+            color: var(--gold);
+        }
+        
+        .btn-warning:hover {
+            background-color: #4D3E00;
+        }
+        
+        .user-profile {
+            padding: 15px 20px;
+            border-top: 1px solid #1A1A1A;
+            display: flex;
+            align-items: center;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background-color: #0F0F0F;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #242424;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+        }
+        
+        .notification-badge {
+            background-color: var(--error);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            position: absolute;
+            top: -5px;
+            right: -5px;
+        }
+        
+        .tab-container {
+            display: flex;
+            border-bottom: 1px solid #333333;
+            margin-bottom: 20px;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            color: var(--text-secondary);
+        }
+        
+        .tab.active {
+            border-bottom: 3px solid var(--green-primary);
+            color: var(--text-primary);
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-right: 5px;
+        }
+        
+        .badge-gold {
+            background-color: #5D4E00;
+            color: #FFD700;
+        }
+        
+        .badge-silver {
+            background-color: #333333;
+            color: #C0C0C0;
+        }
+        
+        .badge-bronze {
+            background-color: #3D2E17;
+            color: #CD7F32;
+        }
+        
+        .badge-green {
+            background-color: rgba(0, 168, 107, 0.2);
+            color: var(--green-primary);
+        }
+        
+        .badge-blue {
+            background-color: rgba(33, 150, 243, 0.2);
+            color: var(--info);
+        }
+        
+        .badge-purple {
+            background-color: rgba(156, 39, 176, 0.2);
+            color: var(--purple);
+        }
+        
+        .status {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .status-success {
+            background-color: rgba(76, 175, 80, 0.2);
+            color: var(--success);
+        }
+        
+        .status-pending {
+            background-color: rgba(255, 193, 7, 0.2);
+            color: var(--warning);
+        }
+        
+        .status-active {
+            background-color: rgba(33, 150, 243, 0.2);
+            color: var(--info);
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .table th {
+            background-color: #1A1A1A;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 500;
+        }
+        
+        .table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #333333;
+        }
+        
+        .table tr:hover {
+            background-color: #2A2A2A;
+        }
+        
+        .lot-card {
+            border: 1px solid #333333;
+            border-radius: 4px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .lot-card:hover {
+            border-color: var(--green-primary);
+            transform: translateY(-2px);
+        }
+        
+        .lot-image {
+            height: 160px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .lot-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .lot-timer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .lot-timer i {
+            margin-right: 5px;
+            color: var(--warning);
+        }
+        
+        .lot-content {
+            padding: 15px;
+        }
+        
+        .lot-title {
+            font-weight: 500;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .lot-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .lot-info-item {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .lot-price {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--green-primary);
+            margin-bottom: 10px;
+        }
+        
+        .lot-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .lot-bids {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+        }
+        
+        .price-suggestion {
+            background-color: rgba(0, 168, 107, 0.1);
+            border-left: 3px solid var(--green-primary);
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .price-suggestion-title {
+            display: flex;
+            align-items: center;
+            color: var(--green-primary);
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        
+        .price-suggestion-title i {
+            margin-right: 8px;
+        }
+        
+        .price-range {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 15px 0;
+        }
+        
+        .price-point {
+            text-align: center;
+        }
+        
+        .price-point-value {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .price-point-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        
+        .price-bar {
+            height: 4px;
+            background: linear-gradient(to right, var(--error), var(--warning), var(--success));
+            flex-grow: 1;
+            margin: 0 10px;
+            border-radius: 2px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 10px;
+            background-color: #333333;
+            border: 1px solid #444444;
+            border-radius: 4px;
+            color: var(--text-primary);
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--green-primary);
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-logo">
+            <h1 class="text-xl font-bold text-green-500">Ecolink</h1>
+            <p class="text-xs text-gray-400">Gestão de E-lixo Corporativo</p>
+        </div>
+        
+        <div class="sidebar-menu">
+            <div class="menu-item">
+                <i class="fas fa-tachometer-alt text-gray-400"></i>
+                <span>Dashboard</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-box text-gray-400"></i>
+                <span>Cadastro de Lotes</span>
+            </div>
+            <div class="menu-item active">
+                <i class="fas fa-gavel text-green-500"></i>
+                <span>Leilão Reverso</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-shield-alt text-gray-400"></i>
+                <span>Pagamento em Garantia</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-truck text-gray-400"></i>
+                <span>Logística</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-certificate text-gray-400"></i>
+                <span>Laudos Técnicos</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-chart-line text-gray-400"></i>
+                <span>Relatórios ESG</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-cog text-gray-400"></i>
+                <span>Configurações</span>
+            </div>
+        </div>
+        
+        <div class="user-profile">
+            <div class="user-avatar">
+                <i class="fas fa-user text-green-500"></i>
+            </div>
+            <div>
+                <p class="font-medium">João Silva</p>
+                <p class="text-xs text-gray-400">Administrador</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <div class="header">
+            <h2 class="text-xl font-medium">Leilão Reverso</h2>
+            <div class="flex items-center">
+                <div class="relative mr-4">
+                    <input type="text" placeholder="Pesquisar..." class="search-bar">
+                    <span class="absolute right-3 top-2 text-green-500">
+                        <i class="fas fa-search"></i>
+                    </span>
+                </div>
+                <div class="relative mr-4">
+                    <i class="fas fa-bell text-gray-400 text-xl"></i>
+                    <span class="notification-badge">3</span>
+                </div>
+                <button class="btn btn-primary">
+                    <i class="fas fa-plus mr-2"></i>Novo Leilão
+                </button>
+            </div>
+        </div>
+        
+        <!-- Tab Navigation -->
+        <div class="tab-container">
+            <div class="tab active">Leilões Ativos</div>
+            <div class="tab">Meus Lotes</div>
+            <div class="tab">Histórico de Leilões</div>
+        </div>
+        
+        <!-- Featured Lot -->
+        <div class="card">
+            <div class="grid grid-cols-3 gap-6">
+                <div>
+                    <img src="https://via.placeholder.com/400x300/333333/666666" alt="Lote em Destaque" class="w-full h-64 object-cover rounded-lg">
+                </div>
+                
+                <div class="col-span-2">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="text-xl font-medium text-green-500">Lote de Servidores Dell PowerEdge</h3>
+                            <p class="text-gray-400">ID: #ECO-2028</p>
+                        </div>
+                        <span class="status status-active">Leilão Ativo</span>
+                    </div>
+                    
+                    <div class="grid grid-cols-3 gap-4 mb-6">
+                        <div>
+                            <p class="text-gray-400 text-sm">Peso Total</p>
+                            <p class="text-lg font-medium">210 kg</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-400 text-sm">Quantidade</p>
+                            <p class="text-lg font-medium">8 unidades</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-400 text-sm">Tempo Restante</p>
+                            <p class="text-lg font-medium text-yellow-400">23h 45min</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <p class="text-gray-400 text-sm mb-2">Categorias</p>
+                        <div>
+                            <span class="badge badge-green">Servidores</span>
+                            <span class="badge badge-blue">Equipamentos de Rede</span>
+                            <span class="badge badge-purple">Hardware Empresarial</span>
+                        </div>
+                    </div>
+                    
+                    <div class="price-suggestion">
+                        <div class="price-suggestion-title">
+                            <i class="fas fa-robot"></i>
+                            <span>Sugestão de Preço (IA)</span>
+                        </div>
+                        
+                        <div class="price-range">
+                            <div class="price-point">
+                                <div class="price-point-value">R$ 4.200</div>
+                                <div class="price-point-label">Mínimo</div>
+                            </div>
+                            
+                            <div class="price-bar"></div>
+                            
+                            <div class="price-point">
+                                <div class="price-point-value">R$ 5.800</div>
+                                <div class="price-point-label">Sugerido</div>
+                            </div>
+                            
+                            <div class="price-bar"></div>
+                            
+                            <div class="price-point">
+                                <div class="price-point-value">R$ 7.500</div>
+                                <div class="price-point-label">Máximo</div>
+                            </div>
+                        </div>
+                        
+                        <p class="text-sm text-gray-400">Justificativa: Baseado em 8 leilões similares recentes e aumento de 12% no valor do cobre.</p>
+                    </div>
+                    
+                    <div class="flex justify-between items-center mt-6">
+                        <div>
+                            <p class="text-gray-400 text-sm">Melhor Lance Atual</p>
+                            <p class="text-2xl font-bold text-green-500">R$ 5.250</p>
+                            <p class="text-xs text-gray-400">por <span class="badge badge-gold">TechRecycle</span> há 2 horas</p>
+                        </div>
+                        
+                        <div class="flex">
+                            <button class="btn btn-secondary mr-3">
+                                <i class="far fa-eye mr-2"></i>Ver Detalhes
+                            </button>
+                            <button class="btn btn-warning">
+                                <i class="fas fa-gavel mr-2"></i>Fazer Lance
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Lots Grid -->
+        <h3 class="text-lg font-medium mb-4">Outros Leilões Ativos</h3>
+        
+        <div class="grid grid-cols-4 gap-4 mb-6">
+            <!-- Lot Card 1 -->
+            <div class="lot-card">
+                <div class="lot-image">
+                    <img src="https://via.placeholder.com/300x200/333333/666666" alt="Lote">
+                    <div class="lot-timer">
+                        <i class="far fa-clock"></i>
+                        <span>2d 14h restantes</span>
+                    </div>
+                </div>
+                <div class="lot-content">
+                    <h4 class="lot-title">Computadores e Periféricos</h4>
+                    <div class="lot-info">
+                        <span class="lot-info-item">ID: #ECO-2027</span>
+                        <span class="lot-info-item">320 kg</span>
+                    </div>
+                    <div class="lot-price">R$ 4.800</div>
+                    <div class="lot-footer">
+                        <span class="badge badge-green">15 itens</span>
+                        <span class="lot-bids">8 lances</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Lot Card 2 -->
+            <div class="lot-card">
+                <div class="lot-image">
+                    <img src="https://via.placeholder.com/300x200/333333/666666" alt="Lote">
+                    <div class="lot-timer">
+                        <i class="far fa-clock"></i>
+                        <span>8h 22min restantes</span>
+                    </div>
+                </div>
+                <div class="lot-content">
+                    <h4 class="lot-title">Smartphones e Tablets</h4>
+                    <div class="lot-info">
+                        <span class="lot-info-item">ID: #ECO-2026</span>
+                        <span class="lot-info-item">45 kg</span>
+                    </div>
+                    <div class="lot-price">R$ 3.200</div>
+                    <div class="lot-footer">
+                        <span class="badge badge-blue">28 itens</span>
+                        <span class="lot-bids">12 lances</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Lot Card 3 -->
+            <div class="lot-card">
+                <div class="lot-image">
+                    <img src="https://via.placeholder.com/300x200/333333/666666" alt="Lote">
+                    <div class="lot-timer">
+                        <i class="far fa-clock"></i>
+                        <span>1d 6h restantes</span>
+                    </div>
+                </div>
+                <div class="lot-content">
+                    <h4 class="lot-title">Monitores LCD</h4>
+                    <div class="lot-info">
+                        <span class="lot-info-item">ID: #ECO-2025</span>
+                        <span class="lot-info-item">95 kg</span>
+                    </div>
+                    <div class="lot-price">R$ 1.850</div>
+                    <div class="lot-footer">
+                        <span class="badge badge-purple">12 itens</span>
+                        <span class="lot-bids">5 lances</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Lot Card 4 -->
+            <div class="lot-card">
+                <div class="lot-image">
+                    <img src="https://via.placeholder.com/300x200/333333/666666" alt="Lote">
+                    <div class="lot-timer">
+                        <i class="far fa-clock"></i>
+                        <span>3d 12h restantes</span>
+                    </div>
+                </div>
+                <div class="lot-content">
+                    <h4 class="lot-title">Impressoras e Toners</h4>
+                    <div class="lot-info">
+                        <span class="lot-info-item">ID: #ECO-2024</span>
+                        <span class="lot-info-item">75 kg</span>
+                    </div>
+                    <div class="lot-price">R$ 1.200</div>
+                    <div class="lot-footer">
+                        <span class="badge badge-green">8 itens</span>
+                        <span class="lot-bids">3 lances</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Market Trends -->
+        <div class="card">
+            <h3 class="text-lg font-medium mb-4 text-green-500">Tendências de Mercado</h3>
+            
+            <div class="grid grid-cols-2 gap-6">
+                <div>
+                    <h4 class="text-base font-medium mb-3">Preço Médio por Categoria (R$/kg)</h4>
+                    <div class="chart-container">
+                        <canvas id="categoryPriceChart"></canvas>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-base font-medium mb-3">Variação de Preço de Commodities</h4>
+                    <div class="chart-container">
+                        <canvas id="commodityPriceChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Category Price Chart
+        const categoryCtx = document.getElementById('categoryPriceChart').getContext('2d');
+        const categoryChart = new Chart(categoryCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Computadores', 'Servidores', 'Smartphones', 'Monitores', 'Impressoras'],
+                datasets: [{
+                    label: 'Preço Médio (R$/kg)',
+                    data: [15, 28, 42, 18, 12],
+                    backgroundColor: '#00A86B',
+                    borderColor: '#008255',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: '#333333'
+                        },
+                        ticks: {
+                            color: '#B3B3B3'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            color: '#333333'
+                        },
+                        ticks: {
+                            color: '#B3B3B3'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+        
+        // Commodity Price Chart
+        const commodityCtx = document.getElementById('commodityPriceChart').getContext('2d');
+        const commodityChart = new Chart(commodityCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+                datasets: [
+                    {
+                        label: 'Cobre',
+                        data: [100, 105, 110, 108, 115, 120],
+                        backgroundColor: 'rgba(255, 215, 0, 0.2)',
+                        borderColor: '#FFD700',
+                        borderWidth: 2,
+                        tension: 0.4
+                    },
+                    {
+                        label: 'Alumínio',
+                        data: [100, 102, 103, 105, 104, 106],
+                        backgroundColor: 'rgba(192, 192, 192, 0.2)',
+                        borderColor: '#C0C0C0',
+                        borderWidth: 2,
+                        tension: 0.4
+                    },
+                    {
+                        label: 'Plástico',
+                        data: [100, 98, 97, 95, 93, 90],
+                        backgroundColor: 'rgba(0, 168, 107, 0.2)',
+                        borderColor: '#00A86B',
+                        borderWidth: 2,
+                        tension: 0.4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        grid: {
+                            color: '#333333'
+                        },
+                        ticks: {
+                            color: '#B3B3B3'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            color: '#333333'
+                        },
+                        ticks: {
+                            color: '#B3B3B3'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: '#B3B3B3',
+                            boxWidth: 12,
+                            padding: 15
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': Índice ' + context.raw + ' (base 100)';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

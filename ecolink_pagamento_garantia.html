@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecolink - Pagamento em Garantia</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+        
+        :root {
+            --bg-primary: #121212;
+            --bg-secondary: #1A1A1A;
+            --bg-card: #242424;
+            --green-primary: #00A86B;
+            --green-secondary: #008255;
+            --gold: #FFD700;
+            --text-primary: #FFFFFF;
+            --text-secondary: #B3B3B3;
+            --text-tertiary: #808080;
+            --border-color: #333333;
+            --success: #4CAF50;
+            --warning: #FFC107;
+            --error: #F44336;
+            --info: #2196F3;
+            --purple: #9C27B0;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+        }
+        
+        .sidebar {
+            background-color: #0F0F0F;
+            height: 100vh;
+            width: 200px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-y: auto;
+        }
+        
+        .sidebar-logo {
+            padding: 20px;
+            border-bottom: 1px solid #1A1A1A;
+        }
+        
+        .sidebar-menu {
+            padding: 10px 0;
+        }
+        
+        .menu-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .menu-item:hover, .menu-item.active {
+            background-color: #1A1A1A;
+            color: var(--text-primary);
+            border-left: 3px solid var(--green-primary);
+        }
+        
+        .menu-item i {
+            margin-right: 12px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .main-content {
+            margin-left: 200px;
+            padding: 20px;
+            min-height: 100vh;
+            background-color: #121212;
+        }
+        
+        .header {
+            background-color: #1A1A1A;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .search-bar {
+            background-color: #242424;
+            border: 1px solid #00A86B;
+            border-radius: 4px;
+            padding: 8px 15px;
+            width: 300px;
+            color: var(--text-primary);
+        }
+        
+        .card {
+            background-color: #242424;
+            border-radius: 4px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background-color: var(--green-primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--green-secondary);
+        }
+        
+        .btn-secondary {
+            background-color: #333333;
+            color: var(--text-primary);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #444444;
+        }
+        
+        .btn-warning {
+            background-color: #5D4E00;
+            color: var(--gold);
+        }
+        
+        .btn-warning:hover {
+            background-color: #4D3E00;
+        }
+        
+        .btn-info {
+            background-color: rgba(33, 150, 243, 0.2);
+            color: var(--info);
+        }
+        
+        .btn-info:hover {
+            background-color: rgba(33, 150, 243, 0.3);
+        }
+        
+        .user-profile {
+            padding: 15px 20px;
+            border-top: 1px solid #1A1A1A;
+            display: flex;
+            align-items: center;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background-color: #0F0F0F;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #242424;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+        }
+        
+        .notification-badge {
+            background-color: var(--error);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            position: absolute;
+            top: -5px;
+            right: -5px;
+        }
+        
+        .tab-container {
+            display: flex;
+            border-bottom: 1px solid #333333;
+            margin-bottom: 20px;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            color: var(--text-secondary);
+        }
+        
+        .tab.active {
+            border-bottom: 3px solid var(--green-primary);
+            color: var(--text-primary);
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-right: 5px;
+        }
+        
+        .badge-gold {
+            background-color: #5D4E00;
+            color: #FFD700;
+        }
+        
+        .badge-silver {
+            background-color: #333333;
+            color: #C0C0C0;
+        }
+        
+        .badge-bronze {
+            background-color: #3D2E17;
+            color: #CD7F32;
+        }
+        
+        .badge-green {
+            background-color: rgba(0, 168, 107, 0.2);
+            color: var(--green-primary);
+        }
+        
+        .badge-blue {
+            background-color: rgba(33, 150, 243, 0.2);
+            color: var(--info);
+        }
+        
+        .badge-purple {
+            background-color: rgba(156, 39, 176, 0.2);
+            color: var(--purple);
+        }
+        
+        .status {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .status-success {
+            background-color: rgba(76, 175, 80, 0.2);
+            color: var(--success);
+        }
+        
+        .status-pending {
+            background-color: rgba(255, 193, 7, 0.2);
+            color: var(--warning);
+        }
+        
+        .status-active {
+            background-color: rgba(33, 150, 243, 0.2);
+            color: var(--info);
+        }
+        
+        .status-error {
+            background-color: rgba(244, 67, 54, 0.2);
+            color: var(--error);
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .table th {
+            background-color: #1A1A1A;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 500;
+        }
+        
+        .table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #333333;
+        }
+        
+        .table tr:hover {
+            background-color: #2A2A2A;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 10px;
+            background-color: #333333;
+            border: 1px solid #444444;
+            border-radius: 4px;
+            color: var(--text-primary);
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--green-primary);
+        }
+        
+        .form-select {
+            width: 100%;
+            padding: 10px;
+            background-color: #333333;
+            border: 1px solid #444444;
+            border-radius: 4px;
+            color: var(--text-primary);
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23FFFFFF' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+        }
+        
+        .step-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .step-container::before {
+            content: '';
+            position: absolute;
+            top: 24px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: #333333;
+            z-index: 1;
+        }
+        
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .step-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #333333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            border: 2px solid #333333;
+        }
+        
+        .step-circle.active {
+            background-color: var(--green-primary);
+            border-color: var(--green-primary);
+        }
+        
+        .step-circle.completed {
+            background-color: var(--bg-card);
+            border-color: var(--green-primary);
+            color: var(--green-primary);
+        }
+        
+        .step-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-align: center;
+            max-width: 120px;
+        }
+        
+        .step.active .step-label {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        
+        .step.completed .step-label {
+            color: var(--green-primary);
+        }
+        
+        .payment-method {
+            border: 1px solid #333333;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .payment-method:hover, .payment-method.selected {
+            border-color: var(--green-primary);
+            background-color: rgba(0, 168, 107, 0.05);
+        }
+        
+        .payment-method-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #333333;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 20px;
+        }
+        
+        .payment-method-details {
+            flex-grow: 1;
+        }
+        
+        .payment-method-title {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .payment-method-description {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .payment-method-radio {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #444444;
+            border-radius: 50%;
+            margin-left: 10px;
+            position: relative;
+        }
+        
+        .payment-method.selected .payment-method-radio {
+            border-color: var(--green-primary);
+        }
+        
+        .payment-method.selected .payment-method-radio::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: var(--green-primary);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .contract-preview {
+            background-color: #1A1A1A;
+            border: 1px solid #333333;
+            border-radius: 4px;
+            padding: 20px;
+            height: 300px;
+            overflow-y: auto;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .contract-preview h4 {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 15px;
+            color: var(--green-primary);
+        }
+        
+        .contract-preview p {
+            margin-bottom: 15px;
+        }
+        
+        .contract-preview ul {
+            margin-bottom: 15px;
+            padding-left: 20px;
+        }
+        
+        .contract-preview li {
+            margin-bottom: 5px;
+        }
+        
+        .escrow-info {
+            background-color: rgba(33, 150, 243, 0.1);
+            border-left: 3px solid var(--info);
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .escrow-info-title {
+            display: flex;
+            align-items: center;
+            color: var(--info);
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        
+        .escrow-info-title i {
+            margin-right: 8px;
+        }
+        
+        .timeline {
+            margin-top: 20px;
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 15px;
+            width: 2px;
+            background-color: #333333;
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: -30px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #333333;
+            border: 2px solid #242424;
+            top: 0;
+        }
+        
+        .timeline-item.completed .timeline-dot {
+            background-color: var(--green-primary);
+        }
+        
+        .timeline-item.active .timeline-dot {
+            background-color: var(--info);
+        }
+        
+        .timeline-item.pending .timeline-dot {
+            background-color: var(--warning);
+        }
+        
+        .timeline-content {
+            padding-bottom: 15px;
+        }
+        
+        .timeline-date {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-bottom: 5px;
+        }
+        
+        .timeline-title {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .timeline-description {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-logo">
+            <h1 class="text-xl font-bold text-green-500">Ecolink</h1>
+            <p class="text-xs text-gray-400">Gestão de E-lixo Corporativo</p>
+        </div>
+        
+        <div class="sidebar-menu">
+            <div class="menu-item">
+                <i class="fas fa-tachometer-alt text-gray-400"></i>
+                <span>Dashboard</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-box text-gray-400"></i>
+                <span>Cadastro de Lotes</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-gavel text-gray-400"></i>
+                <span>Leilão Reverso</span>
+            </div>
+            <div class="menu-item active">
+                <i class="fas fa-shield-alt text-green-500"></i>
+                <span>Pagamento em Garantia</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-truck text-gray-400"></i>
+                <span>Logística</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-certificate text-gray-400"></i>
+                <span>Laudos Técnicos</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-chart-line text-gray-400"></i>
+                <span>Relatórios ESG</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-cog text-gray-400"></i>
+                <span>Configurações</span>
+            </div>
+        </div>
+        
+        <div class="user-profile">
+            <div class="user-avatar">
+                <i class="fas fa-user text-green-500"></i>
+            </div>
+            <div>
+                <p class="font-medium">João Silva</p>
+                <p class="text-xs text-gray-400">Administrador</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <div class="header">
+            <h2 class="text-xl font-medium">Pagamento em Garantia</h2>
+            <div class="flex items-center">
+                <div class="relative mr-4">
+                    <input type="text" placeholder="Pesquisar..." class="search-bar">
+                    <span class="absolute right-3 top-2 text-green-500">
+                        <i class="fas fa-search"></i>
+                    </span>
+                </div>
+                <div class="relative mr-4">
+                    <i class="fas fa-bell text-gray-400 text-xl"></i>
+                    <span class="notification-badge">3</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tab Navigation -->
+        <div class="tab-container">
+            <div class="tab active">Transações Ativas</div>
+            <div class="tab">Histórico de Transações</div>
+            <div class="tab">Contratos</div>
+        </div>
+        
+        <!-- Transaction Details -->
+        <div class="card">
+            <div class="flex justify-between items-start mb-6">
+                <div>
+                    <h3 class="text-xl font-medium text-green-500">Transação #ESC-1042</h3>
+                    <p class="text-gray-400">Lote #ECO-2028 - Servidores Dell PowerEdge</p>
+                </div>
+                <span class="status status-active">Em Andamento</span>
+            </div>
+            
+            <!-- Progress Steps -->
+            <div class="step-container">
+                <div class="step completed">
+                    <div class="step-circle completed">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="step-label">Contrato Assinado</div>
+                </div>
+                
+                <div class="step completed">
+                    <div class="step-circle completed">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="step-label">Pagamento em Garantia</div>
+                </div>
+                
+                <div class="step active">
+                    <div class="step-circle active">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <div class="step-label">Coleta e Entrega</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-circle">
+                        <i class="fas fa-clipboard-check"></i>
+                    </div>
+                    <div class="step-label">Verificação do Lote</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-circle">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <div class="step-label">Liberação do Pagamento</div>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-3 gap-6">
+                <!-- Transaction Details -->
+                <div>
+                    <h4 class="text-lg font-medium mb-4">Detalhes da Transação</h4>
+                    
+                    <div class="bg-gray-800 rounded-lg p-4 mb-4">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-gray-400">Valor Total:</span>
+                            <span class="font-medium">R$ 5.800,00</span>
+                        </div>
+                        <div class="flex justify-between mb-2">
+                            <span class="text-gray-400">Taxa de Serviço (3%):</span>
+                            <span>R$ 174,00</span>
+                        </div>
+                        <div class="flex justify-between mb-2">
+                            <span class="text-gray-400">Valor em Garantia:</span>
+                            <span class="font-medium">R$ 5.800,00</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Status do Pagamento:</span>
+                            <span class="text-green-500">Confirmado</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5 class="font-medium mb-2">Vendedor</h5>
+                        <p>TechCorp Brasil Ltda.</p>
+                        <p class="text-sm text-gray-400">CNPJ: 12.345.678/0001-90</p>
+                    </div>
+                    
+                    <div>
+                        <h5 class="font-medium mb-2">Comprador</h5>
+                        <p><span class="badge badge-gold">TechRecycle</span></p>
+                        <p class="text-sm text-gray-400">CNPJ: 98.765.432/0001-10</p>
+                    </div>
+                </div>
+                
+                <!-- Timeline -->
+                <div>
+                    <h4 class="text-lg font-medium mb-4">Linha do Tempo</h4>
+                    
+                    <div class="timeline">
+                        <div class="timeline-item completed">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-date">03/10/2025 - 10:15</div>
+                                <div class="timeline-title">Contrato Assinado</div>
+                                <div class="timeline-description">Ambas as partes assinaram o contrato digital.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item completed">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-date">03/10/2025 - 11:30</div>
+                                <div class="timeline-title">Pagamento Realizado</div>
+                                <div class="timeline-description">TechRecycle depositou R$ 5.800,00 na conta de garantia.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item active">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-date">03/10/2025 - 14:20</div>
+                                <div class="timeline-title">Coleta Agendada</div>
+                                <div class="timeline-description">Coleta programada para 05/10/2025 entre 09:00 e 11:00.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item pending">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Verificação do Lote</div>
+                                <div class="timeline-description">Pendente - Prazo de 48h após a entrega.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Liberação do Pagamento</div>
+                                <div class="timeline-description">Pendente - Após aprovação do lote.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contract & Actions -->
+                <div>
+                    <h4 class="text-lg font-medium mb-4">Contrato Digital</h4>
+                    
+                    <div class="contract-preview mb-4">
+                        <h4>CONTRATO DE COMPRA E VENDA - #ESC-1042</h4>
+                        <p>Pelo presente instrumento particular, de um lado <strong>TechCorp Brasil Ltda.</strong>, CNPJ 12.345.678/0001-90, doravante denominada VENDEDORA, e de outro lado <strong>TechRecycle</strong>, CNPJ 98.765.432/0001-10, doravante denominada COMPRADORA, têm entre si justo e contratado o seguinte:</p>
+                        
+                        <p><strong>CLÁUSULA 1 - OBJETO</strong><br>
+                        A VENDEDORA se compromete a vender à COMPRADORA o lote de equipamentos eletrônicos #ECO-2028, composto por 8 unidades de Servidores Dell PowerEdge, com peso total aproximado de 210kg.</p>
+                        
+                        <p><strong>CLÁUSULA 2 - PREÇO E FORMA DE PAGAMENTO</strong><br>
+                        O valor total da transação é de R$ 5.800,00 (cinco mil e oitocentos reais), a ser depositado em conta de garantia (escrow) gerenciada pela Ecolink.</p>
+                        
+                        <p><strong>CLÁUSULA 3 - VERIFICAÇÃO E CONFORMIDADE</strong><br>
+                        A COMPRADORA terá o prazo de 48 (quarenta e oito) horas após o recebimento para verificar a conformidade do lote com a descrição. Em caso de divergência significativa, deverá ser aberto processo de contestação conforme procedimento da plataforma.</p>
+                        
+                        <p><strong>CLÁUSULA 4 - RESPONSABILIDADES</strong><br>
+                        A VENDEDORA é responsável pela veracidade das informações fornecidas sobre o lote. A COMPRADORA é responsável pelo correto processamento e destinação dos materiais conforme legislação ambiental vigente.</p>
+                    </div>
+                    
+                    <div class="flex mb-4">
+                        <button class="btn btn-secondary flex-1 mr-2">
+                            <i class="fas fa-download mr-2"></i>Baixar Contrato
+                        </button>
+                        <button class="btn btn-info flex-1">
+                            <i class="fas fa-file-signature mr-2"></i>Ver Assinaturas
+                        </button>
+                    </div>
+                    
+                    <div class="escrow-info">
+                        <div class="escrow-info-title">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Informações da Conta de Garantia</span>
+                        </div>
+                        <p class="text-sm mb-2">O valor está seguro em uma conta de garantia e só será liberado após a confirmação de recebimento e verificação do lote.</p>
+                        <p class="text-sm">Em caso de disputa, o processo de mediação será iniciado conforme os termos do contrato.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Active Transactions Table -->
+        <div class="card">
+            <h3 class="text-lg font-medium mb-4 text-green-500">Outras Transações Ativas</h3>
+            
+            <div class="overflow-x-auto">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Lote</th>
+                            <th>Valor</th>
+                            <th>Comprador/Vendedor</th>
+                            <th>Data</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#ESC-1041</td>
+                            <td>Computadores e Periféricos</td>
+                            <td>R$ 4.800,00</td>
+                            <td><span class="badge badge-silver">GreenTech</span></td>
+                            <td>02/10/2025</td>
+                            <td><span class="status status-pending">Aguardando Coleta</span></td>
+                            <td>
+                                <button class="btn btn-secondary text-sm">Detalhes</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#ESC-1040</td>
+                            <td>Smartphones e Tablets</td>
+                            <td>R$ 3.200,00</td>
+                            <td><span class="badge badge-bronze">EcoTech</span></td>
+                            <td>01/10/2025</td>
+                            <td><span class="status status-error">Em Disputa</span></td>
+                            <td>
+                                <button class="btn btn-secondary text-sm">Detalhes</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#ESC-1039</td>
+                            <td>Monitores LCD</td>
+                            <td>R$ 1.850,00</td>
+                            <td><span class="badge badge-gold">TechRecycle</span></td>
+                            <td>30/09/2025</td>
+                            <td><span class="status status-success">Pagamento Liberado</span></td>
+                            <td>
+                                <button class="btn btn-secondary text-sm">Detalhes</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecolink - Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+        
+        :root {
+            --bg-primary: #121212;
+            --bg-secondary: #1A1A1A;
+            --bg-card: #242424;
+            --green-primary: #00A86B;
+            --green-secondary: #008255;
+            --gold: #FFD700;
+            --text-primary: #FFFFFF;
+            --text-secondary: #B3B3B3;
+            --text-tertiary: #808080;
+            --border-color: #333333;
+            --success: #4CAF50;
+            --warning: #FFC107;
+            --error: #F44336;
+            --info: #2196F3;
+            --purple: #9C27B0;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+        }
+        
+        .sidebar {
+            background-color: #0F0F0F;
+            height: 100vh;
+            width: 200px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-y: auto;
+        }
+        
+        .sidebar-logo {
+            padding: 20px;
+            border-bottom: 1px solid #1A1A1A;
+        }
+        
+        .sidebar-menu {
+            padding: 10px 0;
+        }
+        
+        .menu-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .menu-item:hover, .menu-item.active {
+            background-color: #1A1A1A;
+            color: var(--text-primary);
+            border-left: 3px solid var(--green-primary);
+        }
+        
+        .menu-item i {
+            margin-right: 12px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .main-content {
+            margin-left: 200px;
+            padding: 20px;
+            min-height: 100vh;
+            background-color: #121212;
+        }
+        
+        .header {
+            background-color: #1A1A1A;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .search-bar {
+            background-color: #242424;
+            border: 1px solid #00A86B;
+            border-radius: 4px;
+            padding: 8px 15px;
+            width: 300px;
+            color: var(--text-primary);
+        }
+        
+        .card {
+            background-color: #242424;
+            border-radius: 4px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .metric-card {
+            background-color: #242424;
+            border-radius: 4px;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .metric-value {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+        
+        .metric-label {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background-color: var(--green-primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--green-secondary);
+        }
+        
+        .btn-secondary {
+            background-color: #333333;
+            color: var(--text-primary);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #444444;
+        }
+        
+        .btn-mensal {
+            background-color: #5D4E00;
+            color: var(--gold);
+            padding: 4px 12px;
+            font-size: 14px;
+            border-radius: 4px;
+        }
+        
+        .btn-anual {
+            background-color: #3D1A45;
+            color: #BB86FC;
+            padding: 4px 12px;
+            font-size: 14px;
+            border-radius: 4px;
+            margin-left: 5px;
+        }
+        
+        .btn-exportar {
+            background-color: #333333;
+            color: var(--text-primary);
+            padding: 4px 12px;
+            font-size: 14px;
+            border-radius: 4px;
+        }
+        
+        .btn-ver-todos {
+            background-color: #3D1A45;
+            color: #BB86FC;
+            padding: 4px 12px;
+            font-size: 14px;
+            border-radius: 4px;
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .table th {
+            background-color: #1A1A1A;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 500;
+        }
+        
+        .table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #333333;
+        }
+        
+        .status {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .status-success {
+            background-color: rgba(76, 175, 80, 0.2);
+            color: var(--success);
+        }
+        
+        .status-pending {
+            background-color: rgba(255, 193, 7, 0.2);
+            color: var(--warning);
+        }
+        
+        .status-error {
+            background-color: rgba(244, 67, 54, 0.2);
+            color: var(--error);
+        }
+        
+        .user-profile {
+            padding: 15px 20px;
+            border-top: 1px solid #1A1A1A;
+            display: flex;
+            align-items: center;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background-color: #0F0F0F;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #242424;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+        }
+        
+        .notification-badge {
+            background-color: var(--error);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            position: absolute;
+            top: -5px;
+            right: -5px;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+        }
+        
+        .badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .badge-gold {
+            background-color: #5D4E00;
+            color: #FFD700;
+        }
+        
+        .badge-silver {
+            background-color: #333333;
+            color: #C0C0C0;
+        }
+        
+        .badge-bronze {
+            background-color: #3D2E17;
+            color: #CD7F32;
+        }
+        
+        .chart-title {
+            color: var(--green-primary);
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+        
+        .action-icon {
+            color: var(--green-primary);
+            font-size: 18px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .action-icon-red {
+            color: var(--error);
+            font-size: 18px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .action-number {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background-color: #333;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 12px;
+            line-height: 20px;
+            margin-right: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-logo">
+            <h1 class="text-xl font-bold text-green-500">Ecolink</h1>
+            <p class="text-xs text-gray-400">Gestão de E-lixo Corporativo</p>
+        </div>
+        
+        <div class="sidebar-menu">
+            <div class="menu-item active">
+                <i class="fas fa-tachometer-alt text-green-500"></i>
+                <span>Dashboard</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-box text-gray-400"></i>
+                <span>Cadastro de Lotes</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-gavel text-gray-400"></i>
+                <span>Leilão Reverso</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-shield-alt text-gray-400"></i>
+                <span>Pagamento em Garantia</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-truck text-gray-400"></i>
+                <span>Logística</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-certificate text-gray-400"></i>
+                <span>Laudos Técnicos</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-chart-line text-gray-400"></i>
+                <span>Relatórios ESG</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-cog text-gray-400"></i>
+                <span>Configurações</span>
+            </div>
+        </div>
+        
+        <div class="user-profile">
+            <div class="user-avatar">
+                <i class="fas fa-user text-green-500"></i>
+            </div>
+            <div>
+                <p class="font-medium">João Silva</p>
+                <p class="text-xs text-gray-400">Administrador</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <div class="header">
+            <h2 class="text-xl font-medium">Dashboard</h2>
+            <div class="flex items-center">
+                <div class="relative mr-4">
+                    <input type="text" placeholder="Pesquisar..." class="search-bar">
+                    <span class="absolute right-3 top-2 text-green-500">
+                        <i class="fas fa-search"></i>
+                    </span>
+                </div>
+                <div class="relative mr-4">
+                    <i class="fas fa-bell text-gray-400 text-xl"></i>
+                    <span class="notification-badge">3</span>
+                </div>
+                <button class="btn btn-primary">
+                    <i class="fas fa-plus mr-2"></i>Novo Lote
+                </button>
+            </div>
+        </div>
+        
+        <!-- Metrics Row -->
+        <div class="grid grid-cols-4 gap-4 mb-6">
+            <div class="metric-card">
+                <i class="fas fa-shopping-bag text-green-500 text-2xl"></i>
+                <div class="metric-value">1.250 kg</div>
+                <div class="metric-label">Volume Processado</div>
+            </div>
+            <div class="metric-card">
+                <i class="fas fa-check-circle text-green-500 text-2xl"></i>
+                <div class="metric-value">95%</div>
+                <div class="metric-label">Transações sem Disputa</div>
+            </div>
+            <div class="metric-card">
+                <i class="fas fa-clock text-green-500 text-2xl"></i>
+                <div class="metric-value">5 dias</div>
+                <div class="metric-label">Tempo Médio de Ciclo</div>
+            </div>
+            <div class="metric-card">
+                <i class="fas fa-dollar-sign text-green-500 text-2xl"></i>
+                <div class="metric-value">R$ 3.200</div>
+                <div class="metric-label">Receita Média por Lote</div>
+            </div>
+        </div>
+        
+        <!-- Charts Row -->
+        <div class="grid grid-cols-2 gap-6 mb-6">
+            <!-- Volume Chart -->
+            <div class="card">
+                <div class="flex justify-between items-center mb-4">
+                    <div class="chart-title">Volume Processado (kg)</div>
+                    <div>
+                        <button class="btn-mensal">Mensal</button>
+                        <button class="btn-anual">Anual</button>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="volumeChart"></canvas>
+                </div>
+            </div>
+            
+            <!-- Impact Chart -->
+            <div class="card">
+                <div class="flex justify-between items-center mb-4">
+                    <div class="chart-title">Impacto Ambiental</div>
+                    <div>
+                        <button class="btn-exportar">Exportar</button>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="impactChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Recent Lots Table -->
+        <div class="card">
+            <div class="flex justify-between items-center mb-4">
+                <div class="chart-title">Lotes Recentes</div>
+                <button class="btn-ver-todos">Ver Todos</button>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Descrição</th>
+                            <th>Peso</th>
+                            <th>Valor</th>
+                            <th>Operador</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#ECO-2025</td>
+                            <td>Computadores e Periféricos</td>
+                            <td>320 kg</td>
+                            <td>R$ 4.800</td>
+                            <td>
+                                <span class="badge badge-gold">TechRecycle</span>
+                            </td>
+                            <td>
+                                <span class="status status-success">Concluído</span>
+                            </td>
+                            <td>
+                                <span class="action-number">7</span>
+                                <span class="action-number action-icon-red">8</span>
+                                <button class="action-icon ml-2">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="action-icon ml-2">
+                                    <i class="fas fa-file-pdf"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#ECO-2024</td>
+                            <td>Servidores Obsoletos</td>
+                            <td>180 kg</td>
+                            <td>R$ 3.600</td>
+                            <td>
+                                <span class="badge badge-silver">GreenTech</span>
+                            </td>
+                            <td>
+                                <span class="status status-pending">Em Trânsito</span>
+                            </td>
+                            <td>
+                                <span class="action-number">9</span>
+                                <span class="action-number action-icon-red">10</span>
+                                <button class="action-icon ml-2">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="text-gray-500 ml-2">
+                                    <i class="fas fa-file-pdf"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#ECO-2023</td>
+                            <td>Smartphones e Tablets</td>
+                            <td>45 kg</td>
+                            <td>R$ 2.250</td>
+                            <td>
+                                <span class="badge badge-bronze">EcoTech</span>
+                            </td>
+                            <td>
+                                <span class="status status-pending">Aguardando Coleta</span>
+                            </td>
+                            <td>
+                                <span class="action-number">11</span>
+                                <span class="action-number action-icon-red">12</span>
+                                <button class="action-icon ml-2">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="text-gray-500 ml-2">
+                                    <i class="fas fa-file-pdf"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Volume Chart
+        const volumeCtx = document.getElementById('volumeChart').getContext('2d');
+        const volumeChart = new Chart(volumeCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+                datasets: [{
+                    label: 'Volume Processado (kg)',
+                    data: [180, 220, 190, 250, 300, 310],
+                    backgroundColor: '#00A86B',
+                    borderColor: '#008255',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: '#333333'
+                        },
+                        ticks: {
+                            color: '#B3B3B3'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            color: '#333333'
+                        },
+                        ticks: {
+                            color: '#B3B3B3'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+        
+        // Impact Chart
+        const impactCtx = document.getElementById('impactChart').getContext('2d');
+        const impactChart = new Chart(impactCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+                datasets: [
+                    {
+                        label: 'CO₂e Evitado (kg)',
+                        data: [120, 150, 130, 170, 210, 215],
+                        backgroundColor: 'rgba(0, 168, 107, 0.2)',
+                        borderColor: '#00A86B',
+                        borderWidth: 2,
+                        tension: 0.4,
+                        pointBackgroundColor: '#00A86B',
+                        pointRadius: 4
+                    },
+                    {
+                        label: 'Metais Recuperados (kg)',
+                        data: [80, 95, 85, 110, 130, 140],
+                        backgroundColor: 'rgba(255, 215, 0, 0.2)',
+                        borderColor: '#FFD700',
+                        borderWidth: 2,
+                        tension: 0.4,
+                        pointBackgroundColor: '#FFD700',
+                        pointRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: '#333333'
+                        },
+                        ticks: {
+                            color: '#B3B3B3'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            color: '#333333'
+                        },
+                        ticks: {
+                            color: '#B3B3B3'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: '#B3B3B3',
+                            boxWidth: 12,
+                            padding: 15
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

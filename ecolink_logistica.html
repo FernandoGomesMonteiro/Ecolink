@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecolink - Logística</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+        
+        :root {
+            --bg-primary: #121212;
+            --bg-secondary: #1A1A1A;
+            --bg-card: #242424;
+            --green-primary: #00A86B;
+            --green-secondary: #008255;
+            --gold: #FFD700;
+            --text-primary: #FFFFFF;
+            --text-secondary: #B3B3B3;
+            --text-tertiary: #808080;
+            --border-color: #333333;
+            --success: #4CAF50;
+            --warning: #FFC107;
+            --error: #F44336;
+            --info: #2196F3;
+            --purple: #9C27B0;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+        }
+        
+        .sidebar {
+            background-color: #0F0F0F;
+            height: 100vh;
+            width: 200px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-y: auto;
+        }
+        
+        .sidebar-logo {
+            padding: 20px;
+            border-bottom: 1px solid #1A1A1A;
+        }
+        
+        .sidebar-menu {
+            padding: 10px 0;
+        }
+        
+        .menu-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .menu-item:hover, .menu-item.active {
+            background-color: #1A1A1A;
+            color: var(--text-primary);
+            border-left: 3px solid var(--green-primary);
+        }
+        
+        .menu-item i {
+            margin-right: 12px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .main-content {
+            margin-left: 200px;
+            padding: 20px;
+            min-height: 100vh;
+            background-color: #121212;
+        }
+        
+        .header {
+            background-color: #1A1A1A;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .search-bar {
+            background-color: #242424;
+            border: 1px solid #00A86B;
+            border-radius: 4px;
+            padding: 8px 15px;
+            width: 300px;
+            color: var(--text-primary);
+        }
+        
+        .card {
+            background-color: #242424;
+            border-radius: 4px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background-color: var(--green-primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--green-secondary);
+        }
+        
+        .btn-secondary {
+            background-color: #333333;
+            color: var(--text-primary);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #444444;
+        }
+        
+        .btn-warning {
+            background-color: #5D4E00;
+            color: var(--gold);
+        }
+        
+        .btn-warning:hover {
+            background-color: #4D3E00;
+        }
+        
+        .btn-info {
+            background-color: rgba(33, 150, 243, 0.2);
+            color: var(--info);
+        }
+        
+        .btn-info:hover {
+            background-color: rgba(33, 150, 243, 0.3);
+        }
+        
+        .user-profile {
+            padding: 15px 20px;
+            border-top: 1px solid #1A1A1A;
+            display: flex;
+            align-items: center;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background-color: #0F0F0F;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #242424;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+        }
+        
+        .notification-badge {
+            background-color: var(--error);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            position: absolute;
+            top: -5px;
+            right: -5px;
+        }
+        
+        .tab-container {
+            display: flex;
+            border-bottom: 1px solid #333333;
+            margin-bottom: 20px;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            color: var(--text-secondary);
+        }
+        
+        .tab.active {
+            border-bottom: 3px solid var(--green-primary);
+            color: var(--text-primary);
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-right: 5px;
+        }
+        
+        .badge-gold {
+            background-color: #5D4E00;
+            color: #FFD700;
+        }
+        
+        .badge-silver {
+            background-color: #333333;
+            color: #C0C0C0;
+        }
+        
+        .badge-bronze {
+            background-color: #3D2E17;
+            color: #CD7F32;
+        }
+        
+        .badge-green {
+            background-color: rgba(0, 168, 107, 0.2);
+            color: var(--green-primary);
+        }
+        
+        .badge-blue {
+            background-color: rgba(33, 150, 243, 0.2);
+            color: var(--info);
+        }
+        
+        .badge-purple {
+            background-color: rgba(156, 39, 176, 0.2);
+            color: var(--purple);
+        }
+        
+        .status {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .status-success {
+            background-color: rgba(76, 175, 80, 0.2);
+            color: var(--success);
+        }
+        
+        .status-pending {
+            background-color: rgba(255, 193, 7, 0.2);
+            color: var(--warning);
+        }
+        
+        .status-active {
+            background-color: rgba(33, 150, 243, 0.2);
+            color: var(--info);
+        }
+        
+        .status-error {
+            background-color: rgba(244, 67, 54, 0.2);
+            color: var(--error);
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .table th {
+            background-color: #1A1A1A;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 500;
+        }
+        
+        .table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #333333;
+        }
+        
+        .table tr:hover {
+            background-color: #2A2A2A;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 10px;
+            background-color: #333333;
+            border: 1px solid #444444;
+            border-radius: 4px;
+            color: var(--text-primary);
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--green-primary);
+        }
+        
+        .form-select {
+            width: 100%;
+            padding: 10px;
+            background-color: #333333;
+            border: 1px solid #444444;
+            border-radius: 4px;
+            color: var(--text-primary);
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23FFFFFF' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+        }
+        
+        .map-container {
+            height: 400px;
+            background-color: #1A1A1A;
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .map-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: var(--text-tertiary);
+        }
+        
+        .map-placeholder i {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        
+        .tracking-timeline {
+            margin-top: 20px;
+            position: relative;
+        }
+        
+        .tracking-step {
+            display: flex;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .tracking-step:last-child {
+            margin-bottom: 0;
+        }
+        
+        .tracking-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 30px;
+            left: 15px;
+            width: 2px;
+            height: calc(100% - 10px);
+            background-color: #333333;
+        }
+        
+        .tracking-step.completed:not(:last-child)::after {
+            background-color: var(--green-primary);
+        }
+        
+        .tracking-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #333333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            z-index: 1;
+        }
+        
+        .tracking-step.completed .tracking-icon {
+            background-color: var(--green-primary);
+        }
+        
+        .tracking-step.active .tracking-icon {
+            background-color: var(--info);
+        }
+        
+        .tracking-content {
+            flex-grow: 1;
+        }
+        
+        .tracking-date {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-bottom: 5px;
+        }
+        
+        .tracking-title {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .tracking-description {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .calendar {
+            background-color: #1A1A1A;
+            border-radius: 4px;
+            padding: 15px;
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .calendar-title {
+            font-weight: 500;
+        }
+        
+        .calendar-nav {
+            display: flex;
+        }
+        
+        .calendar-nav-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 4px;
+            background-color: #333333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+        
+        .calendar-weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .calendar-weekday {
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-tertiary);
+            padding: 5px;
+        }
+        
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+        
+        .calendar-day {
+            text-align: center;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .calendar-day:hover {
+            background-color: #333333;
+        }
+        
+        .calendar-day.other-month {
+            color: var(--text-tertiary);
+        }
+        
+        .calendar-day.today {
+            background-color: rgba(0, 168, 107, 0.2);
+            color: var(--green-primary);
+            font-weight: 500;
+        }
+        
+        .calendar-day.has-event {
+            position: relative;
+        }
+        
+        .calendar-day.has-event::after {
+            content: '';
+            position: absolute;
+            bottom: 3px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background-color: var(--info);
+        }
+        
+        .calendar-day.selected {
+            background-color: var(--green-primary);
+            color: white;
+        }
+        
+        .time-slots {
+            margin-top: 20px;
+        }
+        
+        .time-slot {
+            padding: 10px;
+            border-radius: 4px;
+            background-color: #333333;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .time-slot:hover {
+            background-color: #444444;
+        }
+        
+        .time-slot.selected {
+            background-color: var(--green-primary);
+            color: white;
+        }
+        
+        .time-slot.unavailable {
+            background-color: rgba(244, 67, 54, 0.1);
+            color: var(--text-tertiary);
+            cursor: not-allowed;
+        }
+        
+        .operator-card {
+            background-color: #1A1A1A;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid #333333;
+        }
+        
+        .operator-card:hover, .operator-card.selected {
+            border-color: var(--green-primary);
+            background-color: rgba(0, 168, 107, 0.05);
+        }
+        
+        .operator-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .operator-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 4px;
+            background-color: #333333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+        
+        .operator-name {
+            font-weight: 500;
+        }
+        
+        .operator-rating {
+            margin-left: auto;
+            color: var(--gold);
+        }
+        
+        .operator-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .operator-info-item {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .operator-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .operator-price {
+            font-weight: 500;
+            color: var(--green-primary);
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-logo">
+            <h1 class="text-xl font-bold text-green-500">Ecolink</h1>
+            <p class="text-xs text-gray-400">Gestão de E-lixo Corporativo</p>
+        </div>
+        
+        <div class="sidebar-menu">
+            <div class="menu-item">
+                <i class="fas fa-tachometer-alt text-gray-400"></i>
+                <span>Dashboard</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-box text-gray-400"></i>
+                <span>Cadastro de Lotes</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-gavel text-gray-400"></i>
+                <span>Leilão Reverso</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-shield-alt text-gray-400"></i>
+                <span>Pagamento em Garantia</span>
+            </div>
+            <div class="menu-item active">
+                <i class="fas fa-truck text-green-500"></i>
+                <span>Logística</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-certificate text-gray-400"></i>
+                <span>Laudos Técnicos</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-chart-line text-gray-400"></i>
+                <span>Relatórios ESG</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-cog text-gray-400"></i>
+                <span>Configurações</span>
+            </div>
+        </div>
+        
+        <div class="user-profile">
+            <div class="user-avatar">
+                <i class="fas fa-user text-green-500"></i>
+            </div>
+            <div>
+                <p class="font-medium">João Silva</p>
+                <p class="text-xs text-gray-400">Administrador</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <div class="header">
+            <h2 class="text-xl font-medium">Logística</h2>
+            <div class="flex items-center">
+                <div class="relative mr-4">
+                    <input type="text" placeholder="Pesquisar..." class="search-bar">
+                    <span class="absolute right-3 top-2 text-green-500">
+                        <i class="fas fa-search"></i>
+                    </span>
+                </div>
+                <div class="relative mr-4">
+                    <i class="fas fa-bell text-gray-400 text-xl"></i>
+                    <span class="notification-badge">3</span>
+                </div>
+                <button class="btn btn-primary">
+                    <i class="fas fa-plus mr-2"></i>Agendar Coleta
+                </button>
+            </div>
+        </div>
+        
+        <!-- Tab Navigation -->
+        <div class="tab-container">
+            <div class="tab active">Coletas Agendadas</div>
+            <div class="tab">Rastreamento</div>
+            <div class="tab">Histórico</div>
+        </div>
+        
+        <!-- Tracking Details -->
+        <div class="card">
+            <div class="flex justify-between items-start mb-6">
+                <div>
+                    <h3 class="text-xl font-medium text-green-500">Coleta #LOG-2042</h3>
+                    <p class="text-gray-400">Lote #ECO-2028 - Servidores Dell PowerEdge</p>
+                </div>
+                <span class="status status-active">Em Trânsito</span>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-6">
+                <!-- Map -->
+                <div>
+                    <h4 class="text-lg font-medium mb-4">Rastreamento em Tempo Real</h4>
+                    
+                    <div class="map-container">
+                        <div class="map-placeholder">
+                            <i class="fas fa-map-marked-alt text-gray-600"></i>
+                            <p>Mapa de Rastreamento</p>
+                            <p class="text-sm">Veículo em trânsito - Atualizado há 5 minutos</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-3 gap-4 mt-4">
+                        <div class="bg-gray-800 rounded-lg p-4">
+                            <p class="text-sm text-gray-400">Distância</p>
+                            <p class="font-medium">12 km</p>
+                        </div>
+                        <div class="bg-gray-800 rounded-lg p-4">
+                            <p class="text-sm text-gray-400">Tempo Estimado</p>
+                            <p class="font-medium">25 min</p>
+                        </div>
+                        <div class="bg-gray-800 rounded-lg p-4">
+                            <p class="text-sm text-gray-400">Chegada Prevista</p>
+                            <p class="font-medium">10:45</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tracking Timeline -->
+                <div>
+                    <h4 class="text-lg font-medium mb-4">Status da Coleta</h4>
+                    
+                    <div class="tracking-timeline">
+                        <div class="tracking-step completed">
+                            <div class="tracking-icon">
+                                <i class="fas fa-check text-white text-xs"></i>
+                            </div>
+                            <div class="tracking-content">
+                                <div class="tracking-date">05/10/2025 - 08:30</div>
+                                <div class="tracking-title">Coleta Agendada</div>
+                                <div class="tracking-description">Coleta confirmada para o endereço: Av. Paulista, 1000, São Paulo - SP.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="tracking-step completed">
+                            <div class="tracking-icon">
+                                <i class="fas fa-check text-white text-xs"></i>
+                            </div>
+                            <div class="tracking-content">
+                                <div class="tracking-date">05/10/2025 - 09:15</div>
+                                <div class="tracking-title">Veículo a Caminho</div>
+                                <div class="tracking-description">Veículo saiu da base e está a caminho do local de coleta.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="tracking-step active">
+                            <div class="tracking-icon">
+                                <i class="fas fa-truck text-white text-xs"></i>
+                            </div>
+                            <div class="tracking-content">
+                                <div class="tracking-date">05/10/2025 - 10:20 (Atual)</div>
+                                <div class="tracking-title">Em Trânsito</div>
+                                <div class="tracking-description">Veículo em trânsito para o local de coleta.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="tracking-step">
+                            <div class="tracking-icon">
+                                <i class="fas fa-box text-gray-400 text-xs"></i>
+                            </div>
+                            <div class="tracking-content">
+                                <div class="tracking-title">Coleta Realizada</div>
+                                <div class="tracking-description">Lote coletado e carregado no veículo.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="tracking-step">
+                            <div class="tracking-icon">
+                                <i class="fas fa-warehouse text-gray-400 text-xs"></i>
+                            </div>
+                            <div class="tracking-content">
+                                <div class="tracking-title">Em Trânsito para Destino</div>
+                                <div class="tracking-description">Lote em trânsito para o centro de reciclagem.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="tracking-step">
+                            <div class="tracking-icon">
+                                <i class="fas fa-check-circle text-gray-400 text-xs"></i>
+                            </div>
+                            <div class="tracking-content">
+                                <div class="tracking-title">Entrega Concluída</div>
+                                <div class="tracking-description">Lote entregue no destino final.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-3 gap-6 mt-6">
+                <!-- Collection Details -->
+                <div>
+                    <h4 class="text-lg font-medium mb-4">Detalhes da Coleta</h4>
+                    
+                    <div class="bg-gray-800 rounded-lg p-4">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-gray-400">Data:</span>
+                            <span>05/10/2025</span>
+                        </div>
+                        <div class="flex justify-between mb-2">
+                            <span class="text-gray-400">Horário:</span>
+                            <span>09:00 - 11:00</span>
+                        </div>
+                        <div class="flex justify-between mb-2">
+                            <span class="text-gray-400">Peso Total:</span>
+                            <span>210 kg</span>
+                        </div>
+                        <div class="flex justify-between mb-2">
+                            <span class="text-gray-400">Volume:</span>
+                            <span>1,2 m³</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Operador:</span>
+                            <span class="badge badge-gold">TechRecycle</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Address -->
+                <div>
+                    <h4 class="text-lg font-medium mb-4">Endereço de Coleta</h4>
+                    
+                    <div class="bg-gray-800 rounded-lg p-4">
+                        <p class="font-medium mb-2">TechCorp Brasil Ltda.</p>
+                        <p class="text-gray-400 mb-1">Av. Paulista, 1000, 10º andar</p>
+                        <p class="text-gray-400 mb-1">Bela Vista, São Paulo - SP</p>
+                        <p class="text-gray-400 mb-1">CEP: 01310-100</p>
+                        <p class="text-gray-400">Referência: Próximo à estação de metrô</p>
+                    </div>
+                </div>
+                
+                <!-- Contact -->
+                <div>
+                    <h4 class="text-lg font-medium mb-4">Contatos</h4>
+                    
+                    <div class="bg-gray-800 rounded-lg p-4">
+                        <div class="mb-3">
+                            <p class="font-medium">Responsável pela Entrega</p>
+                            <p class="text-gray-400">Carlos Mendes</p>
+                            <p class="text-gray-400">(11) 98765-4321</p>
+                        </div>
+                        
+                        <div>
+                            <p class="font-medium">Motorista</p>
+                            <p class="text-gray-400">Roberto Almeida</p>
+                            <p class="text-gray-400">(11) 91234-5678</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex justify-end mt-6 pt-6 border-t border-gray-700">
+                <button class="btn btn-secondary mr-3">
+                    <i class="fas fa-print mr-2"></i>Imprimir Guia
+                </button>
+                <button class="btn btn-info mr-3">
+                    <i class="fas fa-phone-alt mr-2"></i>Contatar Motorista
+                </button>
+                <button class="btn btn-primary">
+                    <i class="fas fa-edit mr-2"></i>Editar Coleta
+                </button>
+            </div>
+        </div>
+        
+        <!-- Schedule New Collection -->
+        <div class="card">
+            <h3 class="text-lg font-medium mb-6 text-green-500">Agendar Nova Coleta</h3>
+            
+            <div class="grid grid-cols-3 gap-6">
+                <!-- Calendar -->
+                <div>
+                    <h4 class="text-base font-medium mb-4">Selecione a Data</h4>
+                    
+                    <div class="calendar">
+                        <div class="calendar-header">
+                            <div class="calendar-title">Outubro 2025</div>
+                            <div class="calendar-nav">
+                                <div class="calendar-nav-btn">
+                                    <i class="fas fa-chevron-left"></i>
+                                </div>
+                                <div class="calendar-nav-btn">
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="calendar-weekdays">
+                            <div class="calendar-weekday">Dom</div>
+                            <div class="calendar-weekday">Seg</div>
+                            <div class="calendar-weekday">Ter</div>
+                            <div class="calendar-weekday">Qua</div>
+                            <div class="calendar-weekday">Qui</div>
+                            <div class="calendar-weekday">Sex</div>
+                            <div class="calendar-weekday">Sáb</div>
+                        </div>
+                        
+                        <div class="calendar-days">
+                            <div class="calendar-day other-month">29</div>
+                            <div class="calendar-day other-month">30</div>
+                            <div class="calendar-day">1</div>
+                            <div class="calendar-day">2</div>
+                            <div class="calendar-day today">3</div>
+                            <div class="calendar-day">4</div>
+                            <div class="calendar-day">5</div>
+                            <div class="calendar-day">6</div>
+                            <div class="calendar-day">7</div>
+                            <div class="calendar-day has-event">8</div>
+                            <div class="calendar-day">9</div>
+                            <div class="calendar-day">10</div>
+                            <div class="calendar-day selected">11</div>
+                            <div class="calendar-day">12</div>
+                            <div class="calendar-day">13</div>
+                            <div class="calendar-day">14</div>
+                            <div class="calendar-day has-event">15</div>
+                            <div class="calendar-day">16</div>
+                            <div class="calendar-day">17</div>
+                            <div class="calendar-day">18</div>
+                            <div class="calendar-day">19</div>
+                            <div class="calendar-day">20</div>
+                            <div class="calendar-day">21</div>
+                            <div class="calendar-day">22</div>
+                            <div class="calendar-day">23</div>
+                            <div class="calendar-day">24</div>
+                            <div class="calendar-day">25</div>
+                            <div class="calendar-day">26</div>
+                            <div class="calendar-day">27</div>
+                            <div class="calendar-day">28</div>
+                            <div class="calendar-day">29</div>
+                            <div class="calendar-day">30</div>
+                            <div class="calendar-day">31</div>
+                            <div class="calendar-day other-month">1</div>
+                            <div class="calendar-day other-month">2</div>
+                        </div>
+                    </div>
+                    
+                    <div class="time-slots">
+                        <h4 class="text-base font-medium mb-4">Horários Disponíveis</h4>
+                        
+                        <div class="time-slot">09:00 - 11:00</div>
+                        <div class="time-slot selected">13:00 - 15:00</div>
+                        <div class="time-slot unavailable">15:00 - 17:00</div>
+                        <div class="time-slot">17:00 - 19:00</div>
+                    </div>
+                </div>
+                
+                <!-- Operators -->
+                <div>
+                    <h4 class="text-base font-medium mb-4">Selecione o Operador Logístico</h4>
+                    
+                    <div class="operator-card selected">
+                        <div class="operator-header">
+                            <div class="operator-logo">
+                                <i class="fas fa-recycle text-green-500"></i>
+                            </div>
+                            <div class="operator-name">TechRecycle</div>
+                            <div class="operator-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="operator-info">
+                            <span class="operator-info-item">Tempo médio: 24h</span>
+                            <span class="operator-info-item">Avaliações: 128</span>
+                        </div>
+                        
+                        <div class="operator-footer">
+                            <span class="badge badge-gold">Ouro</span>
+                            <span class="operator-price">R$ 180,00</span>
+                        </div>
+                    </div>
+                    
+                    <div class="operator-card">
+                        <div class="operator-header">
+                            <div class="operator-logo">
+                                <i class="fas fa-leaf text-green-500"></i>
+                            </div>
+                            <div class="operator-name">GreenTech</div>
+                            <div class="operator-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="operator-info">
+                            <span class="operator-info-item">Tempo médio: 36h</span>
+                            <span class="operator-info-item">Avaliações: 95</span>
+                        </div>
+                        
+                        <div class="operator-footer">
+                            <span class="badge badge-silver">Prata</span>
+                            <span class="operator-price">R$ 150,00</span>
+                        </div>
+                    </div>
+                    
+                    <div class="operator-card">
+                        <div class="operator-header">
+                            <div class="operator-logo">
+                                <i class="fas fa-truck text-green-500"></i>
+                            </div>
+                            <div class="operator-name">EcoTech</div>
+                            <div class="operator-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="operator-info">
+                            <span class="operator-info-item">Tempo médio: 48h</span>
+                            <span class="operator-info-item">Avaliações: 42</span>
+                        </div>
+                        
+                        <div class="operator-footer">
+                            <span class="badge badge-bronze">Bronze</span>
+                            <span class="operator-price">R$ 120,00</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Collection Details -->
+                <div>
+                    <h4 class="text-base font-medium mb-4">Detalhes da Coleta</h4>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Lote</label>
+                        <select class="form-select">
+                            <option value="">Selecione um lote</option>
+                            <option value="eco-2028" selected>ECO-2028 - Servidores Dell PowerEdge</option>
+                            <option value="eco-2027">ECO-2027 - Computadores e Periféricos</option>
+                            <option value="eco-2026">ECO-2026 - Smartphones e Tablets</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Endereço de Coleta</label>
+                        <select class="form-select">
+                            <option value="">Selecione um endereço</option>
+                            <option value="endereco1" selected>Sede Principal - Av. Paulista, 1000</option>
+                            <option value="endereco2">Filial Sul - Rua Augusta, 500</option>
+                            <option value="endereco3">Depósito - Rua Vergueiro, 200</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Contato Responsável</label>
+                        <select class="form-select">
+                            <option value="">Selecione um contato</option>
+                            <option value="contato1" selected>Carlos Mendes - (11) 98765-4321</option>
+                            <option value="contato2">Ana Paula Silva - (11) 97654-3210</option>
+                            <option value="contato3">Marcos Oliveira - (11) 96543-2109</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Instruções Especiais</label>
+                        <textarea class="form-input" rows="4" placeholder="Instruções para o motorista...">Procurar na recepção. Necessário identificação. Material está no 2º subsolo.</textarea>
+                    </div>
+                    
+                    <div class="flex justify-end mt-6">
+                        <button class="btn btn-secondary mr-3">Cancelar</button>
+                        <button class="btn btn-primary">Confirmar Agendamento</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
