@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
-        
+
         :root {
             --bg-primary: #121212;
             --bg-secondary: #1A1A1A;
@@ -27,7 +28,7 @@
             --info: #2196F3;
             --purple: #9C27B0;
         }
-        
+
         body {
             font-family: 'Roboto', sans-serif;
             background-color: var(--bg-primary);
@@ -35,7 +36,7 @@
             margin: 0;
             padding: 0;
         }
-        
+
         .sidebar {
             background-color: #0F0F0F;
             height: 100vh;
@@ -45,16 +46,16 @@
             left: 0;
             overflow-y: auto;
         }
-        
+
         .sidebar-logo {
             padding: 20px;
             border-bottom: 1px solid #1A1A1A;
         }
-        
+
         .sidebar-menu {
             padding: 10px 0;
         }
-        
+
         .menu-item {
             padding: 12px 20px;
             display: flex;
@@ -63,26 +64,27 @@
             transition: all 0.3s ease;
             border-left: 3px solid transparent;
         }
-        
-        .menu-item:hover, .menu-item.active {
+
+        .menu-item:hover,
+        .menu-item.active {
             background-color: #1A1A1A;
             color: var(--text-primary);
             border-left: 3px solid var(--green-primary);
         }
-        
+
         .menu-item i {
             margin-right: 12px;
             width: 20px;
             text-align: center;
         }
-        
+
         .main-content {
             margin-left: 200px;
             padding: 20px;
             min-height: 100vh;
             background-color: #121212;
         }
-        
+
         .header {
             background-color: #1A1A1A;
             padding: 15px 20px;
@@ -91,7 +93,7 @@
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .search-bar {
             background-color: #242424;
             border: 1px solid #00A86B;
@@ -100,14 +102,14 @@
             width: 300px;
             color: var(--text-primary);
         }
-        
+
         .card {
             background-color: #242424;
             border-radius: 4px;
             padding: 20px;
             margin-bottom: 20px;
         }
-        
+
         .btn {
             padding: 8px 16px;
             border-radius: 4px;
@@ -115,43 +117,43 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        
+
         .btn-primary {
             background-color: var(--green-primary);
             color: white;
         }
-        
+
         .btn-primary:hover {
             background-color: var(--green-secondary);
         }
-        
+
         .btn-secondary {
             background-color: #333333;
             color: var(--text-primary);
         }
-        
+
         .btn-secondary:hover {
             background-color: #444444;
         }
-        
+
         .btn-warning {
             background-color: #5D4E00;
             color: var(--gold);
         }
-        
+
         .btn-warning:hover {
             background-color: #4D3E00;
         }
-        
+
         .btn-info {
             background-color: rgba(33, 150, 243, 0.2);
             color: var(--info);
         }
-        
+
         .btn-info:hover {
             background-color: rgba(33, 150, 243, 0.3);
         }
-        
+
         .user-profile {
             padding: 15px 20px;
             border-top: 1px solid #1A1A1A;
@@ -162,7 +164,7 @@
             width: 100%;
             background-color: #0F0F0F;
         }
-        
+
         .user-avatar {
             width: 40px;
             height: 40px;
@@ -173,7 +175,7 @@
             justify-content: center;
             margin-right: 12px;
         }
-        
+
         .notification-badge {
             background-color: var(--error);
             color: white;
@@ -188,25 +190,25 @@
             top: -5px;
             right: -5px;
         }
-        
+
         .tab-container {
             display: flex;
             border-bottom: 1px solid #333333;
             margin-bottom: 20px;
         }
-        
+
         .tab {
             padding: 10px 20px;
             cursor: pointer;
             border-bottom: 3px solid transparent;
             color: var(--text-secondary);
         }
-        
+
         .tab.active {
             border-bottom: 3px solid var(--green-primary);
             color: var(--text-primary);
         }
-        
+
         .badge {
             display: inline-block;
             padding: 4px 8px;
@@ -215,96 +217,96 @@
             font-weight: 500;
             margin-right: 5px;
         }
-        
+
         .badge-gold {
             background-color: #5D4E00;
             color: #FFD700;
         }
-        
+
         .badge-silver {
             background-color: #333333;
             color: #C0C0C0;
         }
-        
+
         .badge-bronze {
             background-color: #3D2E17;
             color: #CD7F32;
         }
-        
+
         .badge-green {
             background-color: rgba(0, 168, 107, 0.2);
             color: var(--green-primary);
         }
-        
+
         .badge-blue {
             background-color: rgba(33, 150, 243, 0.2);
             color: var(--info);
         }
-        
+
         .badge-purple {
             background-color: rgba(156, 39, 176, 0.2);
             color: var(--purple);
         }
-        
+
         .status {
             padding: 4px 8px;
             border-radius: 4px;
             font-size: 12px;
             font-weight: 500;
         }
-        
+
         .status-success {
             background-color: rgba(76, 175, 80, 0.2);
             color: var(--success);
         }
-        
+
         .status-pending {
             background-color: rgba(255, 193, 7, 0.2);
             color: var(--warning);
         }
-        
+
         .status-active {
             background-color: rgba(33, 150, 243, 0.2);
             color: var(--info);
         }
-        
+
         .status-error {
             background-color: rgba(244, 67, 54, 0.2);
             color: var(--error);
         }
-        
+
         .table {
             width: 100%;
             border-collapse: collapse;
         }
-        
+
         .table th {
             background-color: #1A1A1A;
             padding: 12px 15px;
             text-align: left;
             font-weight: 500;
         }
-        
+
         .table td {
             padding: 12px 15px;
             border-bottom: 1px solid #333333;
         }
-        
+
         .table tr:hover {
             background-color: #2A2A2A;
         }
-        
+
         .form-group {
             margin-bottom: 20px;
         }
-        
+
         .form-label {
             display: block;
             margin-bottom: 8px;
             font-weight: 500;
             color: var(--text-secondary);
         }
-        
+
         .form-input {
             width: 100%;
             padding: 10px;
@@ -313,12 +315,12 @@
             border-radius: 4px;
             color: var(--text-primary);
         }
-        
+
         .form-input:focus {
             outline: none;
             border-color: var(--green-primary);
         }
-        
+
         .form-select {
             width: 100%;
             padding: 10px;
@@ -331,7 +333,7 @@
             background-repeat: no-repeat;
             background-position: right 10px center;
         }
-        
+
         .form-textarea {
             width: 100%;
             padding: 10px;
@@ -342,36 +344,36 @@
             min-height: 100px;
             resize: vertical;
         }
-        
+
         .chart-container {
             position: relative;
             height: 250px;
             width: 100%;
         }
-        
+
         .chart-container.large {
             height: 350px;
         }
-        
+
         .metric-card {
             background-color: #1A1A1A;
             border-radius: 4px;
             padding: 15px;
             height: 100%;
         }
-        
+
         .metric-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
         }
-        
+
         .metric-title {
             font-weight: 500;
             color: var(--text-secondary);
         }
-        
+
         .metric-icon {
             width: 40px;
             height: 40px;
@@ -382,31 +384,31 @@
             justify-content: center;
             color: var(--green-primary);
         }
-        
+
         .metric-value {
             font-size: 24px;
             font-weight: 700;
             margin-bottom: 5px;
         }
-        
+
         .metric-change {
             font-size: 12px;
             display: flex;
             align-items: center;
         }
-        
+
         .metric-change.positive {
             color: var(--success);
         }
-        
+
         .metric-change.negative {
             color: var(--error);
         }
-        
+
         .metric-change i {
             margin-right: 5px;
         }
-        
+
         .progress-container {
             width: 100%;
             height: 6px;
@@ -415,27 +417,27 @@
             overflow: hidden;
             margin-bottom: 5px;
         }
-        
+
         .progress-bar {
             height: 100%;
             background-color: var(--green-primary);
         }
-        
+
         .progress-labels {
             display: flex;
             justify-content: space-between;
             font-size: 12px;
         }
-        
+
         .progress-label {
             color: var(--text-tertiary);
         }
-        
+
         .progress-value {
             color: var(--green-primary);
             font-weight: 500;
         }
-        
+
         .report-card {
             background-color: #1A1A1A;
             border-radius: 4px;
@@ -445,49 +447,49 @@
             transition: all 0.3s ease;
             border: 1px solid #333333;
         }
-        
+
         .report-card:hover {
             border-color: var(--green-primary);
             background-color: rgba(0, 168, 107, 0.05);
         }
-        
+
         .report-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
         }
-        
+
         .report-title {
             font-weight: 500;
         }
-        
+
         .report-date {
             font-size: 12px;
             color: var(--text-tertiary);
         }
-        
+
         .report-content {
             margin-bottom: 10px;
         }
-        
+
         .report-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .report-meta {
             font-size: 12px;
             color: var(--text-secondary);
         }
-        
+
         .sdg-grid {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
             gap: 10px;
         }
-        
+
         .sdg-item {
             aspect-ratio: 1;
             border-radius: 4px;
@@ -500,39 +502,89 @@
             transition: all 0.3s ease;
             opacity: 0.5;
         }
-        
+
         .sdg-item.active {
             opacity: 1;
             transform: scale(1.05);
         }
-        
+
         .sdg-item:hover {
             opacity: 0.8;
         }
-        
-        .sdg-1 { background-color: #E5243B; }
-        .sdg-2 { background-color: #DDA63A; }
-        .sdg-3 { background-color: #4C9F38; }
-        .sdg-4 { background-color: #C5192D; }
-        .sdg-5 { background-color: #FF3A21; }
-        .sdg-6 { background-color: #26BDE2; }
-        .sdg-7 { background-color: #FCC30B; }
-        .sdg-8 { background-color: #A21942; }
-        .sdg-9 { background-color: #FD6925; }
-        .sdg-10 { background-color: #DD1367; }
-        .sdg-11 { background-color: #FD9D24; }
-        .sdg-12 { background-color: #BF8B2E; }
-        .sdg-13 { background-color: #3F7E44; }
-        .sdg-14 { background-color: #0A97D9; }
-        .sdg-15 { background-color: #56C02B; }
-        .sdg-16 { background-color: #00689D; }
-        .sdg-17 { background-color: #19486A; }
-        
+
+        .sdg-1 {
+            background-color: #E5243B;
+        }
+
+        .sdg-2 {
+            background-color: #DDA63A;
+        }
+
+        .sdg-3 {
+            background-color: #4C9F38;
+        }
+
+        .sdg-4 {
+            background-color: #C5192D;
+        }
+
+        .sdg-5 {
+            background-color: #FF3A21;
+        }
+
+        .sdg-6 {
+            background-color: #26BDE2;
+        }
+
+        .sdg-7 {
+            background-color: #FCC30B;
+        }
+
+        .sdg-8 {
+            background-color: #A21942;
+        }
+
+        .sdg-9 {
+            background-color: #FD6925;
+        }
+
+        .sdg-10 {
+            background-color: #DD1367;
+        }
+
+        .sdg-11 {
+            background-color: #FD9D24;
+        }
+
+        .sdg-12 {
+            background-color: #BF8B2E;
+        }
+
+        .sdg-13 {
+            background-color: #3F7E44;
+        }
+
+        .sdg-14 {
+            background-color: #0A97D9;
+        }
+
+        .sdg-15 {
+            background-color: #56C02B;
+        }
+
+        .sdg-16 {
+            background-color: #00689D;
+        }
+
+        .sdg-17 {
+            background-color: #19486A;
+        }
+
         .filter-container {
             display: flex;
             margin-bottom: 20px;
         }
-        
+
         .filter-item {
             padding: 8px 16px;
             background-color: #1A1A1A;
@@ -541,18 +593,19 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        
-        .filter-item:hover, .filter-item.active {
+
+        .filter-item:hover,
+        .filter-item.active {
             background-color: var(--green-primary);
             color: white;
         }
-        
+
         .date-range {
             display: flex;
             align-items: center;
             margin-left: auto;
         }
-        
+
         .date-range-input {
             background-color: #1A1A1A;
             border: 1px solid #333333;
@@ -562,7 +615,7 @@
             width: 120px;
             margin: 0 5px;
         }
-        
+
         .impact-card {
             background-color: #1A1A1A;
             border-radius: 4px;
@@ -571,7 +624,7 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         .impact-card::before {
             content: '';
             position: absolute;
@@ -585,7 +638,7 @@
             opacity: 0.2;
             transform: rotate(30deg);
         }
-        
+
         .impact-header {
             display: flex;
             justify-content: space-between;
@@ -594,12 +647,12 @@
             position: relative;
             z-index: 1;
         }
-        
+
         .impact-title {
             font-weight: 500;
             font-size: 18px;
         }
-        
+
         .impact-value {
             font-size: 28px;
             font-weight: 700;
@@ -607,7 +660,7 @@
             position: relative;
             z-index: 1;
         }
-        
+
         .impact-description {
             font-size: 14px;
             color: var(--text-secondary);
@@ -615,7 +668,7 @@
             position: relative;
             z-index: 1;
         }
-        
+
         .impact-footer {
             display: flex;
             justify-content: space-between;
@@ -623,12 +676,12 @@
             position: relative;
             z-index: 1;
         }
-        
+
         .impact-meta {
             font-size: 12px;
             color: var(--text-tertiary);
         }
-        
+
         .impact-icon {
             width: 40px;
             height: 40px;
@@ -641,6 +694,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Sidebar -->
     <div class="sidebar">
@@ -648,37 +702,27 @@
             <h1 class="text-xl font-bold text-green-500">Ecolink</h1>
             <p class="text-xs text-gray-400">Gestão de E-lixo Corporativo</p>
         </div>
-        
+
         <div class="sidebar-menu">
-    <a href="/" class="menu-item active">
-        <i class="fas fa-tachometer-alt text-green-500"></i>
-        <span>Dashboard</span>
-    </a>
-    <a href="/cadastro-lotes" class="menu-item">
-        <i class="fas fa-box text-gray-400"></i>
-        <span>Cadastro de Lotes</span>
-    </a>
-    <a href="/leilao-reverso" class="menu-item">
-        <i class="fas fa-gavel text-gray-400"></i>
-        <span>Leilão Reverso</span>
-    </a>
-    <a href="/pagamento-garantia" class="menu-item">
-        <i class="fas fa-shield-alt text-gray-400"></i>
-        <span>Pagamento em Garantia</span>
-    </a>
-    <a href="/logistica" class="menu-item">
-        <i class="fas fa-truck text-gray-400"></i>
-        <span>Logística</span>
-    </a>
-    <a href="/laudos-tecnicos" class="menu-item">
-        <i class="fas fa-certificate text-gray-400"></i>
-        <span>Laudos Técnicos</span>
-    </a>
-    <a href="/relatorios-esg" class="menu-item">
-        <i class="fas fa-chart-line text-gray-400"></i>
-        <span>Relatórios ESG</span>
-    </a>
-</div>
+            <a href="/dashboard" class="menu-item active">
+                <i class="fas fa-tachometer-alt text-green-500"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="/cadastro-lotes" class="menu-item">
+                <i class="fas fa-box text-gray-400"></i>
+                <span>Cadastro de Lotes</span>
+            </a>
+            <a href="/leilao-reverso" class="menu-item">
+                <i class="fas fa-gavel text-gray-400"></i>
+                <span>Leilão Reverso</span>
+            </a>
+
+            <a href="/laudos-tecnicos" class="menu-item">
+                <i class="fas fa-certificate text-gray-400"></i>
+                <span>Laudos Técnicos</span>
+            </a>
+
+        </div>
         <div class="user-profile">
             <div class="user-avatar">
                 <i class="fas fa-user text-green-500"></i>
@@ -689,7 +733,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Main Content -->
     <div class="main-content">
         <!-- Header -->
@@ -711,14 +755,14 @@
                 </button>
             </div>
         </div>
-        
+
         <!-- Filters -->
         <div class="filter-container">
             <div class="filter-item active">Todos</div>
             <div class="filter-item">Ambiental</div>
             <div class="filter-item">Social</div>
             <div class="filter-item">Governança</div>
-            
+
             <div class="date-range">
                 <span class="text-gray-400">Período:</span>
                 <input type="text" class="date-range-input" placeholder="01/01/2025" value="01/01/2025">
@@ -727,11 +771,11 @@
                 <button class="btn btn-secondary ml-2">Aplicar</button>
             </div>
         </div>
-        
+
         <!-- ESG Summary -->
         <div class="card">
             <h3 class="text-lg font-medium mb-6 text-green-500">Resumo de Impacto ESG</h3>
-            
+
             <div class="grid grid-cols-3 gap-6 mb-6">
                 <!-- Environmental Impact -->
                 <div class="impact-card">
@@ -741,16 +785,16 @@
                             <i class="fas fa-leaf"></i>
                         </div>
                     </div>
-                    
+
                     <div class="impact-value">1.250 kg CO₂</div>
                     <div class="impact-description">Emissões de carbono evitadas através da reciclagem de e-lixo</div>
-                    
+
                     <div class="impact-footer">
                         <div class="impact-meta">Equivalente a 5,2 árvores/ano</div>
                         <span class="badge badge-green">+15% vs. 2024</span>
                     </div>
                 </div>
-                
+
                 <!-- Social Impact -->
                 <div class="impact-card">
                     <div class="impact-header">
@@ -759,16 +803,16 @@
                             <i class="fas fa-users"></i>
                         </div>
                     </div>
-                    
+
                     <div class="impact-value">28 empregos</div>
                     <div class="impact-description">Empregos gerados na cadeia de reciclagem e economia circular</div>
-                    
+
                     <div class="impact-footer">
                         <div class="impact-meta">12 em comunidades vulneráveis</div>
                         <span class="badge badge-blue">+8% vs. 2024</span>
                     </div>
                 </div>
-                
+
                 <!-- Governance Impact -->
                 <div class="impact-card">
                     <div class="impact-header">
@@ -777,17 +821,18 @@
                             <i class="fas fa-balance-scale"></i>
                         </div>
                     </div>
-                    
+
                     <div class="impact-value">100%</div>
-                    <div class="impact-description">Conformidade com regulamentações de descarte de resíduos eletrônicos</div>
-                    
+                    <div class="impact-description">Conformidade com regulamentações de descarte de resíduos eletrônicos
+                    </div>
+
                     <div class="impact-footer">
                         <div class="impact-meta">15 auditorias realizadas</div>
                         <span class="badge badge-purple">Certificado</span>
                     </div>
                 </div>
             </div>
-            
+
             <div class="grid grid-cols-4 gap-4">
                 <div class="metric-card">
                     <div class="metric-header">
@@ -799,7 +844,7 @@
                         <span>12% vs. período anterior</span>
                     </div>
                 </div>
-                
+
                 <div class="metric-card">
                     <div class="metric-header">
                         <div class="metric-title">Energia Economizada</div>
@@ -810,7 +855,7 @@
                         <span>8% vs. período anterior</span>
                     </div>
                 </div>
-                
+
                 <div class="metric-card">
                     <div class="metric-header">
                         <div class="metric-title">Materiais Recuperados</div>
@@ -821,7 +866,7 @@
                         <span>15% vs. período anterior</span>
                     </div>
                 </div>
-                
+
                 <div class="metric-card">
                     <div class="metric-header">
                         <div class="metric-title">Taxa de Reciclagem</div>
@@ -834,11 +879,11 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Environmental Impact -->
         <div class="card">
             <h3 class="text-lg font-medium mb-6 text-green-500">Impacto Ambiental Detalhado</h3>
-            
+
             <div class="grid grid-cols-2 gap-6">
                 <!-- CO2 Emissions Chart -->
                 <div>
@@ -847,7 +892,7 @@
                         <canvas id="co2Chart"></canvas>
                     </div>
                 </div>
-                
+
                 <!-- Materials Recovery Chart -->
                 <div>
                     <h4 class="text-base font-medium mb-4">Recuperação de Materiais por Tipo (kg)</h4>
@@ -856,11 +901,11 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="grid grid-cols-3 gap-6 mt-6">
                 <div>
                     <h4 class="text-base font-medium mb-4">Economia de Recursos</h4>
-                    
+
                     <div class="bg-gray-800 rounded-lg p-4 mb-4">
                         <div class="flex justify-between mb-2">
                             <span class="text-gray-400">Água Economizada:</span>
@@ -879,7 +924,7 @@
                             <span>12 m²</span>
                         </div>
                     </div>
-                    
+
                     <div class="progress-container">
                         <div class="progress-bar" style="width: 85%"></div>
                     </div>
@@ -888,10 +933,10 @@
                         <span class="progress-value">85%</span>
                     </div>
                 </div>
-                
+
                 <div>
                     <h4 class="text-base font-medium mb-4">Redução de Poluentes</h4>
-                    
+
                     <div class="bg-gray-800 rounded-lg p-4 mb-4">
                         <div class="flex justify-between mb-2">
                             <span class="text-gray-400">Metais Pesados:</span>
@@ -910,7 +955,7 @@
                             <span>5,8 kg</span>
                         </div>
                     </div>
-                    
+
                     <div class="progress-container">
                         <div class="progress-bar" style="width: 92%"></div>
                     </div>
@@ -919,10 +964,10 @@
                         <span class="progress-value">92%</span>
                     </div>
                 </div>
-                
+
                 <div>
                     <h4 class="text-base font-medium mb-4">Certificações Ambientais</h4>
-                    
+
                     <div class="flex flex-wrap">
                         <div class="bg-gray-800 rounded-lg p-3 m-1 flex items-center">
                             <i class="fas fa-check-circle text-green-500 mr-2"></i>
@@ -952,11 +997,11 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Social Impact -->
         <div class="card">
             <h3 class="text-lg font-medium mb-6 text-green-500">Impacto Social</h3>
-            
+
             <div class="grid grid-cols-2 gap-6">
                 <!-- Jobs Created Chart -->
                 <div>
@@ -965,11 +1010,11 @@
                         <canvas id="jobsChart"></canvas>
                     </div>
                 </div>
-                
+
                 <!-- Community Impact -->
                 <div>
                     <h4 class="text-base font-medium mb-4">Impacto em Comunidades</h4>
-                    
+
                     <div class="bg-gray-800 rounded-lg p-4 mb-4">
                         <div class="grid grid-cols-2 gap-4">
                             <div>
@@ -990,14 +1035,15 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="report-card">
                         <div class="report-header">
                             <div class="report-title">Programa de Inclusão Digital</div>
                             <span class="badge badge-blue">Em Andamento</span>
                         </div>
                         <div class="report-content">
-                            <p class="text-sm text-gray-400">Equipamentos recuperados são doados para escolas públicas e centros comunitários, beneficiando comunidades de baixa renda.</p>
+                            <p class="text-sm text-gray-400">Equipamentos recuperados são doados para escolas públicas e
+                                centros comunitários, beneficiando comunidades de baixa renda.</p>
                         </div>
                         <div class="report-footer">
                             <div class="report-meta">120 computadores doados</div>
@@ -1006,10 +1052,11 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="mt-6">
-                <h4 class="text-base font-medium mb-4">Contribuição para ODS (Objetivos de Desenvolvimento Sustentável)</h4>
-                
+                <h4 class="text-base font-medium mb-4">Contribuição para ODS (Objetivos de Desenvolvimento Sustentável)
+                </h4>
+
                 <div class="sdg-grid">
                     <div class="sdg-item sdg-1">1</div>
                     <div class="sdg-item sdg-2">2</div>
@@ -1031,11 +1078,11 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Governance -->
         <div class="card">
             <h3 class="text-lg font-medium mb-6 text-green-500">Governança e Compliance</h3>
-            
+
             <div class="grid grid-cols-2 gap-6">
                 <!-- Compliance Chart -->
                 <div>
@@ -1044,11 +1091,11 @@
                         <canvas id="complianceChart"></canvas>
                     </div>
                 </div>
-                
+
                 <!-- Audit Results -->
                 <div>
                     <h4 class="text-base font-medium mb-4">Resultados de Auditorias</h4>
-                    
+
                     <div class="overflow-x-auto">
                         <table class="table">
                             <thead>
@@ -1089,11 +1136,11 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="grid grid-cols-3 gap-6 mt-6">
                 <div>
                     <h4 class="text-base font-medium mb-4">Políticas e Procedimentos</h4>
-                    
+
                     <div class="bg-gray-800 rounded-lg p-4">
                         <div class="flex justify-between items-center mb-3">
                             <span>Política de Gestão de Resíduos</span>
@@ -1117,10 +1164,10 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div>
                     <h4 class="text-base font-medium mb-4">Treinamentos de Compliance</h4>
-                    
+
                     <div class="bg-gray-800 rounded-lg p-4">
                         <div class="mb-3">
                             <div class="flex justify-between mb-1">
@@ -1131,7 +1178,7 @@
                                 <div class="progress-bar" style="width: 95%"></div>
                             </div>
                         </div>
-                        
+
                         <div class="mb-3">
                             <div class="flex justify-between mb-1">
                                 <span>Segurança de Dados</span>
@@ -1141,7 +1188,7 @@
                                 <div class="progress-bar" style="width: 100%"></div>
                             </div>
                         </div>
-                        
+
                         <div class="mb-3">
                             <div class="flex justify-between mb-1">
                                 <span>Ética e Conduta</span>
@@ -1151,7 +1198,7 @@
                                 <div class="progress-bar" style="width: 98%"></div>
                             </div>
                         </div>
-                        
+
                         <div>
                             <div class="flex justify-between mb-1">
                                 <span>Legislação Ambiental</span>
@@ -1163,10 +1210,10 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div>
                     <h4 class="text-base font-medium mb-4">Certificações e Licenças</h4>
-                    
+
                     <div class="bg-gray-800 rounded-lg p-4">
                         <div class="flex justify-between items-center mb-3">
                             <span>Licença de Operação Ambiental</span>
@@ -1192,11 +1239,11 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Report Generation -->
         <div class="card">
             <h3 class="text-lg font-medium mb-6 text-green-500">Gerar Relatório Personalizado</h3>
-            
+
             <div class="grid grid-cols-2 gap-6">
                 <div>
                     <div class="form-group">
@@ -1210,7 +1257,7 @@
                             <option value="sustentabilidade">Relatório de Sustentabilidade GRI</option>
                         </select>
                     </div>
-                    
+
                     <div class="form-group">
                         <label class="form-label">Período</label>
                         <div class="grid grid-cols-2 gap-4">
@@ -1218,7 +1265,7 @@
                             <input type="text" class="form-input" placeholder="Data Final" value="31/12/2025">
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <label class="form-label">Formato</label>
                         <select class="form-select">
@@ -1229,7 +1276,7 @@
                             <option value="ppt">PowerPoint</option>
                         </select>
                     </div>
-                    
+
                     <div class="form-group">
                         <label class="form-label">Incluir Comparativo</label>
                         <select class="form-select">
@@ -1241,11 +1288,11 @@
                         </select>
                     </div>
                 </div>
-                
+
                 <div>
                     <div class="form-group">
                         <label class="form-label">Seções a Incluir</label>
-                        
+
                         <div class="bg-gray-800 rounded-lg p-4">
                             <div class="flex items-center mb-3">
                                 <input type="checkbox" id="section1" class="mr-3" checked>
@@ -1277,12 +1324,13 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <label class="form-label">Observações</label>
-                        <textarea class="form-textarea" placeholder="Informações adicionais para o relatório..."></textarea>
+                        <textarea class="form-textarea"
+                            placeholder="Informações adicionais para o relatório..."></textarea>
                     </div>
-                    
+
                     <div class="flex justify-end mt-6">
                         <button class="btn btn-secondary mr-3">Visualizar Prévia</button>
                         <button class="btn btn-primary">Gerar Relatório</button>
@@ -1291,7 +1339,7 @@
             </div>
         </div>
     </div>
-    
+
     <script>
         // CO2 Emissions Chart
         const co2Ctx = document.getElementById('co2Chart').getContext('2d');
@@ -1338,7 +1386,7 @@
                 }
             }
         });
-        
+
         // Materials Chart
         const materialsCtx = document.getElementById('materialsChart').getContext('2d');
         const materialsChart = new Chart(materialsCtx, {
@@ -1387,7 +1435,7 @@
                 }
             }
         });
-        
+
         // Jobs Chart
         const jobsCtx = document.getElementById('jobsChart').getContext('2d');
         const jobsChart = new Chart(jobsCtx, {
@@ -1421,7 +1469,7 @@
                 }
             }
         });
-        
+
         // Compliance Chart
         const complianceCtx = document.getElementById('complianceChart').getContext('2d');
         const complianceChart = new Chart(complianceCtx, {
@@ -1468,4 +1516,5 @@
         });
     </script>
 </body>
+
 </html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
-        
+
         :root {
             --bg-primary: #121212;
             --bg-secondary: #1A1A1A;
@@ -27,7 +28,7 @@
             --info: #2196F3;
             --purple: #9C27B0;
         }
-        
+
         body {
             font-family: 'Roboto', sans-serif;
             background-color: var(--bg-primary);
@@ -35,7 +36,7 @@
             margin: 0;
             padding: 0;
         }
-        
+
         .sidebar {
             background-color: #0F0F0F;
             height: 100vh;
@@ -45,16 +46,16 @@
             left: 0;
             overflow-y: auto;
         }
-        
+
         .sidebar-logo {
             padding: 20px;
             border-bottom: 1px solid #1A1A1A;
         }
-        
+
         .sidebar-menu {
             padding: 10px 0;
         }
-        
+
         .menu-item {
             padding: 12px 20px;
             display: flex;
@@ -63,26 +64,27 @@
             transition: all 0.3s ease;
             border-left: 3px solid transparent;
         }
-        
-        .menu-item:hover, .menu-item.active {
+
+        .menu-item:hover,
+        .menu-item.active {
             background-color: #1A1A1A;
             color: var(--text-primary);
             border-left: 3px solid var(--green-primary);
         }
-        
+
         .menu-item i {
             margin-right: 12px;
             width: 20px;
             text-align: center;
         }
-        
+
         .main-content {
             margin-left: 200px;
             padding: 20px;
             min-height: 100vh;
             background-color: #121212;
         }
-        
+
         .header {
             background-color: #1A1A1A;
             padding: 15px 20px;
@@ -91,7 +93,7 @@
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .search-bar {
             background-color: #242424;
             border: 1px solid #00A86B;
@@ -100,32 +102,32 @@
             width: 300px;
             color: var(--text-primary);
         }
-        
+
         .card {
             background-color: #242424;
             border-radius: 4px;
             padding: 20px;
             margin-bottom: 20px;
         }
-        
+
         .metric-card {
             background-color: #242424;
             border-radius: 4px;
             padding: 15px;
             text-align: center;
         }
-        
+
         .metric-value {
             font-size: 24px;
             font-weight: 700;
             margin: 10px 0;
         }
-        
+
         .metric-label {
             color: var(--text-secondary);
             font-size: 14px;
         }
-        
+
         .btn {
             padding: 8px 16px;
             border-radius: 4px;
@@ -133,25 +135,25 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        
+
         .btn-primary {
             background-color: var(--green-primary);
             color: white;
         }
-        
+
         .btn-primary:hover {
             background-color: var(--green-secondary);
         }
-        
+
         .btn-secondary {
             background-color: #333333;
             color: var(--text-primary);
         }
-        
+
         .btn-secondary:hover {
             background-color: #444444;
         }
-        
+
         .btn-mensal {
             background-color: #5D4E00;
             color: var(--gold);
@@ -159,7 +161,7 @@
             font-size: 14px;
             border-radius: 4px;
         }
-        
+
         .btn-anual {
             background-color: #3D1A45;
             color: #BB86FC;
@@ -168,7 +170,7 @@
             border-radius: 4px;
             margin-left: 5px;
         }
-        
+
         .btn-exportar {
             background-color: #333333;
             color: var(--text-primary);
@@ -176,7 +178,7 @@
             font-size: 14px;
             border-radius: 4px;
         }
-        
+
         .btn-ver-todos {
             background-color: #3D1A45;
             color: #BB86FC;
@@ -184,46 +186,46 @@
             font-size: 14px;
             border-radius: 4px;
         }
-        
+
         .table {
             width: 100%;
             border-collapse: collapse;
         }
-        
+
         .table th {
             background-color: #1A1A1A;
             padding: 12px 15px;
             text-align: left;
             font-weight: 500;
         }
-        
+
         .table td {
             padding: 12px 15px;
             border-bottom: 1px solid #333333;
         }
-        
+
         .status {
             padding: 4px 8px;
             border-radius: 4px;
             font-size: 12px;
             font-weight: 500;
         }
-        
+
         .status-success {
             background-color: rgba(76, 175, 80, 0.2);
             color: var(--success);
         }
-        
+
         .status-pending {
             background-color: rgba(255, 193, 7, 0.2);
             color: var(--warning);
         }
-        
+
         .status-error {
             background-color: rgba(244, 67, 54, 0.2);
             color: var(--error);
         }
-        
+
         .user-profile {
             padding: 15px 20px;
             border-top: 1px solid #1A1A1A;
@@ -234,7 +236,7 @@
             width: 100%;
             background-color: #0F0F0F;
         }
-        
+
         .user-avatar {
             width: 40px;
             height: 40px;
@@ -245,7 +247,7 @@
             justify-content: center;
             margin-right: 12px;
         }
-        
+
         .notification-badge {
             background-color: var(--error);
             color: white;
@@ -260,42 +262,42 @@
             top: -5px;
             right: -5px;
         }
-        
+
         .chart-container {
             position: relative;
             height: 250px;
             width: 100%;
         }
-        
+
         .badge {
             padding: 4px 8px;
             border-radius: 4px;
             font-size: 12px;
             font-weight: 500;
         }
-        
+
         .badge-gold {
             background-color: #5D4E00;
             color: #FFD700;
         }
-        
+
         .badge-silver {
             background-color: #333333;
             color: #C0C0C0;
         }
-        
+
         .badge-bronze {
             background-color: #3D2E17;
             color: #CD7F32;
         }
-        
+
         .chart-title {
             color: var(--green-primary);
             font-size: 18px;
             font-weight: 500;
             margin-bottom: 15px;
         }
-        
+
         .action-icon {
             color: var(--green-primary);
             font-size: 18px;
@@ -303,7 +305,7 @@
             border: none;
             cursor: pointer;
         }
-        
+
         .action-icon-red {
             color: var(--error);
             font-size: 18px;
@@ -311,7 +313,7 @@
             border: none;
             cursor: pointer;
         }
-        
+
         .action-number {
             display: inline-block;
             width: 20px;
@@ -326,46 +328,36 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Sidebar -->
     <div class="sidebar">
         <div class="sidebar-logo">
-            
+
             <h1 class="text-xl font-bold text-green-500">Ecolink</h1>
             <p class="text-xs text-gray-400">Gestão de E-lixo Corporativo</p>
         </div>
-        
-    <div class="sidebar-menu">
-    <a href="/" class="menu-item active">
-        <i class="fas fa-tachometer-alt text-green-500"></i>
-        <span>Dashboard</span>
-    </a>
-    <a href="/cadastro-lotes" class="menu-item">
-        <i class="fas fa-box text-gray-400"></i>
-        <span>Cadastro de Lotes</span>
-    </a>
-    <a href="/leilao-reverso" class="menu-item">
-        <i class="fas fa-gavel text-gray-400"></i>
-        <span>Leilão Reverso</span>
-    </a>
-    <a href="/pagamento-garantia" class="menu-item">
-        <i class="fas fa-shield-alt text-gray-400"></i>
-        <span>Pagamento em Garantia</span>
-    </a>
-    <a href="/logistica" class="menu-item">
-        <i class="fas fa-truck text-gray-400"></i>
-        <span>Logística</span>
-    </a>
-    <a href="/laudos-tecnicos" class="menu-item">
-        <i class="fas fa-certificate text-gray-400"></i>
-        <span>Laudos Técnicos</span>
-    </a>
-    <a href="/relatorios-esg" class="menu-item">
-        <i class="fas fa-chart-line text-gray-400"></i>
-        <span>Relatórios ESG</span>
-    </a>
-</div>
-        
+
+        <div class="sidebar-menu">
+            <a href="/dashboard" class="menu-item active">
+                <i class="fas fa-tachometer-alt text-green-500"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="/cadastro-lotes" class="menu-item">
+                <i class="fas fa-box text-gray-400"></i>
+                <span>Cadastro de Lotes</span>
+            </a>
+            <a href="/leilao-reverso" class="menu-item">
+                <i class="fas fa-gavel text-gray-400"></i>
+                <span>Leilão Reverso</span>
+            </a>
+
+            <a href="/laudos-tecnicos" class="menu-item">
+                <i class="fas fa-certificate text-gray-400"></i>
+                <span>Laudos Técnicos</span>
+            </a>
+        </div>
+
         <div class="user-profile">
             <div class="user-avatar">
                 <i class="fas fa-user text-green-500"></i>
@@ -376,7 +368,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Main Content -->
     <div class="main-content">
         <!-- Header -->
@@ -398,7 +390,7 @@
                 </button>
             </div>
         </div>
-        
+
         <!-- Metrics Row -->
         <div class="grid grid-cols-4 gap-4 mb-6">
             <div class="metric-card">
@@ -406,23 +398,14 @@
                 <div class="metric-value">1.250 kg</div>
                 <div class="metric-label">Volume Processado</div>
             </div>
-            <div class="metric-card">
-                <i class="fas fa-check-circle text-green-500 text-2xl"></i>
-                <div class="metric-value">95%</div>
-                <div class="metric-label">Transações sem Disputa</div>
-            </div>
-            <div class="metric-card">
-                <i class="fas fa-clock text-green-500 text-2xl"></i>
-                <div class="metric-value">5 dias</div>
-                <div class="metric-label">Tempo Médio de Ciclo</div>
-            </div>
+            
             <div class="metric-card">
                 <i class="fas fa-dollar-sign text-green-500 text-2xl"></i>
                 <div class="metric-value">R$ 3.200</div>
                 <div class="metric-label">Receita Média por Lote</div>
             </div>
         </div>
-        
+
         <!-- Charts Row -->
         <div class="grid grid-cols-2 gap-6 mb-6">
             <!-- Volume Chart -->
@@ -438,7 +421,7 @@
                     <canvas id="volumeChart"></canvas>
                 </div>
             </div>
-            
+
             <!-- Impact Chart -->
             <div class="card">
                 <div class="flex justify-between items-center mb-4">
@@ -452,7 +435,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Recent Lots Table -->
         <div class="card">
             <div class="flex justify-between items-center mb-4">
@@ -544,7 +527,7 @@
             </div>
         </div>
     </div>
-    
+
     <script>
         // Volume Chart
         const volumeCtx = document.getElementById('volumeChart').getContext('2d');
@@ -589,7 +572,7 @@
                 }
             }
         });
-        
+
         // Impact Chart
         const impactCtx = document.getElementById('impactChart').getContext('2d');
         const impactChart = new Chart(impactCtx, {
@@ -655,4 +638,5 @@
         });
     </script>
 </body>
+
 </html>

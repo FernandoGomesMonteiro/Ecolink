@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
-        
+
         :root {
             --bg-primary: #121212;
             --bg-secondary: #1A1A1A;
@@ -26,7 +27,7 @@
             --info: #2196F3;
             --purple: #9C27B0;
         }
-        
+
         body {
             font-family: 'Roboto', sans-serif;
             background-color: var(--bg-primary);
@@ -34,7 +35,7 @@
             margin: 0;
             padding: 0;
         }
-        
+
         .sidebar {
             background-color: #0F0F0F;
             height: 100vh;
@@ -44,16 +45,16 @@
             left: 0;
             overflow-y: auto;
         }
-        
+
         .sidebar-logo {
             padding: 20px;
             border-bottom: 1px solid #1A1A1A;
         }
-        
+
         .sidebar-menu {
             padding: 10px 0;
         }
-        
+
         .menu-item {
             padding: 12px 20px;
             display: flex;
@@ -62,26 +63,27 @@
             transition: all 0.3s ease;
             border-left: 3px solid transparent;
         }
-        
-        .menu-item:hover, .menu-item.active {
+
+        .menu-item:hover,
+        .menu-item.active {
             background-color: #1A1A1A;
             color: var(--text-primary);
             border-left: 3px solid var(--green-primary);
         }
-        
+
         .menu-item i {
             margin-right: 12px;
             width: 20px;
             text-align: center;
         }
-        
+
         .main-content {
             margin-left: 200px;
             padding: 20px;
             min-height: 100vh;
             background-color: #121212;
         }
-        
+
         .header {
             background-color: #1A1A1A;
             padding: 15px 20px;
@@ -90,7 +92,7 @@
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .search-bar {
             background-color: #242424;
             border: 1px solid #00A86B;
@@ -99,14 +101,14 @@
             width: 300px;
             color: var(--text-primary);
         }
-        
+
         .card {
             background-color: #242424;
             border-radius: 4px;
             padding: 20px;
             margin-bottom: 20px;
         }
-        
+
         .btn {
             padding: 8px 16px;
             border-radius: 4px;
@@ -114,25 +116,25 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        
+
         .btn-primary {
             background-color: var(--green-primary);
             color: white;
         }
-        
+
         .btn-primary:hover {
             background-color: var(--green-secondary);
         }
-        
+
         .btn-secondary {
             background-color: #333333;
             color: var(--text-primary);
         }
-        
+
         .btn-secondary:hover {
             background-color: #444444;
         }
-        
+
         .user-profile {
             padding: 15px 20px;
             border-top: 1px solid #1A1A1A;
@@ -143,7 +145,7 @@
             width: 100%;
             background-color: #0F0F0F;
         }
-        
+
         .user-avatar {
             width: 40px;
             height: 40px;
@@ -154,7 +156,7 @@
             justify-content: center;
             margin-right: 12px;
         }
-        
+
         .notification-badge {
             background-color: var(--error);
             color: white;
@@ -169,18 +171,18 @@
             top: -5px;
             right: -5px;
         }
-        
+
         .form-group {
             margin-bottom: 20px;
         }
-        
+
         .form-label {
             display: block;
             margin-bottom: 8px;
             font-weight: 500;
             color: var(--text-secondary);
         }
-        
+
         .form-input {
             width: 100%;
             padding: 10px;
@@ -189,12 +191,12 @@
             border-radius: 4px;
             color: var(--text-primary);
         }
-        
+
         .form-input:focus {
             outline: none;
             border-color: var(--green-primary);
         }
-        
+
         .form-select {
             width: 100%;
             padding: 10px;
@@ -207,7 +209,7 @@
             background-repeat: no-repeat;
             background-position: right 10px center;
         }
-        
+
         .form-textarea {
             width: 100%;
             padding: 10px;
@@ -218,25 +220,25 @@
             min-height: 100px;
             resize: vertical;
         }
-        
+
         .tab-container {
             display: flex;
             border-bottom: 1px solid #333333;
             margin-bottom: 20px;
         }
-        
+
         .tab {
             padding: 10px 20px;
             cursor: pointer;
             border-bottom: 3px solid transparent;
             color: var(--text-secondary);
         }
-        
+
         .tab.active {
             border-bottom: 3px solid var(--green-primary);
             color: var(--text-primary);
         }
-        
+
         .dropzone {
             border: 2px dashed #444444;
             border-radius: 4px;
@@ -245,24 +247,24 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        
+
         .dropzone:hover {
             border-color: var(--green-primary);
         }
-        
+
         .dropzone-icon {
             font-size: 48px;
             color: #444444;
             margin-bottom: 10px;
         }
-        
+
         .preview-container {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
             margin-top: 20px;
         }
-        
+
         .preview-item {
             width: 100px;
             height: 100px;
@@ -271,13 +273,13 @@
             position: relative;
             background-color: #333333;
         }
-        
+
         .preview-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-        
+
         .preview-remove {
             position: absolute;
             top: 5px;
@@ -292,7 +294,7 @@
             justify-content: center;
             cursor: pointer;
         }
-        
+
         .ai-suggestion {
             background-color: rgba(0, 168, 107, 0.1);
             border-left: 3px solid var(--green-primary);
@@ -300,7 +302,7 @@
             margin-top: 10px;
             border-radius: 0 4px 4px 0;
         }
-        
+
         .ai-suggestion-title {
             display: flex;
             align-items: center;
@@ -308,11 +310,11 @@
             font-weight: 500;
             margin-bottom: 5px;
         }
-        
+
         .ai-suggestion-title i {
             margin-right: 8px;
         }
-        
+
         .badge {
             display: inline-block;
             padding: 4px 8px;
@@ -322,13 +324,14 @@
             margin-right: 5px;
             margin-bottom: 5px;
         }
-        
+
         .badge-green {
             background-color: rgba(0, 168, 107, 0.2);
             color: var(--green-primary);
         }
     </style>
 </head>
+
 <body>
     <!-- Sidebar -->
     <div class="sidebar">
@@ -336,38 +339,29 @@
             <h1 class="text-xl font-bold text-green-500">Ecolink</h1>
             <p class="text-xs text-gray-400">Gestão de E-lixo Corporativo</p>
         </div>
-        
-       <div class="sidebar-menu">
-    <a href="/" class="menu-item active">
-        <i class="fas fa-tachometer-alt text-green-500"></i>
-        <span>Dashboard</span>
-    </a>
-    <a href="/cadastro-lotes" class="menu-item">
-        <i class="fas fa-box text-gray-400"></i>
-        <span>Cadastro de Lotes</span>
-    </a>
-    <a href="/leilao-reverso" class="menu-item">
-        <i class="fas fa-gavel text-gray-400"></i>
-        <span>Leilão Reverso</span>
-    </a>
-    <a href="/pagamento-garantia" class="menu-item">
-        <i class="fas fa-shield-alt text-gray-400"></i>
-        <span>Pagamento em Garantia</span>
-    </a>
-    <a href="/logistica" class="menu-item">
-        <i class="fas fa-truck text-gray-400"></i>
-        <span>Logística</span>
-    </a>
-    <a href="/laudos-tecnicos" class="menu-item">
-        <i class="fas fa-certificate text-gray-400"></i>
-        <span>Laudos Técnicos</span>
-    </a>
-    <a href="/relatorios-esg" class="menu-item">
-        <i class="fas fa-chart-line text-gray-400"></i>
-        <span>Relatórios ESG</span>
-    </a>
-</div>
-        
+
+        <div class="sidebar-menu">
+            <a href="/dashboard" class="menu-item">
+                <i class="fas fa-tachometer-alt text-gray-400"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="/cadastro-lotes" class="menu-item active">
+                <i class="fas fa-box text-green-500"></i>
+                <span>Cadastro de Lotes</span>
+            </a>
+            <a href="/leilao-reverso" class="menu-item">
+                <i class="fas fa-gavel text-gray-400"></i>
+                <span>Leilão Reverso</span>
+            </a>
+
+
+            <a href="/laudos-tecnicos" class="menu-item">
+                <i class="fas fa-certificate text-gray-400"></i>
+                <span>Laudos Técnicos</span>
+            </a>
+
+        </div>
+
         <div class="user-profile">
             <div class="user-avatar">
                 <i class="fas fa-user text-green-500"></i>
@@ -378,7 +372,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Main Content -->
     <div class="main-content">
         <!-- Header -->
@@ -397,18 +391,17 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Tab Navigation -->
         <div class="tab-container">
             <div class="tab active">Cadastro Simplificado</div>
-            <div class="tab">Cadastro Detalhado</div>
             <div class="tab">Histórico de Lotes</div>
         </div>
-        
+
         <!-- Main Form Card -->
         <div class="card">
             <h3 class="text-lg font-medium mb-6 text-green-500">Novo Lote - Cadastro Simplificado</h3>
-            
+
             <div class="grid grid-cols-2 gap-6">
                 <div>
                     <div class="form-group">
@@ -424,17 +417,17 @@
                             <option value="outros">Outros</option>
                         </select>
                     </div>
-                    
+
                     <div class="form-group">
                         <label class="form-label">Peso Aproximado (kg)</label>
                         <input type="number" class="form-input" placeholder="Ex: 50">
                     </div>
-                    
+
                     <div class="form-group">
                         <label class="form-label">Quantidade Estimada de Itens</label>
                         <input type="number" class="form-input" placeholder="Ex: 10">
                     </div>
-                    
+
                     <div class="form-group">
                         <label class="form-label">Estado de Conservação</label>
                         <select class="form-select">
@@ -446,13 +439,13 @@
                             <option value="ruim">Ruim (não funciona, para peças)</option>
                         </select>
                     </div>
-                    
+
                     <div class="form-group">
                         <label class="form-label">Observações</label>
                         <textarea class="form-textarea" placeholder="Informações adicionais sobre o lote..."></textarea>
                     </div>
                 </div>
-                
+
                 <div>
                     <div class="form-group">
                         <label class="form-label">Fotos do Lote</label>
@@ -461,7 +454,7 @@
                             <p class="mb-2">Arraste e solte as fotos aqui</p>
                             <p class="text-sm text-gray-400">ou clique para selecionar arquivos</p>
                         </div>
-                        
+
                         <div class="preview-container">
                             <div class="preview-item">
                                 <img src="https://via.placeholder.com/100x100/333333/666666" alt="Preview">
@@ -477,7 +470,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="ai-suggestion">
                         <div class="ai-suggestion-title">
                             <i class="fas fa-robot"></i>
@@ -492,7 +485,7 @@
                         </div>
                         <p class="text-sm mt-2">Peso estimado: 45-55kg</p>
                     </div>
-                    
+
                     <div class="form-group mt-6">
                         <label class="form-label">Endereço de Coleta</label>
                         <select class="form-select mb-3">
@@ -507,27 +500,27 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="flex justify-end mt-6 pt-6 border-t border-gray-700">
                 <button class="btn btn-secondary mr-3">Cancelar</button>
-                <button class="btn btn-secondary mr-3">Salvar Rascunho</button>
                 <button class="btn btn-primary">Cadastrar Lote</button>
             </div>
         </div>
-        
+
         <!-- Tips Card -->
         <div class="card">
             <h3 class="text-lg font-medium mb-4 text-green-500">Dicas para um Cadastro Eficiente</h3>
-            
+
             <div class="grid grid-cols-3 gap-4">
                 <div class="flex items-start">
                     <i class="fas fa-camera text-green-500 text-xl mr-3 mt-1"></i>
                     <div>
                         <p class="font-medium mb-1">Fotos de Qualidade</p>
-                        <p class="text-sm text-gray-400">Tire fotos bem iluminadas e de vários ângulos para melhor avaliação.</p>
+                        <p class="text-sm text-gray-400">Tire fotos bem iluminadas e de vários ângulos para melhor
+                            avaliação.</p>
                     </div>
                 </div>
-                
+
                 <div class="flex items-start">
                     <i class="fas fa-tag text-green-500 text-xl mr-3 mt-1"></i>
                     <div>
@@ -535,7 +528,7 @@
                         <p class="text-sm text-gray-400">Categorize corretamente para atrair os recicladores certos.</p>
                     </div>
                 </div>
-                
+
                 <div class="flex items-start">
                     <i class="fas fa-weight text-green-500 text-xl mr-3 mt-1"></i>
                     <div>
@@ -547,4 +540,5 @@
         </div>
     </div>
 </body>
+
 </html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
-        
+
         :root {
             --bg-primary: #121212;
             --bg-secondary: #1A1A1A;
@@ -27,7 +28,7 @@
             --info: #2196F3;
             --purple: #9C27B0;
         }
-        
+
         body {
             font-family: 'Roboto', sans-serif;
             background-color: var(--bg-primary);
@@ -35,7 +36,7 @@
             margin: 0;
             padding: 0;
         }
-        
+
         .sidebar {
             background-color: #0F0F0F;
             height: 100vh;
@@ -45,16 +46,16 @@
             left: 0;
             overflow-y: auto;
         }
-        
+
         .sidebar-logo {
             padding: 20px;
             border-bottom: 1px solid #1A1A1A;
         }
-        
+
         .sidebar-menu {
             padding: 10px 0;
         }
-        
+
         .menu-item {
             padding: 12px 20px;
             display: flex;
@@ -63,26 +64,27 @@
             transition: all 0.3s ease;
             border-left: 3px solid transparent;
         }
-        
-        .menu-item:hover, .menu-item.active {
+
+        .menu-item:hover,
+        .menu-item.active {
             background-color: #1A1A1A;
             color: var(--text-primary);
             border-left: 3px solid var(--green-primary);
         }
-        
+
         .menu-item i {
             margin-right: 12px;
             width: 20px;
             text-align: center;
         }
-        
+
         .main-content {
             margin-left: 200px;
             padding: 20px;
             min-height: 100vh;
             background-color: #121212;
         }
-        
+
         .header {
             background-color: #1A1A1A;
             padding: 15px 20px;
@@ -91,7 +93,7 @@
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .search-bar {
             background-color: #242424;
             border: 1px solid #00A86B;
@@ -100,14 +102,14 @@
             width: 300px;
             color: var(--text-primary);
         }
-        
+
         .card {
             background-color: #242424;
             border-radius: 4px;
             padding: 20px;
             margin-bottom: 20px;
         }
-        
+
         .btn {
             padding: 8px 16px;
             border-radius: 4px;
@@ -115,43 +117,43 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        
+
         .btn-primary {
             background-color: var(--green-primary);
             color: white;
         }
-        
+
         .btn-primary:hover {
             background-color: var(--green-secondary);
         }
-        
+
         .btn-secondary {
             background-color: #333333;
             color: var(--text-primary);
         }
-        
+
         .btn-secondary:hover {
             background-color: #444444;
         }
-        
+
         .btn-warning {
             background-color: #5D4E00;
             color: var(--gold);
         }
-        
+
         .btn-warning:hover {
             background-color: #4D3E00;
         }
-        
+
         .btn-info {
             background-color: rgba(33, 150, 243, 0.2);
             color: var(--info);
         }
-        
+
         .btn-info:hover {
             background-color: rgba(33, 150, 243, 0.3);
         }
-        
+
         .user-profile {
             padding: 15px 20px;
             border-top: 1px solid #1A1A1A;
@@ -162,7 +164,7 @@
             width: 100%;
             background-color: #0F0F0F;
         }
-        
+
         .user-avatar {
             width: 40px;
             height: 40px;
@@ -173,7 +175,7 @@
             justify-content: center;
             margin-right: 12px;
         }
-        
+
         .notification-badge {
             background-color: var(--error);
             color: white;
@@ -188,25 +190,25 @@
             top: -5px;
             right: -5px;
         }
-        
+
         .tab-container {
             display: flex;
             border-bottom: 1px solid #333333;
             margin-bottom: 20px;
         }
-        
+
         .tab {
             padding: 10px 20px;
             cursor: pointer;
             border-bottom: 3px solid transparent;
             color: var(--text-secondary);
         }
-        
+
         .tab.active {
             border-bottom: 3px solid var(--green-primary);
             color: var(--text-primary);
         }
-        
+
         .badge {
             display: inline-block;
             padding: 4px 8px;
@@ -215,96 +217,96 @@
             font-weight: 500;
             margin-right: 5px;
         }
-        
+
         .badge-gold {
             background-color: #5D4E00;
             color: #FFD700;
         }
-        
+
         .badge-silver {
             background-color: #333333;
             color: #C0C0C0;
         }
-        
+
         .badge-bronze {
             background-color: #3D2E17;
             color: #CD7F32;
         }
-        
+
         .badge-green {
             background-color: rgba(0, 168, 107, 0.2);
             color: var(--green-primary);
         }
-        
+
         .badge-blue {
             background-color: rgba(33, 150, 243, 0.2);
             color: var(--info);
         }
-        
+
         .badge-purple {
             background-color: rgba(156, 39, 176, 0.2);
             color: var(--purple);
         }
-        
+
         .status {
             padding: 4px 8px;
             border-radius: 4px;
             font-size: 12px;
             font-weight: 500;
         }
-        
+
         .status-success {
             background-color: rgba(76, 175, 80, 0.2);
             color: var(--success);
         }
-        
+
         .status-pending {
             background-color: rgba(255, 193, 7, 0.2);
             color: var(--warning);
         }
-        
+
         .status-active {
             background-color: rgba(33, 150, 243, 0.2);
             color: var(--info);
         }
-        
+
         .status-error {
             background-color: rgba(244, 67, 54, 0.2);
             color: var(--error);
         }
-        
+
         .table {
             width: 100%;
             border-collapse: collapse;
         }
-        
+
         .table th {
             background-color: #1A1A1A;
             padding: 12px 15px;
             text-align: left;
             font-weight: 500;
         }
-        
+
         .table td {
             padding: 12px 15px;
             border-bottom: 1px solid #333333;
         }
-        
+
         .table tr:hover {
             background-color: #2A2A2A;
         }
-        
+
         .form-group {
             margin-bottom: 20px;
         }
-        
+
         .form-label {
             display: block;
             margin-bottom: 8px;
             font-weight: 500;
             color: var(--text-secondary);
         }
-        
+
         .form-input {
             width: 100%;
             padding: 10px;
@@ -313,12 +315,12 @@
             border-radius: 4px;
             color: var(--text-primary);
         }
-        
+
         .form-input:focus {
             outline: none;
             border-color: var(--green-primary);
         }
-        
+
         .form-select {
             width: 100%;
             padding: 10px;
@@ -331,7 +333,7 @@
             background-repeat: no-repeat;
             background-position: right 10px center;
         }
-        
+
         .form-textarea {
             width: 100%;
             padding: 10px;
@@ -342,13 +344,13 @@
             min-height: 100px;
             resize: vertical;
         }
-        
+
         .chart-container {
             position: relative;
             height: 250px;
             width: 100%;
         }
-        
+
         .report-card {
             background-color: #1A1A1A;
             border-radius: 4px;
@@ -358,43 +360,43 @@
             transition: all 0.3s ease;
             border: 1px solid #333333;
         }
-        
+
         .report-card:hover {
             border-color: var(--green-primary);
             background-color: rgba(0, 168, 107, 0.05);
         }
-        
+
         .report-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
         }
-        
+
         .report-title {
             font-weight: 500;
         }
-        
+
         .report-date {
             font-size: 12px;
             color: var(--text-tertiary);
         }
-        
+
         .report-content {
             margin-bottom: 10px;
         }
-        
+
         .report-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .report-meta {
             font-size: 12px;
             color: var(--text-secondary);
         }
-        
+
         .progress-container {
             width: 100%;
             height: 6px;
@@ -403,27 +405,27 @@
             overflow: hidden;
             margin-bottom: 5px;
         }
-        
+
         .progress-bar {
             height: 100%;
             background-color: var(--green-primary);
         }
-        
+
         .progress-labels {
             display: flex;
             justify-content: space-between;
             font-size: 12px;
         }
-        
+
         .progress-label {
             color: var(--text-tertiary);
         }
-        
+
         .progress-value {
             color: var(--green-primary);
             font-weight: 500;
         }
-        
+
         .material-card {
             background-color: #1A1A1A;
             border-radius: 4px;
@@ -431,38 +433,38 @@
             margin-bottom: 15px;
             border: 1px solid #333333;
         }
-        
+
         .material-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
         }
-        
+
         .material-title {
             font-weight: 500;
         }
-        
+
         .material-content {
             margin-bottom: 10px;
         }
-        
+
         .material-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .material-meta {
             font-size: 12px;
             color: var(--text-secondary);
         }
-        
+
         .material-value {
             font-weight: 500;
             color: var(--green-primary);
         }
-        
+
         .certificate-card {
             background-color: #1A1A1A;
             border-radius: 4px;
@@ -472,7 +474,7 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         .certificate-card::before {
             content: '';
             position: absolute;
@@ -486,31 +488,31 @@
             opacity: 0.2;
             transform: rotate(30deg);
         }
-        
+
         .certificate-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 15px;
         }
-        
+
         .certificate-title {
             font-weight: 500;
             font-size: 18px;
             color: var(--green-primary);
         }
-        
+
         .certificate-date {
             font-size: 14px;
             color: var(--text-tertiary);
         }
-        
+
         .certificate-content {
             margin-bottom: 15px;
             position: relative;
             z-index: 1;
         }
-        
+
         .certificate-footer {
             display: flex;
             justify-content: space-between;
@@ -520,12 +522,12 @@
             position: relative;
             z-index: 1;
         }
-        
+
         .certificate-issuer {
             display: flex;
             align-items: center;
         }
-        
+
         .certificate-issuer-logo {
             width: 30px;
             height: 30px;
@@ -536,26 +538,26 @@
             justify-content: center;
             margin-right: 10px;
         }
-        
+
         .certificate-issuer-name {
             font-size: 14px;
             font-weight: 500;
         }
-        
+
         .certificate-verification {
             font-size: 12px;
             color: var(--text-secondary);
         }
-        
+
         .certificate-verification a {
             color: var(--info);
             text-decoration: none;
         }
-        
+
         .certificate-verification a:hover {
             text-decoration: underline;
         }
-        
+
         .dropzone {
             border: 2px dashed #444444;
             border-radius: 4px;
@@ -564,24 +566,24 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        
+
         .dropzone:hover {
             border-color: var(--green-primary);
         }
-        
+
         .dropzone-icon {
             font-size: 48px;
             color: #444444;
             margin-bottom: 10px;
         }
-        
+
         .preview-container {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
             margin-top: 20px;
         }
-        
+
         .preview-item {
             width: 100px;
             height: 100px;
@@ -590,13 +592,13 @@
             position: relative;
             background-color: #333333;
         }
-        
+
         .preview-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-        
+
         .preview-remove {
             position: absolute;
             top: 5px;
@@ -611,7 +613,7 @@
             justify-content: center;
             cursor: pointer;
         }
-        
+
         .ai-suggestion {
             background-color: rgba(0, 168, 107, 0.1);
             border-left: 3px solid var(--green-primary);
@@ -619,7 +621,7 @@
             margin-top: 10px;
             border-radius: 0 4px 4px 0;
         }
-        
+
         .ai-suggestion-title {
             display: flex;
             align-items: center;
@@ -627,12 +629,13 @@
             font-weight: 500;
             margin-bottom: 5px;
         }
-        
+
         .ai-suggestion-title i {
             margin-right: 8px;
         }
     </style>
 </head>
+
 <body>
     <!-- Sidebar -->
     <div class="sidebar">
@@ -640,38 +643,29 @@
             <h1 class="text-xl font-bold text-green-500">Ecolink</h1>
             <p class="text-xs text-gray-400">Gestão de E-lixo Corporativo</p>
         </div>
-        
-          <div class="sidebar-menu">
-    <a href="/" class="menu-item active">
-        <i class="fas fa-tachometer-alt text-green-500"></i>
-        <span>Dashboard</span>
-    </a>
-    <a href="/cadastro-lotes" class="menu-item">
-        <i class="fas fa-box text-gray-400"></i>
-        <span>Cadastro de Lotes</span>
-    </a>
-    <a href="/leilao-reverso" class="menu-item">
-        <i class="fas fa-gavel text-gray-400"></i>
-        <span>Leilão Reverso</span>
-    </a>
-    <a href="/pagamento-garantia" class="menu-item">
-        <i class="fas fa-shield-alt text-gray-400"></i>
-        <span>Pagamento em Garantia</span>
-    </a>
-    <a href="/logistica" class="menu-item">
-        <i class="fas fa-truck text-gray-400"></i>
-        <span>Logística</span>
-    </a>
-    <a href="/laudos-tecnicos" class="menu-item">
-        <i class="fas fa-certificate text-gray-400"></i>
-        <span>Laudos Técnicos</span>
-    </a>
-    <a href="/relatorios-esg" class="menu-item">
-        <i class="fas fa-chart-line text-gray-400"></i>
-        <span>Relatórios ESG</span>
-    </a>
-</div>
-        
+
+        <div class="sidebar-menu">
+            <a href="/dashboard" class="menu-item">
+                <i class="fas fa-tachometer-alt text-green-500"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="/cadastro-lotes" class="menu-item">
+                <i class="fas fa-box text-gray-400"></i>
+                <span>Cadastro de Lotes</span>
+            </a>
+            <a href="/leilao-reverso" class="menu-item">
+                <i class="fas fa-gavel text-gray-400"></i>
+                <span>Leilão Reverso</span>
+            </a>
+
+
+            <a href="/laudos-tecnicos" class="menu-item active">
+                <i class="fas fa-certificate text-gray-400"></i>
+                <span>Laudos Técnicos</span>
+            </a>
+
+        </div>
+
         <div class="user-profile">
             <div class="user-avatar">
                 <i class="fas fa-user text-green-500"></i>
@@ -682,7 +676,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Main Content -->
     <div class="main-content">
         <!-- Header -->
@@ -704,14 +698,14 @@
                 </button>
             </div>
         </div>
-        
+
         <!-- Tab Navigation -->
         <div class="tab-container">
             <div class="tab active">Laudos Recentes</div>
             <div class="tab">Certificados</div>
             <div class="tab">Relatórios de Materiais</div>
         </div>
-        
+
         <!-- Technical Report Details -->
         <div class="card">
             <div class="flex justify-between items-start mb-6">
@@ -721,12 +715,12 @@
                 </div>
                 <span class="status status-success">Aprovado</span>
             </div>
-            
+
             <div class="grid grid-cols-3 gap-6">
                 <!-- Report Details -->
                 <div>
                     <h4 class="text-lg font-medium mb-4">Detalhes do Laudo</h4>
-                    
+
                     <div class="bg-gray-800 rounded-lg p-4 mb-4">
                         <div class="flex justify-between mb-2">
                             <span class="text-gray-400">Data de Emissão:</span>
@@ -749,7 +743,7 @@
                             <span>05/10/2026</span>
                         </div>
                     </div>
-                    
+
                     <div class="mb-4">
                         <h5 class="font-medium mb-2">Conformidade</h5>
                         <div class="progress-container">
@@ -760,7 +754,7 @@
                             <span class="progress-value">95%</span>
                         </div>
                     </div>
-                    
+
                     <div>
                         <h5 class="font-medium mb-2">Certificações</h5>
                         <div class="flex flex-wrap">
@@ -770,15 +764,15 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Material Composition -->
                 <div>
                     <h4 class="text-lg font-medium mb-4">Composição de Materiais</h4>
-                    
+
                     <div class="chart-container mb-4">
                         <canvas id="materialsChart"></canvas>
                     </div>
-                    
+
                     <div class="material-card">
                         <div class="material-header">
                             <div class="material-title">Metais Preciosos</div>
@@ -809,7 +803,7 @@
                             <span class="material-value">R$ 1.850,00</span>
                         </div>
                     </div>
-                    
+
                     <div class="material-card">
                         <div class="material-header">
                             <div class="material-title">Metais Base</div>
@@ -841,11 +835,11 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Environmental Impact -->
                 <div>
                     <h4 class="text-lg font-medium mb-4">Impacto Ambiental</h4>
-                    
+
                     <div class="bg-gray-800 rounded-lg p-4 mb-4">
                         <div class="flex justify-between mb-2">
                             <span class="text-gray-400">CO₂ Evitado:</span>
@@ -864,38 +858,46 @@
                             <span>5,2 árvores/ano</span>
                         </div>
                     </div>
-                    
+
                     <div class="chart-container mb-4">
                         <canvas id="impactChart"></canvas>
                     </div>
-                    
+
                     <div class="ai-suggestion">
                         <div class="ai-suggestion-title">
                             <i class="fas fa-robot"></i>
                             <span>Sugestão de Melhoria</span>
                         </div>
                         <p class="text-sm mb-2">Com base na análise deste lote, recomendamos:</p>
-                        <p class="text-sm">Separação prévia dos componentes de memória RAM e processadores antes do envio, aumentando em até 15% o valor de recuperação de metais preciosos.</p>
+                        <p class="text-sm">Separação prévia dos componentes de memória RAM e processadores antes do
+                            envio, aumentando em até 15% o valor de recuperação de metais preciosos.</p>
                     </div>
                 </div>
             </div>
-            
+
             <div class="mt-6 pt-6 border-t border-gray-700">
                 <h4 class="text-lg font-medium mb-4">Observações Técnicas</h4>
-                
+
                 <div class="bg-gray-800 rounded-lg p-4 mb-4">
-                    <p class="mb-3">O lote analisado apresenta excelente potencial de recuperação de materiais, especialmente metais preciosos presentes nas placas de circuito impresso dos servidores. A análise detalhada revelou:</p>
-                    
+                    <p class="mb-3">O lote analisado apresenta excelente potencial de recuperação de materiais,
+                        especialmente metais preciosos presentes nas placas de circuito impresso dos servidores. A
+                        análise detalhada revelou:</p>
+
                     <ul class="list-disc pl-5 mb-3 text-gray-300">
-                        <li class="mb-2">Todos os equipamentos estão em conformidade com as normas RoHS, não apresentando níveis significativos de substâncias restritas;</li>
-                        <li class="mb-2">Os discos rígidos foram submetidos a processo de sanitização de dados conforme padrão NIST 800-88, garantindo a segurança das informações;</li>
-                        <li class="mb-2">Componentes como baterias de CMOS e capacitores foram devidamente segregados para tratamento específico;</li>
-                        <li class="mb-2">Aproximadamente 92% dos materiais presentes no lote são recicláveis, com alto índice de pureza.</li>
+                        <li class="mb-2">Todos os equipamentos estão em conformidade com as normas RoHS, não
+                            apresentando níveis significativos de substâncias restritas;</li>
+                        <li class="mb-2">Os discos rígidos foram submetidos a processo de sanitização de dados conforme
+                            padrão NIST 800-88, garantindo a segurança das informações;</li>
+                        <li class="mb-2">Componentes como baterias de CMOS e capacitores foram devidamente segregados
+                            para tratamento específico;</li>
+                        <li class="mb-2">Aproximadamente 92% dos materiais presentes no lote são recicláveis, com alto
+                            índice de pureza.</li>
                     </ul>
-                    
-                    <p>Recomenda-se a destinação dos materiais para recicladores certificados, especialmente para recuperação dos metais preciosos presentes nas placas de circuito impresso.</p>
+
+                    <p>Recomenda-se a destinação dos materiais para recicladores certificados, especialmente para
+                        recuperação dos metais preciosos presentes nas placas de circuito impresso.</p>
                 </div>
-                
+
                 <div class="flex justify-end">
                     <button class="btn btn-secondary mr-3">
                         <i class="fas fa-download mr-2"></i>Baixar Laudo Completo
@@ -906,21 +908,22 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Certificates -->
         <div class="card">
             <h3 class="text-lg font-medium mb-6 text-green-500">Certificados Disponíveis</h3>
-            
+
             <div class="grid grid-cols-2 gap-6">
                 <div class="certificate-card">
                     <div class="certificate-header">
                         <div class="certificate-title">Certificado de Destinação Final</div>
                         <div class="certificate-date">Emitido em: 05/10/2025</div>
                     </div>
-                    
+
                     <div class="certificate-content">
-                        <p class="mb-3">Certificamos que o lote #ECO-2028, composto por Servidores Dell PowerEdge, foi devidamente processado e reciclado de acordo com as normas ambientais vigentes.</p>
-                        
+                        <p class="mb-3">Certificamos que o lote #ECO-2028, composto por Servidores Dell PowerEdge, foi
+                            devidamente processado e reciclado de acordo com as normas ambientais vigentes.</p>
+
                         <div class="grid grid-cols-2 gap-4 mb-3">
                             <div>
                                 <p class="text-sm text-gray-400">Peso Total</p>
@@ -940,7 +943,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="certificate-footer">
                         <div class="certificate-issuer">
                             <div class="certificate-issuer-logo">
@@ -953,16 +956,18 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="certificate-card">
                     <div class="certificate-header">
                         <div class="certificate-title">Certificado de Destruição de Dados</div>
                         <div class="certificate-date">Emitido em: 03/10/2025</div>
                     </div>
-                    
+
                     <div class="certificate-content">
-                        <p class="mb-3">Certificamos que todos os dispositivos de armazenamento presentes no lote #ECO-2028 foram submetidos a processo de sanitização de dados conforme padrão NIST 800-88, garantindo a eliminação segura e permanente de todas as informações.</p>
-                        
+                        <p class="mb-3">Certificamos que todos os dispositivos de armazenamento presentes no lote
+                            #ECO-2028 foram submetidos a processo de sanitização de dados conforme padrão NIST 800-88,
+                            garantindo a eliminação segura e permanente de todas as informações.</p>
+
                         <div class="grid grid-cols-2 gap-4 mb-3">
                             <div>
                                 <p class="text-sm text-gray-400">Dispositivos Processados</p>
@@ -982,7 +987,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="certificate-footer">
                         <div class="certificate-issuer">
                             <div class="certificate-issuer-logo">
@@ -997,9 +1002,9 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- New Report Form -->
-        <div class="card">
+        <!--  <div class="card">
             <h3 class="text-lg font-medium mb-6 text-green-500">Solicitar Novo Laudo</h3>
             
             <div class="grid grid-cols-2 gap-6">
@@ -1107,8 +1112,10 @@
                 </div>
             </div>
         </div>
+    -->
+
     </div>
-    
+
     <script>
         // Materials Chart
         const materialsCtx = document.getElementById('materialsChart').getContext('2d');
@@ -1143,7 +1150,7 @@
                 }
             }
         });
-        
+
         // Impact Chart
         const impactCtx = document.getElementById('impactChart').getContext('2d');
         const impactChart = new Chart(impactCtx, {
@@ -1170,7 +1177,7 @@
                         },
                         ticks: {
                             color: '#B3B3B3',
-                            callback: function(value) {
+                            callback: function (value) {
                                 return value + '%';
                             }
                         }
@@ -1190,7 +1197,7 @@
                     },
                     tooltip: {
                         callbacks: {
-                            label: function(context) {
+                            label: function (context) {
                                 return context.raw + '% de eficiência em relação à produção primária';
                             }
                         }
@@ -1200,4 +1207,5 @@
         });
     </script>
 </body>
+
 </html>
