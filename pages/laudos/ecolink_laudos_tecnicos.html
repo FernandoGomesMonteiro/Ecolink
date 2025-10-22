@@ -29,27 +29,56 @@
             --purple: #9C27B0;
         }
 
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 14px;
+            line-height: 1.4;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        /* Mobile First - Sidebar como menu hamburger */
         .sidebar {
             background-color: #0F0F0F;
             height: 100vh;
-            width: 200px;
+            width: 100%;
             position: fixed;
             top: 0;
-            left: 0;
+            left: -100%;
             overflow-y: auto;
+            transition: left 0.3s ease;
+            z-index: 1000;
+        }
+
+        .sidebar.active {
+            left: 0;
         }
 
         .sidebar-logo {
-            padding: 20px;
+            padding: 15px;
             border-bottom: 1px solid #1A1A1A;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .close-sidebar {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 18px;
+            cursor: pointer;
+            padding: 5px;
         }
 
         .sidebar-menu {
@@ -57,12 +86,14 @@
         }
 
         .menu-item {
-            padding: 12px 20px;
+            padding: 12px 15px;
             display: flex;
             align-items: center;
             color: var(--text-secondary);
             transition: all 0.3s ease;
             border-left: 3px solid transparent;
+            text-decoration: none;
+            font-size: 14px;
         }
 
         .menu-item:hover,
@@ -73,49 +104,98 @@
         }
 
         .menu-item i {
-            margin-right: 12px;
-            width: 20px;
+            margin-right: 10px;
+            width: 18px;
             text-align: center;
+            font-size: 14px;
         }
 
         .main-content {
-            margin-left: 200px;
-            padding: 20px;
             min-height: 100vh;
             background-color: #121212;
+            width: 100%;
+            padding: 0;
         }
 
         .header {
             background-color: #1A1A1A;
-            padding: 15px 20px;
-            margin-bottom: 20px;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
+        }
+
+        .menu-toggle {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 18px;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .search-container {
+            position: relative;
+            width: 100%;
+            margin: 5px 0;
         }
 
         .search-bar {
             background-color: #242424;
             border: 1px solid #00A86B;
             border-radius: 4px;
-            padding: 8px 15px;
-            width: 300px;
+            padding: 8px 35px 8px 12px;
+            width: 100%;
             color: var(--text-primary);
+            font-size: 14px;
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--green-primary);
         }
 
         .card {
             background-color: #242424;
             border-radius: 4px;
-            padding: 20px;
-            margin-bottom: 20px;
+            padding: 15px;
+            margin-bottom: 15px;
+            margin-left: 10px;
+            margin-right: 10px;
         }
 
         .btn {
-            padding: 8px 16px;
+            padding: 10px 15px;
             border-radius: 4px;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.3s ease;
+            border: none;
+            font-size: 14px;
+            white-space: nowrap;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .btn-primary {
@@ -155,7 +235,7 @@
         }
 
         .user-profile {
-            padding: 15px 20px;
+            padding: 12px 15px;
             border-top: 1px solid #1A1A1A;
             display: flex;
             align-items: center;
@@ -166,42 +246,49 @@
         }
 
         .user-avatar {
-            width: 40px;
-            height: 40px;
+            width: 35px;
+            height: 35px;
             border-radius: 50%;
             background-color: #242424;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 12px;
+            margin-right: 10px;
         }
 
         .notification-badge {
             background-color: var(--error);
             color: white;
             border-radius: 50%;
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
+            font-size: 10px;
             position: absolute;
-            top: -5px;
-            right: -5px;
+            top: -3px;
+            right: -3px;
         }
 
         .tab-container {
             display: flex;
             border-bottom: 1px solid #333333;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            overflow-x: auto;
+            padding: 0 10px;
         }
 
         .tab {
-            padding: 10px 20px;
+            padding: 12px 15px;
             cursor: pointer;
             border-bottom: 3px solid transparent;
             color: var(--text-secondary);
+            white-space: nowrap;
+            font-size: 14px;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
         }
 
         .tab.active {
@@ -213,9 +300,10 @@
             display: inline-block;
             padding: 4px 8px;
             border-radius: 4px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 500;
-            margin-right: 5px;
+            margin-right: 4px;
+            margin-bottom: 4px;
         }
 
         .badge-gold {
@@ -249,7 +337,7 @@
         }
 
         .status {
-            padding: 4px 8px;
+            padding: 6px 10px;
             border-radius: 4px;
             font-size: 12px;
             font-weight: 500;
@@ -275,45 +363,27 @@
             color: var(--error);
         }
 
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .table th {
-            background-color: #1A1A1A;
-            padding: 12px 15px;
-            text-align: left;
-            font-weight: 500;
-        }
-
-        .table td {
-            padding: 12px 15px;
-            border-bottom: 1px solid #333333;
-        }
-
-        .table tr:hover {
-            background-color: #2A2A2A;
-        }
-
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .form-label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             font-weight: 500;
             color: var(--text-secondary);
+            font-size: 14px;
         }
 
         .form-input {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             background-color: #333333;
             border: 1px solid #444444;
             border-radius: 4px;
             color: var(--text-primary);
+            font-size: 16px;
+            min-height: 44px;
         }
 
         .form-input:focus {
@@ -323,7 +393,7 @@
 
         .form-select {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             background-color: #333333;
             border: 1px solid #444444;
             border-radius: 4px;
@@ -331,31 +401,35 @@
             appearance: none;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23FFFFFF' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
-            background-position: right 10px center;
+            background-position: right 12px center;
+            font-size: 16px;
+            min-height: 44px;
         }
 
         .form-textarea {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             background-color: #333333;
             border: 1px solid #444444;
             border-radius: 4px;
             color: var(--text-primary);
-            min-height: 100px;
+            min-height: 120px;
             resize: vertical;
+            font-size: 16px;
+            font-family: 'Roboto', sans-serif;
         }
 
         .chart-container {
             position: relative;
-            height: 250px;
+            height: 200px;
             width: 100%;
         }
 
         .report-card {
             background-color: #1A1A1A;
             border-radius: 4px;
-            padding: 15px;
-            margin-bottom: 15px;
+            padding: 12px;
+            margin-bottom: 12px;
             cursor: pointer;
             transition: all 0.3s ease;
             border: 1px solid #333333;
@@ -370,20 +444,22 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .report-title {
             font-weight: 500;
+            font-size: 14px;
         }
 
         .report-date {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-tertiary);
         }
 
         .report-content {
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+            font-size: 13px;
         }
 
         .report-footer {
@@ -393,7 +469,7 @@
         }
 
         .report-meta {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-secondary);
         }
 
@@ -414,7 +490,7 @@
         .progress-labels {
             display: flex;
             justify-content: space-between;
-            font-size: 12px;
+            font-size: 11px;
         }
 
         .progress-label {
@@ -429,8 +505,8 @@
         .material-card {
             background-color: #1A1A1A;
             border-radius: 4px;
-            padding: 15px;
-            margin-bottom: 15px;
+            padding: 12px;
+            margin-bottom: 12px;
             border: 1px solid #333333;
         }
 
@@ -438,15 +514,16 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .material-title {
             font-weight: 500;
+            font-size: 14px;
         }
 
         .material-content {
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .material-footer {
@@ -456,7 +533,7 @@
         }
 
         .material-meta {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-secondary);
         }
 
@@ -468,8 +545,8 @@
         .certificate-card {
             background-color: #1A1A1A;
             border-radius: 4px;
-            padding: 15px;
-            margin-bottom: 15px;
+            padding: 12px;
+            margin-bottom: 12px;
             border: 1px solid #333333;
             position: relative;
             overflow: hidden;
@@ -480,8 +557,8 @@
             position: absolute;
             top: 0;
             right: 0;
-            width: 100px;
-            height: 100px;
+            width: 80px;
+            height: 80px;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 24 24' fill='none' stroke='rgba(0, 168, 107, 0.1)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M22 11.08V12a10 10 0 1 1-5.93-9.14'%3E%3C/path%3E%3Cpolyline points='22 4 12 14.01 9 11.01'%3E%3C/polyline%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: center;
@@ -493,24 +570,25 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .certificate-title {
             font-weight: 500;
-            font-size: 18px;
+            font-size: 16px;
             color: var(--green-primary);
         }
 
         .certificate-date {
-            font-size: 14px;
+            font-size: 12px;
             color: var(--text-tertiary);
         }
 
         .certificate-content {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             position: relative;
             z-index: 1;
+            font-size: 13px;
         }
 
         .certificate-footer {
@@ -518,7 +596,7 @@
             justify-content: space-between;
             align-items: center;
             border-top: 1px solid #333333;
-            padding-top: 15px;
+            padding-top: 12px;
             position: relative;
             z-index: 1;
         }
@@ -529,23 +607,23 @@
         }
 
         .certificate-issuer-logo {
-            width: 30px;
-            height: 30px;
+            width: 25px;
+            height: 25px;
             border-radius: 4px;
             background-color: #333333;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 10px;
+            margin-right: 8px;
         }
 
         .certificate-issuer-name {
-            font-size: 14px;
+            font-size: 12px;
             font-weight: 500;
         }
 
         .certificate-verification {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-secondary);
         }
 
@@ -561,10 +639,15 @@
         .dropzone {
             border: 2px dashed #444444;
             border-radius: 4px;
-            padding: 30px;
+            padding: 20px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
         .dropzone:hover {
@@ -572,21 +655,21 @@
         }
 
         .dropzone-icon {
-            font-size: 48px;
+            font-size: 32px;
             color: #444444;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .preview-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 20px;
+            gap: 8px;
+            margin-top: 15px;
         }
 
         .preview-item {
-            width: 100px;
-            height: 100px;
+            width: 80px;
+            height: 80px;
             border-radius: 4px;
             overflow: hidden;
             position: relative;
@@ -601,9 +684,9 @@
 
         .preview-remove {
             position: absolute;
-            top: 5px;
-            right: 5px;
-            background-color: rgba(0, 0, 0, 0.5);
+            top: 3px;
+            right: 3px;
+            background-color: rgba(0, 0, 0, 0.7);
             color: white;
             width: 20px;
             height: 20px;
@@ -612,14 +695,16 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
+            font-size: 10px;
         }
 
         .ai-suggestion {
             background-color: rgba(0, 168, 107, 0.1);
             border-left: 3px solid var(--green-primary);
-            padding: 10px 15px;
+            padding: 12px;
             margin-top: 10px;
             border-radius: 0 4px 4px 0;
+            font-size: 13px;
         }
 
         .ai-suggestion-title {
@@ -627,26 +712,243 @@
             align-items: center;
             color: var(--green-primary);
             font-weight: 500;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
+            font-size: 14px;
         }
 
         .ai-suggestion-title i {
-            margin-right: 8px;
+            margin-right: 6px;
+            font-size: 14px;
+        }
+
+        /* Grid responsivo para mobile */
+        .report-details-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .details-section {
+            background-color: #1A1A1A;
+            border-radius: 4px;
+            padding: 12px;
+            margin-bottom: 12px;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0;
+            border-bottom: 1px solid #333333;
+        }
+
+        .detail-item:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        .detail-value {
+            font-weight: 500;
+            font-size: 13px;
+        }
+
+        .materials-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+
+        .material-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .certificates-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        /* Acessibilidade */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Focus styles para acessibilidade */
+        button:focus,
+        a:focus,
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: 2px solid var(--green-primary);
+            outline-offset: 2px;
+        }
+
+        /* Overlay para menu mobile */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+            display: none;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        /* Melhorias para touch em dispositivos móveis */
+        @media (hover: none) and (pointer: coarse) {
+
+            .menu-item,
+            .btn,
+            .tab {
+                min-height: 44px;
+                display: flex;
+                align-items: center;
+            }
+
+            .report-card,
+            .material-card,
+            .certificate-card {
+                min-height: 80px;
+            }
+
+            .preview-remove {
+                min-width: 28px;
+                min-height: 28px;
+            }
+        }
+
+        /* Ajustes para orientação paisagem em mobile */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .sidebar {
+                overflow-y: auto;
+            }
+
+            .user-profile {
+                position: relative;
+            }
+        }
+
+        /* Prevenir zoom em inputs em iOS */
+        @media screen and (max-width: 480px) {
+
+            input,
+            select,
+            textarea {
+                font-size: 16px;
+            }
+        }
+
+        /* Ajustes para telas muito pequenas */
+        @media (max-width: 360px) {
+            .card {
+                margin-left: 8px;
+                margin-right: 8px;
+                padding: 12px;
+            }
+
+            .header {
+                padding: 10px 12px;
+            }
+
+            .tab {
+                padding: 10px 12px;
+                font-size: 13px;
+            }
+
+            .btn {
+                padding: 10px 12px;
+                font-size: 13px;
+            }
+
+            .certificate-title {
+                font-size: 14px;
+            }
+        }
+
+        /* Ajustes para o título da página */
+        .page-title {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            padding: 0 10px;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--green-primary);
+            margin-bottom: 12px;
+        }
+
+        /* Ações do formulário */
+        .form-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #333333;
+        }
+
+        .form-actions .btn {
+            width: 100%;
+            justify-content: center;
         }
     </style>
 </head>
 
 <body>
+    <!-- Overlay para menu mobile -->
+    <div class="overlay" id="overlay"></div>
+
     <!-- Sidebar -->
-    <div class="sidebar">
+    <div class="sidebar" id="sidebar">
         <div class="sidebar-logo">
-            <h1 class="text-xl font-bold text-green-500">Ecolink</h1>
-            <p class="text-xs text-gray-400">Gestão de E-lixo Corporativo</p>
+            <div>
+                <h1 class="text-xl font-bold text-green-500">Ecolink</h1>
+                <p class="text-xs text-gray-400">Gestão de E-lixo Corporativo</p>
+            </div>
+            <button class="close-sidebar" id="closeSidebar" aria-label="Fechar menu">
+                <i class="fas fa-times"></i>
+            </button>
         </div>
 
         <div class="sidebar-menu">
             <a href="/dashboard" class="menu-item">
-                <i class="fas fa-tachometer-alt text-green-500"></i>
+                <i class="fas fa-tachometer-alt text-gray-400"></i>
                 <span>Dashboard</span>
             </a>
             <a href="/cadastro-lotes" class="menu-item">
@@ -657,13 +959,10 @@
                 <i class="fas fa-gavel text-gray-400"></i>
                 <span>Leilão Reverso</span>
             </a>
-
-
             <a href="/laudos-tecnicos" class="menu-item active">
-                <i class="fas fa-certificate text-gray-400"></i>
+                <i class="fas fa-certificate text-green-500"></i>
                 <span>Laudos Técnicos</span>
             </a>
-
         </div>
 
         <div class="user-profile">
@@ -678,24 +977,28 @@
     </div>
 
     <!-- Main Content -->
-    <div class="main-content">
+    <div class="main-content" id="mainContent">
         <!-- Header -->
         <div class="header">
-            <h2 class="text-xl font-medium">Laudos Técnicos</h2>
-            <div class="flex items-center">
-                <div class="relative mr-4">
-                    <input type="text" placeholder="Pesquisar..." class="search-bar">
-                    <span class="absolute right-3 top-2 text-green-500">
-                        <i class="fas fa-search"></i>
-                    </span>
-                </div>
-                <div class="relative mr-4">
-                    <i class="fas fa-bell text-gray-400 text-xl"></i>
-                    <span class="notification-badge">3</span>
-                </div>
-                <button class="btn btn-primary">
-                    <i class="fas fa-plus mr-2"></i>Novo Laudo
+            <div class="header-top">
+                <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">
+                    <i class="fas fa-bars"></i>
                 </button>
+                <h2 class="page-title">Laudos Técnicos</h2>
+                <div class="header-actions">
+                    <div class="relative">
+                        <button class="text-gray-400 text-xl" aria-label="Notificações">
+                            <i class="fas fa-bell"></i>
+                            <span class="notification-badge">3</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="search-container">
+                <input type="text" placeholder="Pesquisar laudos..." class="search-bar" aria-label="Pesquisar">
+                <span class="search-icon">
+                    <i class="fas fa-search"></i>
+                </span>
             </div>
         </div>
 
@@ -703,49 +1006,49 @@
         <div class="tab-container">
             <div class="tab active">Laudos Recentes</div>
             <div class="tab">Certificados</div>
-            <div class="tab">Relatórios de Materiais</div>
+            <div class="tab">Relatórios</div>
         </div>
 
         <!-- Technical Report Details -->
         <div class="card">
-            <div class="flex justify-between items-start mb-6">
+            <div class="flex justify-between items-start mb-4">
                 <div>
-                    <h3 class="text-xl font-medium text-green-500">Laudo Técnico #LT-1042</h3>
-                    <p class="text-gray-400">Lote #ECO-2028 - Servidores Dell PowerEdge</p>
+                    <h3 class="card-title">Laudo Técnico #LT-1042</h3>
+                    <p class="text-gray-400 text-sm">Lote #ECO-2028 - Servidores Dell PowerEdge</p>
                 </div>
                 <span class="status status-success">Aprovado</span>
             </div>
 
-            <div class="grid grid-cols-3 gap-6">
+            <div class="report-details-grid">
                 <!-- Report Details -->
-                <div>
-                    <h4 class="text-lg font-medium mb-4">Detalhes do Laudo</h4>
+                <div class="details-section">
+                    <h4 class="text-md font-medium mb-3">Detalhes do Laudo</h4>
 
-                    <div class="bg-gray-800 rounded-lg p-4 mb-4">
-                        <div class="flex justify-between mb-2">
-                            <span class="text-gray-400">Data de Emissão:</span>
-                            <span>05/10/2025</span>
+                    <div class="details-grid">
+                        <div class="detail-item">
+                            <span class="detail-label">Data de Emissão:</span>
+                            <span class="detail-value">05/10/2025</span>
                         </div>
-                        <div class="flex justify-between mb-2">
-                            <span class="text-gray-400">Técnico Responsável:</span>
-                            <span>Ricardo Ferreira</span>
+                        <div class="detail-item">
+                            <span class="detail-label">Técnico Responsável:</span>
+                            <span class="detail-value">Ricardo Ferreira</span>
                         </div>
-                        <div class="flex justify-between mb-2">
-                            <span class="text-gray-400">Laboratório:</span>
-                            <span>EcoTech Labs</span>
+                        <div class="detail-item">
+                            <span class="detail-label">Laboratório:</span>
+                            <span class="detail-value">EcoTech Labs</span>
                         </div>
-                        <div class="flex justify-between mb-2">
-                            <span class="text-gray-400">Normas Aplicadas:</span>
-                            <span>ABNT NBR 16156:2020</span>
+                        <div class="detail-item">
+                            <span class="detail-label">Normas Aplicadas:</span>
+                            <span class="detail-value">ABNT NBR 16156:2020</span>
                         </div>
-                        <div class="flex justify-between">
-                            <span class="text-gray-400">Validade:</span>
-                            <span>05/10/2026</span>
+                        <div class="detail-item">
+                            <span class="detail-label">Validade:</span>
+                            <span class="detail-value">05/10/2026</span>
                         </div>
                     </div>
 
-                    <div class="mb-4">
-                        <h5 class="font-medium mb-2">Conformidade</h5>
+                    <div class="mt-3">
+                        <h5 class="font-medium mb-2 text-sm">Conformidade</h5>
                         <div class="progress-container">
                             <div class="progress-bar" style="width: 95%"></div>
                         </div>
@@ -755,8 +1058,8 @@
                         </div>
                     </div>
 
-                    <div>
-                        <h5 class="font-medium mb-2">Certificações</h5>
+                    <div class="mt-3">
+                        <h5 class="font-medium mb-2 text-sm">Certificações</h5>
                         <div class="flex flex-wrap">
                             <span class="badge badge-green">ISO 14001</span>
                             <span class="badge badge-blue">RoHS</span>
@@ -766,100 +1069,102 @@
                 </div>
 
                 <!-- Material Composition -->
-                <div>
-                    <h4 class="text-lg font-medium mb-4">Composição de Materiais</h4>
+                <div class="details-section">
+                    <h4 class="text-md font-medium mb-3">Composição de Materiais</h4>
 
-                    <div class="chart-container mb-4">
+                    <div class="chart-container mb-3">
                         <canvas id="materialsChart"></canvas>
                     </div>
 
-                    <div class="material-card">
-                        <div class="material-header">
-                            <div class="material-title">Metais Preciosos</div>
-                            <span class="badge badge-gold">Alto Valor</span>
-                        </div>
-                        <div class="material-content">
-                            <div class="grid grid-cols-2 gap-2">
-                                <div>
-                                    <p class="text-sm text-gray-400">Ouro</p>
-                                    <p>12,5 g</p>
-                                </div>
-                                <div>
-                                    <p class="text-sm text-gray-400">Prata</p>
-                                    <p>85,2 g</p>
-                                </div>
-                                <div>
-                                    <p class="text-sm text-gray-400">Paládio</p>
-                                    <p>4,8 g</p>
-                                </div>
-                                <div>
-                                    <p class="text-sm text-gray-400">Platina</p>
-                                    <p>1,2 g</p>
+                    <div class="materials-grid">
+                        <div class="material-card">
+                            <div class="material-header">
+                                <div class="material-title">Metais Preciosos</div>
+                                <span class="badge badge-gold">Alto Valor</span>
+                            </div>
+                            <div class="material-content">
+                                <div class="material-row">
+                                    <div>
+                                        <p class="text-sm text-gray-400">Ouro</p>
+                                        <p>12,5 g</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-400">Prata</p>
+                                        <p>85,2 g</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-400">Paládio</p>
+                                        <p>4,8 g</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-400">Platina</p>
+                                        <p>1,2 g</p>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="material-footer">
+                                <span class="material-meta">Valor estimado</span>
+                                <span class="material-value">R$ 1.850,00</span>
+                            </div>
                         </div>
-                        <div class="material-footer">
-                            <span class="material-meta">Valor estimado</span>
-                            <span class="material-value">R$ 1.850,00</span>
-                        </div>
-                    </div>
 
-                    <div class="material-card">
-                        <div class="material-header">
-                            <div class="material-title">Metais Base</div>
-                            <span class="badge badge-silver">Médio Valor</span>
-                        </div>
-                        <div class="material-content">
-                            <div class="grid grid-cols-2 gap-2">
-                                <div>
-                                    <p class="text-sm text-gray-400">Cobre</p>
-                                    <p>18,5 kg</p>
-                                </div>
-                                <div>
-                                    <p class="text-sm text-gray-400">Alumínio</p>
-                                    <p>12,2 kg</p>
-                                </div>
-                                <div>
-                                    <p class="text-sm text-gray-400">Ferro</p>
-                                    <p>85,4 kg</p>
-                                </div>
-                                <div>
-                                    <p class="text-sm text-gray-400">Estanho</p>
-                                    <p>1,8 kg</p>
+                        <div class="material-card">
+                            <div class="material-header">
+                                <div class="material-title">Metais Base</div>
+                                <span class="badge badge-silver">Médio Valor</span>
+                            </div>
+                            <div class="material-content">
+                                <div class="material-row">
+                                    <div>
+                                        <p class="text-sm text-gray-400">Cobre</p>
+                                        <p>18,5 kg</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-400">Alumínio</p>
+                                        <p>12,2 kg</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-400">Ferro</p>
+                                        <p>85,4 kg</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-400">Estanho</p>
+                                        <p>1,8 kg</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="material-footer">
-                            <span class="material-meta">Valor estimado</span>
-                            <span class="material-value">R$ 2.450,00</span>
+                            <div class="material-footer">
+                                <span class="material-meta">Valor estimado</span>
+                                <span class="material-value">R$ 2.450,00</span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Environmental Impact -->
-                <div>
-                    <h4 class="text-lg font-medium mb-4">Impacto Ambiental</h4>
+                <div class="details-section">
+                    <h4 class="text-md font-medium mb-3">Impacto Ambiental</h4>
 
-                    <div class="bg-gray-800 rounded-lg p-4 mb-4">
-                        <div class="flex justify-between mb-2">
-                            <span class="text-gray-400">CO₂ Evitado:</span>
-                            <span>1.250 kg</span>
+                    <div class="details-grid mb-3">
+                        <div class="detail-item">
+                            <span class="detail-label">CO₂ Evitado:</span>
+                            <span class="detail-value">1.250 kg</span>
                         </div>
-                        <div class="flex justify-between mb-2">
-                            <span class="text-gray-400">Água Economizada:</span>
-                            <span>8.500 litros</span>
+                        <div class="detail-item">
+                            <span class="detail-label">Água Economizada:</span>
+                            <span class="detail-value">8.500 litros</span>
                         </div>
-                        <div class="flex justify-between mb-2">
-                            <span class="text-gray-400">Energia Economizada:</span>
-                            <span>3.200 kWh</span>
+                        <div class="detail-item">
+                            <span class="detail-label">Energia Economizada:</span>
+                            <span class="detail-value">3.200 kWh</span>
                         </div>
-                        <div class="flex justify-between">
-                            <span class="text-gray-400">Equivalente a:</span>
-                            <span>5,2 árvores/ano</span>
+                        <div class="detail-item">
+                            <span class="detail-label">Equivalente a:</span>
+                            <span class="detail-value">5,2 árvores/ano</span>
                         </div>
                     </div>
 
-                    <div class="chart-container mb-4">
+                    <div class="chart-container mb-3">
                         <canvas id="impactChart"></canvas>
                     </div>
 
@@ -868,38 +1173,31 @@
                             <i class="fas fa-robot"></i>
                             <span>Sugestão de Melhoria</span>
                         </div>
-                        <p class="text-sm mb-2">Com base na análise deste lote, recomendamos:</p>
                         <p class="text-sm">Separação prévia dos componentes de memória RAM e processadores antes do
-                            envio, aumentando em até 15% o valor de recuperação de metais preciosos.</p>
+                            envio, aumentando em até 15% o valor de recuperação.</p>
                     </div>
                 </div>
             </div>
 
-            <div class="mt-6 pt-6 border-t border-gray-700">
-                <h4 class="text-lg font-medium mb-4">Observações Técnicas</h4>
+            <div class="mt-4 pt-4 border-t border-gray-700">
+                <h4 class="text-md font-medium mb-3">Observações Técnicas</h4>
 
-                <div class="bg-gray-800 rounded-lg p-4 mb-4">
-                    <p class="mb-3">O lote analisado apresenta excelente potencial de recuperação de materiais,
-                        especialmente metais preciosos presentes nas placas de circuito impresso dos servidores. A
-                        análise detalhada revelou:</p>
+                <div class="bg-gray-800 rounded-lg p-3 mb-3 text-sm">
+                    <p class="mb-2">O lote analisado apresenta excelente potencial de recuperação de materiais,
+                        especialmente metais preciosos presentes nas placas de circuito impresso dos servidores.</p>
 
-                    <ul class="list-disc pl-5 mb-3 text-gray-300">
-                        <li class="mb-2">Todos os equipamentos estão em conformidade com as normas RoHS, não
-                            apresentando níveis significativos de substâncias restritas;</li>
-                        <li class="mb-2">Os discos rígidos foram submetidos a processo de sanitização de dados conforme
-                            padrão NIST 800-88, garantindo a segurança das informações;</li>
-                        <li class="mb-2">Componentes como baterias de CMOS e capacitores foram devidamente segregados
-                            para tratamento específico;</li>
-                        <li class="mb-2">Aproximadamente 92% dos materiais presentes no lote são recicláveis, com alto
-                            índice de pureza.</li>
+                    <ul class="list-disc pl-4 mb-2 text-gray-300">
+                        <li class="mb-1">Todos os equipamentos estão em conformidade com as normas RoHS;</li>
+                        <li class="mb-1">Discos rígidos sanitizados conforme padrão NIST 800-88;</li>
+                        <li class="mb-1">Componentes segregados para tratamento específico;</li>
+                        <li class="mb-1">92% dos materiais são recicláveis.</li>
                     </ul>
 
-                    <p>Recomenda-se a destinação dos materiais para recicladores certificados, especialmente para
-                        recuperação dos metais preciosos presentes nas placas de circuito impresso.</p>
+                    <p>Recomenda-se a destinação para recicladores certificados.</p>
                 </div>
 
-                <div class="flex justify-end">
-                    <button class="btn btn-secondary mr-3">
+                <div class="form-actions">
+                    <button class="btn btn-secondary">
                         <i class="fas fa-download mr-2"></i>Baixar Laudo Completo
                     </button>
                     <button class="btn btn-primary">
@@ -911,20 +1209,20 @@
 
         <!-- Certificates -->
         <div class="card">
-            <h3 class="text-lg font-medium mb-6 text-green-500">Certificados Disponíveis</h3>
+            <h3 class="card-title">Certificados Disponíveis</h3>
 
-            <div class="grid grid-cols-2 gap-6">
+            <div class="certificates-grid">
                 <div class="certificate-card">
                     <div class="certificate-header">
                         <div class="certificate-title">Certificado de Destinação Final</div>
-                        <div class="certificate-date">Emitido em: 05/10/2025</div>
+                        <div class="certificate-date">05/10/2025</div>
                     </div>
 
                     <div class="certificate-content">
-                        <p class="mb-3">Certificamos que o lote #ECO-2028, composto por Servidores Dell PowerEdge, foi
-                            devidamente processado e reciclado de acordo com as normas ambientais vigentes.</p>
+                        <p class="mb-2">Certificamos que o lote #ECO-2028 foi devidamente processado e reciclado de
+                            acordo com as normas ambientais vigentes.</p>
 
-                        <div class="grid grid-cols-2 gap-4 mb-3">
+                        <div class="material-row mb-2">
                             <div>
                                 <p class="text-sm text-gray-400">Peso Total</p>
                                 <p class="font-medium">210 kg</p>
@@ -932,14 +1230,6 @@
                             <div>
                                 <p class="text-sm text-gray-400">Taxa de Recuperação</p>
                                 <p class="font-medium">92%</p>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-400">Processo</p>
-                                <p class="font-medium">Reciclagem Avançada</p>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-400">Normas</p>
-                                <p class="font-medium">ABNT NBR 16156:2020</p>
                             </div>
                         </div>
                     </div>
@@ -952,7 +1242,7 @@
                             <div class="certificate-issuer-name">EcoTech Labs</div>
                         </div>
                         <div class="certificate-verification">
-                            Verificar autenticidade: <a href="#">#CDF-2025-10-05-8742</a>
+                            <a href="#">#CDF-2025-10-05-8742</a>
                         </div>
                     </div>
                 </div>
@@ -960,26 +1250,17 @@
                 <div class="certificate-card">
                     <div class="certificate-header">
                         <div class="certificate-title">Certificado de Destruição de Dados</div>
-                        <div class="certificate-date">Emitido em: 03/10/2025</div>
+                        <div class="certificate-date">03/10/2025</div>
                     </div>
 
                     <div class="certificate-content">
-                        <p class="mb-3">Certificamos que todos os dispositivos de armazenamento presentes no lote
-                            #ECO-2028 foram submetidos a processo de sanitização de dados conforme padrão NIST 800-88,
-                            garantindo a eliminação segura e permanente de todas as informações.</p>
+                        <p class="mb-2">Certificamos que todos os dispositivos de armazenamento foram submetidos a
+                            processo de sanitização de dados conforme padrão NIST 800-88.</p>
 
-                        <div class="grid grid-cols-2 gap-4 mb-3">
+                        <div class="material-row mb-2">
                             <div>
-                                <p class="text-sm text-gray-400">Dispositivos Processados</p>
+                                <p class="text-sm text-gray-400">Dispositivos</p>
                                 <p class="font-medium">24 unidades</p>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-400">Método</p>
-                                <p class="font-medium">Desmagnetização + Sobrescrita</p>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-400">Padrão</p>
-                                <p class="font-medium">NIST 800-88 Rev. 1</p>
                             </div>
                             <div>
                                 <p class="text-sm text-gray-400">Nível de Segurança</p>
@@ -996,127 +1277,51 @@
                             <div class="certificate-issuer-name">DataSec Solutions</div>
                         </div>
                         <div class="certificate-verification">
-                            Verificar autenticidade: <a href="#">#CDD-2025-10-03-5621</a>
+                            <a href="#">#CDD-2025-10-03-5621</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- New Report Form -->
-        <!--  <div class="card">
-            <h3 class="text-lg font-medium mb-6 text-green-500">Solicitar Novo Laudo</h3>
-            
-            <div class="grid grid-cols-2 gap-6">
-                <div>
-                    <div class="form-group">
-                        <label class="form-label">Lote</label>
-                        <select class="form-select">
-                            <option value="">Selecione um lote</option>
-                            <option value="eco-2027">ECO-2027 - Computadores e Periféricos</option>
-                            <option value="eco-2026">ECO-2026 - Smartphones e Tablets</option>
-                            <option value="eco-2025">ECO-2025 - Monitores LCD</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Tipo de Laudo</label>
-                        <select class="form-select">
-                            <option value="">Selecione o tipo de laudo</option>
-                            <option value="completo">Laudo Técnico Completo</option>
-                            <option value="materiais">Análise de Materiais</option>
-                            <option value="dados">Certificado de Destruição de Dados</option>
-                            <option value="destinacao">Certificado de Destinação Final</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Laboratório</label>
-                        <select class="form-select">
-                            <option value="">Selecione um laboratório</option>
-                            <option value="ecotech">EcoTech Labs</option>
-                            <option value="greencert">GreenCert</option>
-                            <option value="datasec">DataSec Solutions</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Urgência</label>
-                        <select class="form-select">
-                            <option value="">Selecione o nível de urgência</option>
-                            <option value="normal">Normal (5-7 dias úteis)</option>
-                            <option value="rapido">Rápido (3 dias úteis)</option>
-                            <option value="urgente">Urgente (24 horas)</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Observações</label>
-                        <textarea class="form-textarea" placeholder="Informações adicionais para o laboratório..."></textarea>
-                    </div>
-                </div>
-                
-                <div>
-                    <div class="form-group">
-                        <label class="form-label">Documentos Complementares</label>
-                        <div class="dropzone">
-                            <i class="fas fa-cloud-upload-alt dropzone-icon"></i>
-                            <p class="mb-2">Arraste e solte arquivos aqui</p>
-                            <p class="text-sm text-gray-400">ou clique para selecionar arquivos</p>
-                        </div>
-                        
-                        <div class="preview-container">
-                            <div class="preview-item">
-                                <img src="https://via.placeholder.com/100x100/333333/666666" alt="Preview">
-                                <div class="preview-remove">
-                                    <i class="fas fa-times"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-gray-800 rounded-lg p-4 mb-4">
-                        <h5 class="font-medium mb-3">Custos Estimados</h5>
-                        
-                        <div class="flex justify-between mb-2">
-                            <span class="text-gray-400">Laudo Técnico Básico:</span>
-                            <span>R$ 450,00</span>
-                        </div>
-                        <div class="flex justify-between mb-2">
-                            <span class="text-gray-400">Análise de Materiais:</span>
-                            <span>+ R$ 250,00</span>
-                        </div>
-                        <div class="flex justify-between mb-2">
-                            <span class="text-gray-400">Certificado de Destruição de Dados:</span>
-                            <span>+ R$ 350,00</span>
-                        </div>
-                        <div class="flex justify-between mb-2 border-t border-gray-700 pt-2">
-                            <span class="text-gray-400">Total Estimado:</span>
-                            <span class="font-medium text-green-500">R$ 1.050,00</span>
-                        </div>
-                    </div>
-                    
-                    <div class="ai-suggestion">
-                        <div class="ai-suggestion-title">
-                            <i class="fas fa-robot"></i>
-                            <span>Recomendação</span>
-                        </div>
-                        <p class="text-sm mb-2">Para este tipo de lote, recomendamos:</p>
-                        <p class="text-sm">Incluir a análise de materiais para identificar metais preciosos, pois o lote contém componentes de alto valor como placas-mãe e processadores.</p>
-                    </div>
-                    
-                    <div class="flex justify-end mt-6">
-                        <button class="btn btn-secondary mr-3">Cancelar</button>
-                        <button class="btn btn-primary">Solicitar Laudo</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    -->
-
     </div>
 
     <script>
+        // Menu toggle functionality
+        const menuToggle = document.getElementById('menuToggle');
+        const closeSidebar = document.getElementById('closeSidebar');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+        const mainContent = document.getElementById('mainContent');
+
+        function toggleSidebar() {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
+        }
+
+        menuToggle.addEventListener('click', toggleSidebar);
+        closeSidebar.addEventListener('click', toggleSidebar);
+        overlay.addEventListener('click', toggleSidebar);
+
+        // Close sidebar when clicking on a menu item (mobile)
+        const menuItems = document.querySelectorAll('.menu-item');
+        menuItems.forEach(item => {
+            item.addEventListener('click', () => {
+                if (window.innerWidth < 768) {
+                    toggleSidebar();
+                }
+            });
+        });
+
+        // Tab functionality
+        const tabs = document.querySelectorAll('.tab');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+            });
+        });
+
         // Materials Chart
         const materialsCtx = document.getElementById('materialsChart').getContext('2d');
         const materialsChart = new Chart(materialsCtx, {
@@ -1144,7 +1349,10 @@
                         labels: {
                             color: '#B3B3B3',
                             boxWidth: 12,
-                            padding: 15
+                            padding: 15,
+                            font: {
+                                size: 11
+                            }
                         }
                     }
                 }
@@ -1179,6 +1387,9 @@
                             color: '#B3B3B3',
                             callback: function (value) {
                                 return value + '%';
+                            },
+                            font: {
+                                size: 11
                             }
                         }
                     },
@@ -1187,7 +1398,10 @@
                             color: '#333333'
                         },
                         ticks: {
-                            color: '#B3B3B3'
+                            color: '#B3B3B3',
+                            font: {
+                                size: 11
+                            }
                         }
                     }
                 },
@@ -1198,7 +1412,7 @@
                     tooltip: {
                         callbacks: {
                             label: function (context) {
-                                return context.raw + '% de eficiência em relação à produção primária';
+                                return context.raw + '% de eficiência';
                             }
                         }
                     }

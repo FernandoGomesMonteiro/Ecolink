@@ -29,27 +29,56 @@
             --purple: #9C27B0;
         }
 
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 14px;
+            line-height: 1.4;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        /* Mobile First - Sidebar como menu hamburger */
         .sidebar {
             background-color: #0F0F0F;
             height: 100vh;
-            width: 200px;
+            width: 100%;
             position: fixed;
             top: 0;
-            left: 0;
+            left: -100%;
             overflow-y: auto;
+            transition: left 0.3s ease;
+            z-index: 1000;
+        }
+
+        .sidebar.active {
+            left: 0;
         }
 
         .sidebar-logo {
-            padding: 20px;
+            padding: 15px;
             border-bottom: 1px solid #1A1A1A;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .close-sidebar {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 18px;
+            cursor: pointer;
+            padding: 5px;
         }
 
         .sidebar-menu {
@@ -57,12 +86,14 @@
         }
 
         .menu-item {
-            padding: 12px 20px;
+            padding: 12px 15px;
             display: flex;
             align-items: center;
             color: var(--text-secondary);
             transition: all 0.3s ease;
             border-left: 3px solid transparent;
+            text-decoration: none;
+            font-size: 14px;
         }
 
         .menu-item:hover,
@@ -73,49 +104,98 @@
         }
 
         .menu-item i {
-            margin-right: 12px;
-            width: 20px;
+            margin-right: 10px;
+            width: 18px;
             text-align: center;
+            font-size: 14px;
         }
 
         .main-content {
-            margin-left: 200px;
-            padding: 20px;
             min-height: 100vh;
             background-color: #121212;
+            width: 100%;
+            padding: 0;
         }
 
         .header {
             background-color: #1A1A1A;
-            padding: 15px 20px;
-            margin-bottom: 20px;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
+        }
+
+        .menu-toggle {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 18px;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .search-container {
+            position: relative;
+            width: 100%;
+            margin: 5px 0;
         }
 
         .search-bar {
             background-color: #242424;
             border: 1px solid #00A86B;
             border-radius: 4px;
-            padding: 8px 15px;
-            width: 300px;
+            padding: 8px 35px 8px 12px;
+            width: 100%;
             color: var(--text-primary);
+            font-size: 14px;
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--green-primary);
         }
 
         .card {
             background-color: #242424;
             border-radius: 4px;
-            padding: 20px;
-            margin-bottom: 20px;
+            padding: 15px;
+            margin-bottom: 15px;
+            margin-left: 10px;
+            margin-right: 10px;
         }
 
         .btn {
-            padding: 8px 16px;
+            padding: 10px 15px;
             border-radius: 4px;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.3s ease;
+            border: none;
+            font-size: 14px;
+            white-space: nowrap;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .btn-primary {
@@ -146,7 +226,7 @@
         }
 
         .user-profile {
-            padding: 15px 20px;
+            padding: 12px 15px;
             border-top: 1px solid #1A1A1A;
             display: flex;
             align-items: center;
@@ -157,42 +237,49 @@
         }
 
         .user-avatar {
-            width: 40px;
-            height: 40px;
+            width: 35px;
+            height: 35px;
             border-radius: 50%;
             background-color: #242424;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 12px;
+            margin-right: 10px;
         }
 
         .notification-badge {
             background-color: var(--error);
             color: white;
             border-radius: 50%;
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
+            font-size: 10px;
             position: absolute;
-            top: -5px;
-            right: -5px;
+            top: -3px;
+            right: -3px;
         }
 
         .tab-container {
             display: flex;
             border-bottom: 1px solid #333333;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            overflow-x: auto;
+            padding: 0 10px;
         }
 
         .tab {
-            padding: 10px 20px;
+            padding: 12px 15px;
             cursor: pointer;
             border-bottom: 3px solid transparent;
             color: var(--text-secondary);
+            white-space: nowrap;
+            font-size: 14px;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
         }
 
         .tab.active {
@@ -204,9 +291,10 @@
             display: inline-block;
             padding: 4px 8px;
             border-radius: 4px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 500;
-            margin-right: 5px;
+            margin-right: 4px;
+            margin-bottom: 4px;
         }
 
         .badge-gold {
@@ -240,7 +328,7 @@
         }
 
         .status {
-            padding: 4px 8px;
+            padding: 6px 10px;
             border-radius: 4px;
             font-size: 12px;
             font-weight: 500;
@@ -287,6 +375,7 @@
             border-radius: 4px;
             overflow: hidden;
             transition: all 0.3s ease;
+            background-color: #242424;
         }
 
         .lot-card:hover {
@@ -295,7 +384,7 @@
         }
 
         .lot-image {
-            height: 160px;
+            height: 140px;
             overflow: hidden;
             position: relative;
         }
@@ -314,7 +403,7 @@
             background-color: rgba(0, 0, 0, 0.7);
             color: white;
             padding: 5px 10px;
-            font-size: 12px;
+            font-size: 11px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -326,7 +415,7 @@
         }
 
         .lot-content {
-            padding: 15px;
+            padding: 12px;
         }
 
         .lot-title {
@@ -335,24 +424,25 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            font-size: 14px;
         }
 
         .lot-info {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+            font-size: 12px;
         }
 
         .lot-info-item {
-            font-size: 14px;
             color: var(--text-secondary);
         }
 
         .lot-price {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 700;
             color: var(--green-primary);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .lot-footer {
@@ -362,22 +452,23 @@
         }
 
         .lot-bids {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-secondary);
         }
 
         .chart-container {
             position: relative;
-            height: 250px;
+            height: 200px;
             width: 100%;
         }
 
         .price-suggestion {
             background-color: rgba(0, 168, 107, 0.1);
             border-left: 3px solid var(--green-primary);
-            padding: 15px;
-            margin-top: 20px;
+            padding: 12px;
+            margin-top: 15px;
             border-radius: 0 4px 4px 0;
+            font-size: 13px;
         }
 
         .price-suggestion-title {
@@ -385,32 +476,38 @@
             align-items: center;
             color: var(--green-primary);
             font-weight: 500;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+            font-size: 14px;
         }
 
         .price-suggestion-title i {
-            margin-right: 8px;
+            margin-right: 6px;
+            font-size: 14px;
         }
 
         .price-range {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin: 15px 0;
+            margin: 12px 0;
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
         .price-point {
             text-align: center;
+            flex: 1;
+            min-width: 80px;
         }
 
         .price-point-value {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 700;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
 
         .price-point-label {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-secondary);
         }
 
@@ -418,43 +515,222 @@
             height: 4px;
             background: linear-gradient(to right, var(--error), var(--warning), var(--success));
             flex-grow: 1;
-            margin: 0 10px;
+            margin: 0 5px;
             border-radius: 2px;
+            min-width: 40px;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .form-label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             font-weight: 500;
             color: var(--text-secondary);
+            font-size: 14px;
         }
 
         .form-input {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             background-color: #333333;
             border: 1px solid #444444;
             border-radius: 4px;
             color: var(--text-primary);
+            font-size: 16px;
+            min-height: 44px;
         }
 
         .form-input:focus {
             outline: none;
             border-color: var(--green-primary);
         }
+
+        /* Grid responsivo para mobile */
+        .featured-lot-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .featured-lot-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .featured-lot-info {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .featured-lot-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .featured-lot-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .featured-lot-actions .btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .lots-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        /* Acessibilidade */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Focus styles para acessibilidade */
+        button:focus,
+        a:focus,
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: 2px solid var(--green-primary);
+            outline-offset: 2px;
+        }
+
+        /* Overlay para menu mobile */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+            display: none;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        /* Melhorias para touch em dispositivos móveis */
+        @media (hover: none) and (pointer: coarse) {
+
+            .menu-item,
+            .btn,
+            .tab {
+                min-height: 44px;
+                display: flex;
+                align-items: center;
+            }
+
+            .lot-card {
+                min-height: 200px;
+            }
+        }
+
+        /* Ajustes para orientação paisagem em mobile */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .sidebar {
+                overflow-y: auto;
+            }
+
+            .user-profile {
+                position: relative;
+            }
+        }
+
+        /* Prevenir zoom em inputs em iOS */
+        @media screen and (max-width: 480px) {
+
+            input,
+            select,
+            textarea {
+                font-size: 16px;
+            }
+        }
+
+        /* Ajustes para telas muito pequenas */
+        @media (max-width: 360px) {
+            .card {
+                margin-left: 8px;
+                margin-right: 8px;
+                padding: 12px;
+            }
+
+            .header {
+                padding: 10px 12px;
+            }
+
+            .tab {
+                padding: 10px 12px;
+                font-size: 13px;
+            }
+
+            .lots-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-lot-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .btn {
+                padding: 10px 12px;
+                font-size: 13px;
+            }
+        }
+
+        /* Ajustes para o título da página */
+        .page-title {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            padding: 0 10px;
+        }
     </style>
 </head>
 
 <body>
+    <!-- Overlay para menu mobile -->
+    <div class="overlay" id="overlay"></div>
+
     <!-- Sidebar -->
-    <div class="sidebar">
+    <div class="sidebar" id="sidebar">
         <div class="sidebar-logo">
-            <h1 class="text-xl font-bold text-green-500">Ecolink</h1>
-            <p class="text-xs text-gray-400">Gestão de E-lixo Corporativo</p>
+            <div>
+                <h1 class="text-xl font-bold text-green-500">Ecolink</h1>
+                <p class="text-xs text-gray-400">Gestão de E-lixo Corporativo</p>
+            </div>
+            <button class="close-sidebar" id="closeSidebar" aria-label="Fechar menu">
+                <i class="fas fa-times"></i>
+            </button>
         </div>
 
         <div class="sidebar-menu">
@@ -470,12 +746,10 @@
                 <i class="fas fa-gavel text-green-500"></i>
                 <span>Leilão Reverso</span>
             </a>
-
             <a href="/laudos-tecnicos" class="menu-item">
                 <i class="fas fa-certificate text-gray-400"></i>
                 <span>Laudos Técnicos</span>
             </a>
-
         </div>
 
         <div class="user-profile">
@@ -490,24 +764,28 @@
     </div>
 
     <!-- Main Content -->
-    <div class="main-content">
+    <div class="main-content" id="mainContent">
         <!-- Header -->
         <div class="header">
-            <h2 class="text-xl font-medium">Leilão Reverso</h2>
-            <div class="flex items-center">
-                <div class="relative mr-4">
-                    <input type="text" placeholder="Pesquisar..." class="search-bar">
-                    <span class="absolute right-3 top-2 text-green-500">
-                        <i class="fas fa-search"></i>
-                    </span>
-                </div>
-                <div class="relative mr-4">
-                    <i class="fas fa-bell text-gray-400 text-xl"></i>
-                    <span class="notification-badge">3</span>
-                </div>
-                <button class="btn btn-primary">
-                    <i class="fas fa-plus mr-2"></i>Novo Leilão
+            <div class="header-top">
+                <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">
+                    <i class="fas fa-bars"></i>
                 </button>
+                <h2 class="page-title">Leilão Reverso</h2>
+                <div class="header-actions">
+                    <div class="relative">
+                        <button class="text-gray-400 text-xl" aria-label="Notificações">
+                            <i class="fas fa-bell"></i>
+                            <span class="notification-badge">3</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="search-container">
+                <input type="text" placeholder="Pesquisar leilões..." class="search-bar" aria-label="Pesquisar">
+                <span class="search-icon">
+                    <i class="fas fa-search"></i>
+                </span>
             </div>
         </div>
 
@@ -515,47 +793,45 @@
         <div class="tab-container">
             <div class="tab active">Leilões Ativos</div>
             <div class="tab">Meus Lotes</div>
-            <div class="tab">Histórico de Leilões</div>
+            <div class="tab">Histórico</div>
         </div>
 
         <!-- Featured Lot -->
         <div class="card">
-            <div class="grid grid-cols-3 gap-6">
-                <div>
-                    <img src="https://via.placeholder.com/400x300/333333/666666" alt="Lote em Destaque"
-                        class="w-full h-64 object-cover rounded-lg">
-                </div>
+            <div class="featured-lot-grid">
+                <img src="https://via.placeholder.com/400x300/333333/666666" alt="Lote em Destaque"
+                    class="featured-lot-image">
 
-                <div class="col-span-2">
-                    <div class="flex justify-between items-start mb-4">
+                <div class="featured-lot-info">
+                    <div class="flex justify-between items-start">
                         <div>
-                            <h3 class="text-xl font-medium text-green-500">Lote de Servidores Dell PowerEdge</h3>
-                            <p class="text-gray-400">ID: #ECO-2028</p>
+                            <h3 class="text-lg font-medium text-green-500">Servidores Dell PowerEdge</h3>
+                            <p class="text-gray-400 text-sm">ID: #ECO-2028</p>
                         </div>
-                        <span class="status status-active">Leilão Ativo</span>
+                        <span class="status status-active">Ativo</span>
                     </div>
 
-                    <div class="grid grid-cols-3 gap-4 mb-6">
+                    <div class="featured-lot-stats">
                         <div>
                             <p class="text-gray-400 text-sm">Peso Total</p>
-                            <p class="text-lg font-medium">210 kg</p>
+                            <p class="font-medium">210 kg</p>
                         </div>
                         <div>
                             <p class="text-gray-400 text-sm">Quantidade</p>
-                            <p class="text-lg font-medium">8 unidades</p>
+                            <p class="font-medium">8 unidades</p>
                         </div>
                         <div>
-                            <p class="text-gray-400 text-sm">Tempo Restante</p>
-                            <p class="text-lg font-medium text-yellow-400">23h 45min</p>
+                            <p class="text-gray-400 text-sm">Tempo</p>
+                            <p class="font-medium text-yellow-400">23h 45min</p>
                         </div>
                     </div>
 
-                    <div class="mb-6">
+                    <div>
                         <p class="text-gray-400 text-sm mb-2">Categorias</p>
                         <div>
                             <span class="badge badge-green">Servidores</span>
-                            <span class="badge badge-blue">Equipamentos de Rede</span>
-                            <span class="badge badge-purple">Hardware Empresarial</span>
+                            <span class="badge badge-blue">Rede</span>
+                            <span class="badge badge-purple">Empresarial</span>
                         </div>
                     </div>
 
@@ -586,24 +862,22 @@
                             </div>
                         </div>
 
-                        <p class="text-sm text-gray-400">Justificativa: Baseado em 8 leilões similares recentes e
-                            aumento de 12% no valor do cobre.</p>
+                        <p class="text-sm text-gray-400">Baseado em 8 leilões similares recentes.</p>
                     </div>
 
-                    <div class="flex justify-between items-center mt-6">
+                    <div class="featured-lot-actions">
                         <div>
                             <p class="text-gray-400 text-sm">Melhor Lance Atual</p>
-                            <p class="text-2xl font-bold text-green-500">R$ 5.250</p>
-                            <p class="text-xs text-gray-400">por <span class="badge badge-gold">TechRecycle</span> há 2
-                                horas</p>
+                            <p class="text-xl font-bold text-green-500">R$ 5.250</p>
+                            <p class="text-xs text-gray-400">por <span class="badge badge-gold">TechRecycle</span></p>
                         </div>
 
-                        <div class="flex">
-                            <button class="btn btn-secondary mr-3">
-                                <i class="far fa-eye mr-2"></i>Ver Detalhes
+                        <div class="flex gap-2">
+                            <button class="btn btn-secondary flex-1">
+                                <i class="far fa-eye mr-2"></i>Detalhes
                             </button>
-                            <button class="btn btn-warning">
-                                <i class="fas fa-gavel mr-2"></i>Fazer Lance
+                            <button class="btn btn-warning flex-1">
+                                <i class="fas fa-gavel mr-2"></i>Lance
                             </button>
                         </div>
                     </div>
@@ -612,22 +886,22 @@
         </div>
 
         <!-- Lots Grid -->
-        <h3 class="text-lg font-medium mb-4">Outros Leilões Ativos</h3>
+        <h3 class="section-title">Outros Leilões Ativos</h3>
 
-        <div class="grid grid-cols-4 gap-4 mb-6">
+        <div class="lots-grid">
             <!-- Lot Card 1 -->
             <div class="lot-card">
                 <div class="lot-image">
                     <img src="https://via.placeholder.com/300x200/333333/666666" alt="Lote">
                     <div class="lot-timer">
                         <i class="far fa-clock"></i>
-                        <span>2d 14h restantes</span>
+                        <span>2d 14h</span>
                     </div>
                 </div>
                 <div class="lot-content">
                     <h4 class="lot-title">Computadores e Periféricos</h4>
                     <div class="lot-info">
-                        <span class="lot-info-item">ID: #ECO-2027</span>
+                        <span class="lot-info-item">#ECO-2027</span>
                         <span class="lot-info-item">320 kg</span>
                     </div>
                     <div class="lot-price">R$ 4.800</div>
@@ -644,13 +918,13 @@
                     <img src="https://via.placeholder.com/300x200/333333/666666" alt="Lote">
                     <div class="lot-timer">
                         <i class="far fa-clock"></i>
-                        <span>8h 22min restantes</span>
+                        <span>8h 22min</span>
                     </div>
                 </div>
                 <div class="lot-content">
                     <h4 class="lot-title">Smartphones e Tablets</h4>
                     <div class="lot-info">
-                        <span class="lot-info-item">ID: #ECO-2026</span>
+                        <span class="lot-info-item">#ECO-2026</span>
                         <span class="lot-info-item">45 kg</span>
                     </div>
                     <div class="lot-price">R$ 3.200</div>
@@ -667,13 +941,13 @@
                     <img src="https://via.placeholder.com/300x200/333333/666666" alt="Lote">
                     <div class="lot-timer">
                         <i class="far fa-clock"></i>
-                        <span>1d 6h restantes</span>
+                        <span>1d 6h</span>
                     </div>
                 </div>
                 <div class="lot-content">
                     <h4 class="lot-title">Monitores LCD</h4>
                     <div class="lot-info">
-                        <span class="lot-info-item">ID: #ECO-2025</span>
+                        <span class="lot-info-item">#ECO-2025</span>
                         <span class="lot-info-item">95 kg</span>
                     </div>
                     <div class="lot-price">R$ 1.850</div>
@@ -690,13 +964,13 @@
                     <img src="https://via.placeholder.com/300x200/333333/666666" alt="Lote">
                     <div class="lot-timer">
                         <i class="far fa-clock"></i>
-                        <span>3d 12h restantes</span>
+                        <span>3d 12h</span>
                     </div>
                 </div>
                 <div class="lot-content">
                     <h4 class="lot-title">Impressoras e Toners</h4>
                     <div class="lot-info">
-                        <span class="lot-info-item">ID: #ECO-2024</span>
+                        <span class="lot-info-item">#ECO-2024</span>
                         <span class="lot-info-item">75 kg</span>
                     </div>
                     <div class="lot-price">R$ 1.200</div>
@@ -709,7 +983,61 @@
         </div>
     </div>
 
+    <script>
+        // Menu toggle functionality
+        const menuToggle = document.getElementById('menuToggle');
+        const closeSidebar = document.getElementById('closeSidebar');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+        const mainContent = document.getElementById('mainContent');
 
+        function toggleSidebar() {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
+        }
+
+        menuToggle.addEventListener('click', toggleSidebar);
+        closeSidebar.addEventListener('click', toggleSidebar);
+        overlay.addEventListener('click', toggleSidebar);
+
+        // Close sidebar when clicking on a menu item (mobile)
+        const menuItems = document.querySelectorAll('.menu-item');
+        menuItems.forEach(item => {
+            item.addEventListener('click', () => {
+                if (window.innerWidth < 768) {
+                    toggleSidebar();
+                }
+            });
+        });
+
+        // Tab functionality
+        const tabs = document.querySelectorAll('.tab');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+            });
+        });
+
+        // Simular contador regressivo para os leilões
+        function updateTimers() {
+            const timers = document.querySelectorAll('.lot-timer span');
+            timers.forEach(timer => {
+                // Simular diminuição do tempo
+                const text = timer.textContent;
+                if (text.includes('h') && !text.includes('min')) {
+                    const hours = parseInt(text.split('h')[0]);
+                    if (hours > 0) {
+                        timer.textContent = text.replace(`${hours}h`, `${hours - 1}h`);
+                    }
+                }
+            });
+        }
+
+        // Atualizar timers a cada minuto (simulação)
+        setInterval(updateTimers, 60000);
+    </script>
 </body>
 
 </html>
