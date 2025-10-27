@@ -27,15 +27,15 @@ app.get("/quem-somos", (req, res) => {
 });
 
 app.get("/dashboard", (req, res) => {
-  res.sendFile(path.join(__dirname, "/pages/dashboard/ecolink_dashboard_final.html"));
+  res.sendFile(path.join(__dirname, "public/views/ecolink_dashboard_final.html"));
 });
 
 app.get("/cadastro-lotes", (req, res) => {
-  res.sendFile(path.join(__dirname, "/pages/cadastro_lotes/ecolink_cadastro_lotes.html"));
+  res.sendFile(path.join(__dirname, "/public/views/ecolink_cadastro_lotes.html"));
 });
 
 app.get("/leilao-reverso", (req, res) => {
-  res.sendFile(path.join(__dirname, "/pages/leilao/ecolink_leilao_reverso.html"));
+  res.sendFile(path.join(__dirname, "/public/views/ecolink_leilao_reverso.html"));
 });
 
 app.get("/pagamento-garantia", (req, res) => {
@@ -47,7 +47,7 @@ app.get("/logistica", (req, res) => {
 });
 
 app.get("/laudos-tecnicos", (req, res) => {
-  res.sendFile(path.join(__dirname, "/pages/laudos/ecolink_laudos_tecnicos.html"));
+  res.sendFile(path.join(__dirname, "/public/views/ecolink_laudos_tecnicos.html"));
 });
 
 app.get("/relatorios-esg", (req, res) => {
